@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1">
+		<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="format-detection" content="email=no">
+		<meta http-equiv="Expires" content="0">
+		<meta http-equiv="Pragma" content="no-cache">
+		<meta http-equiv="Cache-control" content="no-cache">
+		<meta http-equiv="Cache" content="no-cache">
+		<title>检测</title>
+		<meta name="keywords" content="">
+		<meta name="Description" content="">
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/public.css">
+		<link rel="stylesheet" href="css/main.css">
+		<script src="js/jquery.js"></script>
+		<style type="text/css">
+			.mui-preview-image.mui-fullscreen {
+				position: fixed;
+				z-index: 9999999;
+				background-color: #000;
+			}
+			.mui-preview-header,
+			.mui-preview-footer {
+				position: absolute;
+				width: 100%;
+				left: 0;
+				z-index: 10;
+			}
+			.mui-preview-header {
+				height: 44px;
+				top: 0;
+			}
+			.mui-preview-footer {
+				height: 50px;
+				bottom: 0px;
+			}
+			.mui-preview-header .mui-preview-indicator {
+				display: block;
+				line-height: 25px;
+				color: #fff;
+				text-align: center;
+				margin: 15px auto 4;
+				width: 70px;
+				background-color: rgba(0, 0, 0, 0.4);
+				border-radius: 12px;
+				font-size: 16px;
+			}
+			.mui-preview-image {
+				display: none;
+				-webkit-animation-duration: 0.5s;
+				animation-duration: 0.5s;
+				-webkit-animation-fill-mode: both;
+				animation-fill-mode: both;
+			}
+			.mui-preview-image.mui-preview-in {
+				-webkit-animation-name: fadeIn;
+				animation-name: fadeIn;
+			}
+			.mui-preview-image.mui-preview-out {
+				background: none;
+				-webkit-animation-name: fadeOut;
+				animation-name: fadeOut;
+			}
+			.mui-preview-image.mui-preview-out .mui-preview-header,
+			.mui-preview-image.mui-preview-out .mui-preview-footer {
+				display: none;
+			}
+			.mui-zoom-scroller {
+				position: absolute;
+				display: -webkit-box;
+				display: -webkit-flex;
+				display: flex;
+				-webkit-box-align: center;
+				-webkit-align-items: center;
+				align-items: center;
+				-webkit-box-pack: center;
+				-webkit-justify-content: center;
+				justify-content: center;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				margin: 0;
+				-webkit-backface-visibility: hidden;
+			}
+			.mui-zoom {
+				-webkit-transform-style: preserve-3d;
+				transform-style: preserve-3d;
+			}
+			.mui-slider .mui-slider-group .mui-slider-item img {
+				width: auto;
+				height: auto;
+				max-width: 100%;
+				max-height: 100%;
+			}
+			.mui-android-4-1 .mui-slider .mui-slider-group .mui-slider-item img {
+				width: 100%;
+			}
+			.mui-android-4-1 .mui-slider.mui-preview-image .mui-slider-group .mui-slider-item {
+				display: inline-table;
+			}
+			.mui-android-4-1 .mui-slider.mui-preview-image .mui-zoom-scroller img {
+				display: table-cell;
+				vertical-align: middle;
+			}
+			.mui-preview-loading {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				top: 0;
+				left: 0;
+				display: none;
+			}
+			.mui-preview-loading.mui-active {
+				display: block;
+			}
+			.mui-preview-loading .mui-spinner-white {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				margin-left: -25px;
+				margin-top: -25px;
+				height: 50px;
+				width: 50px;
+			}
+			.mui-preview-image img.mui-transitioning {
+				-webkit-transition: -webkit-transform 0.5s ease, opacity 0.5s ease;
+				transition: transform 0.5s ease, opacity 0.5s ease;
+			}
+			@-webkit-keyframes fadeIn {
+				0% {
+					opacity: 0;
+				}
+				100% {
+					opacity: 1;
+				}
+			}
+			@keyframes fadeIn {
+				0% {
+					opacity: 0;
+				}
+				100% {
+					opacity: 1;
+				}
+			}
+			@-webkit-keyframes fadeOut {
+				0% {
+					opacity: 1;
+				}
+				100% {
+					opacity: 0;
+				}
+			}
+			@keyframes fadeOut {
+				0% {
+					opacity: 1;
+				}
+				100% {
+					opacity: 0;
+				}
+			}
+			p img {
+				max-width: 100%;
+				height: auto;
+			}
+		</style>
+	</head>
+
+	<body style="background-color:#fff;">
+		<div class="header_box">
+			<div class="header">
+				<a class="back mui-action-back">
+					<img src="images/back.png" alt="">
+				</a>
+				<h1>检测</h1>
+				<a class="home ">
+					<img src="images/home.png" alt="" />
+				</a>
+			</div>
+		</div>		
+		<form id="form_info" action="" method="post" class="register_list">
+			<input type="hidden" name="RECORD_TYPE" value="A10005_05"/>
+			<input type="hidden" name="IMG_ID"/>
+			<input type="hidden" name="token"/>
+			<input type="hidden" name="REGISTRATION_ID"/>
+			<input type="hidden" name="PRO_CATALOG_ID"/>
+			<input type="hidden" name="EN_USER_ID"/>
+			
+			<ul>
+				<li>
+					<span>产品批次：</span>
+					<div>
+						<input type="text" name="PRO_BATCH_NAME" readonly value="" />
+						<div>
+							<span class=""></span>
+						</div>
+					</div>
+				</li>
+
+				
+				<li>
+					<span>检测方法：</span>
+					<!--<div id="RECORD_NAME">
+						<input type="text" name="RECORD_NAME" readonly value=""placeholder="请选择检测方法"/>
+						<div>
+							<span class="input_tip_more"></span>
+						</div>
+					</div>-->
+					<a data-extras='{"OPTION_NAME":"检测方法","OPTION_TYPE":"20","URL":"A10005_jiance.html"}' href="../public_list1.html" data-wid="public_list1.html" >
+						<input type="text" name="RECORD_NAME" value="" placeholder="请选择检测方法" />
+						<div>
+							<span class="input_tip_more"></span>
+						</div>
+					</a>
+				</li>
+				<li>
+					<span>检测编号：</span>
+					<div>
+						<input type="number" name="RECORD_AMOUNT" placeholder="请输入检测编号" min="0.0" step="0.01"/>
+						<div id="size">
+							<span></span>
+						</div>
+					</div>
+				</li>
+				<li>
+					<span>检测结果：</span>
+					<div id="acreage">
+						<input type="text" name="RECORD_AREANUM" readonly placeholder="请选择检测结果"/>
+						<div>
+							<span class="input_tip_more"></span>
+						</div>
+					</div>
+				</li>
+				<li>
+					<span>操&nbsp;&nbsp;作&nbsp;&nbsp;人：</span>
+					<a data-extras='{"MEMORY_NAME":"操作人","MEMORY_TYPE":"caozuoren","URL":"A10005_jiance.html"}' href="../public_list2.html" data-wid="public_list2.html" >
+						<input type="text" name="RECORD_OPERATOR" value="" placeholder="请选择操作人名称" />
+						<div>
+							<span class="input_tip_more"></span>
+						</div>
+					</a>
+				</li>
+				<li>
+					<span>操作时间：</span>
+					<div>
+						<input type="date" name="OPERATOR_TIME" placeholder="请输入操作时间" />
+						<div>
+							<span class="input_tip_more"></span>
+						</div>
+					</div>
+				</li>
+				<li>
+					<span>备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注：</span>
+					<div>
+						<input type="text" name="PRO_REMARKS" placeholder="请输入备注信息" />
+						<div>
+							<span></span>
+						</div>
+					</div>
+				</li>
+			</ul>
+			<div id="img_box">
+				<p>上传图片（检测样品、检测单据图片）：</p>
+				<ul>
+					<li id="add_img">
+						<img src="images/add.png" alt="" />
+					</li>
+				</ul>
+				<p class="img_tip">注：长按图片可以进行删除</p>
+			</div>
+			<div class="submit_btn_box">
+				<button class="bozhong_submit">保存</button>
+			</div>
+		</form>
+		<ul class="record_list" style="border-top: 0.15rem solid #efeff4;" value="record_id" id="record_list">
+				
+			</ul>
+		<script src="../js/mui.min.js"></script>
+		<script src="js/jquery.form.min.js"></script>
+		<script src="../js/mui.zoom.js"></script>
+		<script src="../js/mui.previewimage.js"></script>
+		<script src="js/init.js"></script>
+		<script src="js/public.js"></script>
+		<script>
+			mui.init({
+			  gestureConfig:{
+			    longtap: true, //默认为false
+			    release:true
+			  }
+			});
+			mui.plusReady(function() {	
+				$("input[name='OPERATOR_TIME']").val(format());
+				$("input[name='OPERATOR_TIME']+div>span").on("click",function(){
+					$("input[name='OPERATOR_TIME']").click();
+				})
+				window.addEventListener('caozuoren', function(e) {
+					var vals=e.detail;
+					$("input[name='RECORD_OPERATOR']").val(vals._html);
+				})
+				window.addEventListener('refresh_recode_name', function(e) {
+					var vals=e.detail;
+					$("input[name='RECORD_NAME']").val(vals._html);
+				})
+				/*提交表单的返回*/
+				var can_back=true;
+				$("body").on("keyup",function(){
+					can_back=false;
+				})
+			 	var old_back=mui.back;
+				mui.back=function(){
+					if(can_back){
+						old_back();
+					}else{
+						var btnArray = ['否', '是'];
+		                mui.confirm('确认要返回么，确认？', TITLE, btnArray, function(e) {
+		                    if (e.index == 1) {
+		                        old_back();
+		                    }
+		                })
+					}	
+				}
+				mui.previewImage();
+				var _self = plus.webview.currentWebview();
+				var REGISTRATION_ID = _self.REGISTRATION_ID;
+				var PRO_BATCH_NAME = _self.PRO_BATCH_NAME;
+				var PRO_CATALOG_ID = _self.PRO_CATALOG_ID;
+				var RECORD_TYPE=$("input[name='RECORD_TYPE']").val();
+				//console.log(REGISTRATION_ID);
+				//console.log(PRO_BATCH_NAME);
+				//console.log(PRO_CATALOG_ID);
+				$("input[name='token']").val(getToken());
+				$("input[name='REGISTRATION_ID']").val(REGISTRATION_ID);
+				$("input[name='PRO_BATCH_NAME']").val(PRO_BATCH_NAME);
+				$("input[name='PRO_CATALOG_ID']").val(PRO_CATALOG_ID);
+				$("input[name='EN_USER_ID']").val(getState().en_user_id);
+				
+				
+				
+				document.getElementById("acreage").addEventListener('tap', function() {
+					var self=this;
+					var bts2 = [{
+						title: "合格",
+						name:"y "
+					}, {
+						title: "不合格 ",
+						name:"n "
+					}];
+					plus.nativeUI.actionSheet({
+						cancel: "取消",
+						buttons: bts2
+					}, function(e) {
+						var i = e.index;
+						if(i > 0) {
+							var title=bts2[i - 1].title;
+							$("input[name='RECORD_AREANUM']").val(title);
+						}
+					});
+				});
+				
+				
+				mui("#img_box").on('longtap','ul li',function(){
+					var _this=this;
+					if(_this.id!="add_img"){
+						var btnArray = ['否', '是'];
+		                mui.confirm('确认要删除该图片么，确认？', TITLE, btnArray, function(e) {
+		                    if (e.index == 1) {
+		                    	if(wainshow()==false){return false;};
+								$.ajax(www_v+"/img/pro_img_delete/", {
+									data: {"token":getToken(),"IMG_ID":$(_this).attr("value")},
+									type: 'post', //HTTP请求类型
+									timeout: 10000, //超时时间设置为10秒；
+									success: function(data) {
+										check_ajax(data,function(data){
+									 	var d_val=$(_this).attr("value");
+									 	var old_val=$("input[name='IMG_ID']").val();
+									 	var new_val=old_val.replace(d_val,'');
+									 	new_val=new_val.replace(',,',',');
+									 	if(new_val.slice(0,1)==","){
+									 		new_val=new_val.slice(1);
+									 	}
+									 	if(new_val.slice(-1)==","){
+									 		new_val=new_val.slice(0,-1);
+									 	}
+									 	$("input[name='IMG_ID']").val(new_val);
+									 	$(_this).remove();
+											plus.nativeUI.toast('删除成功');
+										})
+									},
+									error: function(xhr, type, errorThrown, selfs) {
+										if(type == "timeout") {
+											alert("请求超时");
+										} else if(type == "abort") {
+											alert("请检查您的网络");
+										} else if(type == "error") {
+											alert("服务端错误");
+										}
+									}
+								});
+
+							}
+		                })
+				 	}
+				})
+				document.getElementById("add_img").addEventListener('tap', function() {
+						var self=this;
+						var caremaorimg = [{
+							title: "拍照",
+							name:"p"
+						}, {
+							title: "相册",
+							name:"x"
+						}];
+						plus.nativeUI.actionSheet({
+							cancel: "取消",
+							buttons: caremaorimg
+						}, function(e) {
+							var i = e.index;
+							var _callback=function(data){
+										check_ajax(data,function(data){
+									 	var val=$("input[name='IMG_ID']").val();
+									 	if(val==""||val==undefined){
+									 		$("input[name='IMG_ID']").val(data.IMG_ID);	
+									 	}else{
+									 		$("input[name='IMG_ID']").val(val+","+data.IMG_ID);	
+									 	}
+									 	//console.log($("input[name='IMG_ID']").val());
+									 	//console.log(data.IMG_URL);
+									 	var imgs=data.IMG_URL.split(",");
+									 	var ids=data.IMG_ID.split(",");
+									 	for(var i=0,str="";i<imgs.length;i++){
+									 		str+='<li value="'+ids[i]+'"><img src="'+www+imgs[i]+'" alt="" data-preview-src="" data-preview-group="1"/></li>'
+									 	}
+									 	$("#img_box>ul").append(str);
+									 	})
+							}
+							if(i > 0) {
+								switch(i){
+									 case 1:p(www_v+"/img/prod_img",_callback,"2");
+									 break;
+									 case 2:x(www_v+"/img/prod_img",_callback,"2");
+									 break;
+								}
+							}
+						});
+					});
+					var options={
+					url:www_v+"/pro_planing/add_planing",
+					beforeSubmit:function(){
+						if(wainshow()==false){return false;};
+						if(unsafe_tap2()) return false; // 调用代码
+						if($("input[name='IMG_ID']").val().trim()==""){
+							plus.nativeUI.toast("请上传图片");
+							return false;
+						}
+//						else if($("input[name='RECORD_NAME']").val().trim()==""){
+//							plus.nativeUI.toast("请选择检测方法");
+//							return false;
+//						}else if($("input[name='RECORD_AMOUNT']").val().trim()==""){
+//							plus.nativeUI.toast("请输入检测编号");
+//							return false;
+//						}
+					},
+					success:function(data){
+						//console.log(data);
+						check_ajax(data,function(data){
+							//console.log(JSON.stringify(data));
+								var webview_style = {
+									popGesture: "hide "
+								}
+								var extras = {};
+								var href = "jilushengchan.html";
+								var id = "jilushengchan.html";
+								var old_id=plus.webview.getWebviewById(id);
+								if(old_id){
+									old_id.close("none",0);
+								}
+								plus.nativeUI.toast("添加成功");
+								var webview = plus.webview.create(href, id, webview_style, extras);
+								webview.addEventListener("titleUpdate", function() {
+									setTimeout(function() {
+										webview.show('pop-in', 300);
+									}, 100);
+								});
+								setTimeout(function() {
+									 plus.webview.currentWebview().close("none",0);  
+								}, 500);
+						})
+						
+					},error:function(e){
+						alert("服务端错误");
+					}
+				};
+				$("#form_info").ajaxForm(options);
+				if(wainshow()==false){return false;};
+				$.ajax(www_v+"/pro_planing/already_add_proplaninginfo/", {
+					data: {'RECORD_TYPE':RECORD_TYPE,"REGISTRATION_ID":REGISTRATION_ID,"token":getToken()},
+					type: 'post', //HTTP请求类型
+					timeout: 50000, //超时时间设置为10秒；
+					success: function(data) {
+						check_ajax(data,function(data){
+										//console.log(JSON.stringify(data)); 
+										for(var i = 0, str = ""; i < data.length; i++) {
+											str += ' <li>' +
+												'<a href="javascript:;" data-extras=\'{"record_id":"'+data[i].record_id+'"}\'>' +
+												'<img src="'+www+data[i].img_url+'" alt=""/>' +
+												'<div>' +
+												'<p>检测方法 ：<span>'+data[i].record_name+'</span></p>' +
+												'<p>检测结果：<span>'+data[i].record_areanum+'</span></p>' +
+												'<b>'+data[i].create_time+'</b>' +
+												'</div>' +
+												'</a>' +
+												'</li>';
+										}
+										$(".record_list").html(str);
+									})
+					},
+					error: function(xhr, type, errorThrown, selfs) {
+						if(type == "timeout") {
+							alert("请求超时");
+						} else if(type == "abort") {
+							alert("请检查您的网络");
+						} else if(type == "error") {
+							alert("服务端错误");
+						}
+					}
+				});
+			})
+		</script>
+	</body>
+
+</html>

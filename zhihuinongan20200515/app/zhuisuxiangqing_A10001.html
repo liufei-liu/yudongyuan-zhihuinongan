@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1">
+		<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="format-detection" content="email=no">
+		<meta http-equiv="Expires" content="0">
+		<meta http-equiv="Pragma" content="no-cache">
+		<meta http-equiv="Cache-control" content="no-cache">
+		<meta http-equiv="Cache" content="no-cache">
+		<title>操作记录</title>
+		<meta name="keywords" content="">
+		<meta name="Description" content="">
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/public.css">
+		<link rel="stylesheet" href="css/main.css">
+		<script src="js/jquery.js"></script>
+	</head>
+
+	<body style="background-color: #fff;">
+		<div class="header_box">
+			<div class="header">
+				<a class="back mui-action-back">
+					<img src="images/newImgs/newback.png" alt="">
+				</a>
+				<h1>操作记录</h1>
+				<a class="home ">
+					<img src="images/newImgs/home.png" alt="" />
+				</a>
+			</div>
+		</div>
+		<ul class="review_list">
+			<!--<li>
+				<div><img src="images/flow2.png" alt="" /></div>
+				<table>
+					<thead><tr><th style="width:1rem;"></th><th>种子名称</th><th>操作人</th><th>时间</th></tr></thead>
+					<tbody>
+						<tr><td style="width:1rem;" align="center">1</td><td>种子信息</td><td>种子信息</td><td>种子信息</td></tr>
+					</tbody>
+				</table>
+			</li>-->
+		</ul>
+		<p style="height:1rem"></p>
+		<div id="form_info" action="" method="post" class="register_list" style="display:none;">
+			<input type="hidden" name="token" value="" />
+			<input type="hidden" name="EN_USER_ID" value="" />
+			<input type="hidden" name="OPTION_TYPE" value="6" />
+			<input type="hidden" name="ENTERPRISE_ID" value="" />
+			<p style="color:#FF9C3C;margin-left:0.2rem;">导出操作记录，发送至邮箱：</p>
+			<ul>
+				<li>
+					<span>邮箱：</span>
+					<div>
+						<input type="text" name="TO_EMAIL" value="" placeholder="请输入要接收文件邮箱" />
+						<div>
+							<span></span>
+						</div>
+					</div>
+				</li>
+			</ul>
+			<div class="submit_btn_box">
+				<button class="bozhong_submit">发送至邮箱</button>
+			</div>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="lib/layer/layer.js"></script>
+		<script src="js/init.js"></script>
+		<script src="js/public.js"></script>
+		<script>
+			mui.plusReady(function() {
+				var self = plus.webview.currentWebview();
+				console.log(JSON.stringify(self))
+				var PRO_CAT1_ID = self.PRO_CAT1_ID;
+				var REGISTRATION_ID = self.REGISTRATION_ID;
+				var PRO_CATALOG_ID = self.PRO_CATALOG_ID;
+				var PRO_BATCH_NAME = self.PRO_BATCH_NAME;
+				$(".bozhong_submit").on("tap", function() {
+					if(unsafe_tap2()) return; // 调用代码
+					if(wainshow() == false) {
+						return false;
+					};
+					if(!/^\w+([-+.]\w+)*@\w+([-.] \w+)*\.\w+([-.]\w+)*$/.test($("input[name='TO_EMAIL']").val())) {
+						plus.nativeUI.toast('请输入正确的邮箱');
+						return false;
+					}
+					for(var j = 0, str = ""; j < $(".review_list>li").length; j++) {
+						for(var i = 0; i < $(".review_list>li:eq(" + j + ") tbody tr").length; i++) {
+							var img_arr = $(".review_list>li:eq(" + j + ") tbody tr:eq(" + i + ")").attr("value").split(",");
+							var li_img = "";
+							li_img += '<p height="10" width="660"></p><table cellpadding="1" cellspacing="1"  style="text-align:center;"><tbody>';
+							for(var k = 0; k < img_arr.length; k++) {
+								if(k % 3 == 0) {
+									li_img += '<tr>';
+									li_img += '<td><img width="130" height="130" src="' + www + img_arr[k].replace(/\\/g, "\/") + '"/></td>';
+								}
+								if(k % 3 == 1) {
+									li_img += '<td><img width="130" height="130" src="' + www + img_arr[k].replace(/\\/g, "\/") + '"/></td>';
+								}
+								if(k % 3 == 2) {
+									li_img += '<td><img width="130" height="130" src="' + www + img_arr[k].replace(/\\/g, "\/") + '"/></td>';
+									li_img += '</tr>';
+								}
+								if(k == img_arr.length - 1) {
+									if(k % 3 != 2) {
+										li_img += '</tr>';
+									}
+								}
+
+							}
+							li_img += '</tbody></table><p height="10" width="660">';
+							var img_src = www + "/public/static/index/images/app" + $(".review_list>li:eq(" + j + ")>div>img").attr("src").slice(6);
+							var type = $(".review_list>li:eq(" + j + ")>div>img").attr("value");
+							var td0 = $(".review_list>li:eq(" + j + ")>table tbody tr:eq(" + i + ") td:eq(0)").html();
+							var td1 = $(".review_list>li:eq(" + j + ")>table tbody tr:eq(" + i + ") td:eq(1)").html();
+							var td2 = $(".review_list>li:eq(" + j + ")>table tbody tr:eq(" + i + ") td:eq(2)").html();
+							var td3 = $(".review_list>li:eq(" + j + ")>table tbody tr:eq(" + i + ") td:eq(3)").html();
+							str += '<table cellpadding="1" cellspacing="1" border="1" style="text-align:center;">' +
+								'<thead><tr vspace="10">' +
+								'<td valign="middle" style="width:120px;border: 1px solid #000;">' + type + '</td>' +
+								'<td valign="middle" style="width:180px;border: 1px solid #000;text-align:center;">名称</td>' +
+								'<td valign="middle" style="width:180px;border: 1px solid #000;text-align:center;">操作人</td>' +
+								'<td valign="middle" style="width:180px;border: 1px solid #000;text-align:center;">时间</td>' +
+								'</tr></thead>' +
+								'<tbody>' +
+								'<tr><td style="width:120px;border: 1px solid #000;text-align:center;">' + td0 + '</td>' +
+								'<td style="width:180px;border: 1px solid #000;text-align:center;">' + td1 + '</td>' +
+								'<td style="width:180px;border: 1px solid #000;text-align:center;">' + td2 + '</td>' +
+								'<td style="width:180px;border: 1px solid #000;text-align:center;">' + td3 + '</td></tr>' +
+								'</tbody>' +
+								'</table>' + li_img;
+						}
+					}
+					//console.log(str);
+					plus.nativeUI.toast('正在发送，请等待...');
+					//$.ajax(www_v+"/superior_products/pdf_ms", {
+					$.ajax(www_v + "/Excelpro/excel", {
+						data: {
+							'REGISTRATION_ID': REGISTRATION_ID,
+							"CONTENT_LIST": str,
+							"PRO_BATCH_NAME": PRO_BATCH_NAME,
+							"TO_EMAIL": $("input[name='TO_EMAIL']").val(),
+							"token": getToken(),
+							"EN_USER_ID": getState().en_user_id
+						},
+						type: 'post', //HTTP请求类型
+						timeout: 50000, //超时时间设置为10秒；
+						success: function(data) {
+							if(data.code == 100) {
+								localStorage.setItem('$email', $("input[name='TO_EMAIL']").val());
+								check_ajax(data, function(data) {
+									plus.nativeUI.toast('邮件发送成功，请注意查收');
+								})
+							}
+						},
+						error: function(e) {
+							alert(JSON.stringify(e));
+						}
+					});
+				})
+
+				if(wainshow() == false) {
+					return false;
+				};
+				var loadindex = layer.load(1)
+				$.ajax(www_v + "/superior_products/retrospective_details", {
+					data: {
+						"PRO_CAT1_ID": PRO_CAT1_ID,
+						"REGISTRATION_ID": REGISTRATION_ID,
+						"PRO_CATALOG_ID": PRO_CATALOG_ID,
+						"token": getToken()
+					},
+					type: 'post', //HTTP请求类型
+					timeout: 50000, //超时时间设置为10秒；
+					success: function(data) {
+						check_ajax(data, function(data) {
+							//console.log(data);
+							//										console.log(JSON.stringify(data));
+
+							//播种
+							for(var i = 0, str1 = ""; i < data.plan.length; i++) {
+								for(var j = 0, img_str = ""; j < data.plan[i].IMG_URL.length; j++) {
+									img_str += ',' + data.plan[i].IMG_URL[j].IMG_URL;
+								}
+								img_str = img_str.slice(1);
+								str1 += '<tr value="' + img_str + '"><td style="width:1rem;" align="center">' + (i + 1) + '</td><td>' + data.plan[i].RECORD_NAME + '</td><td style="width:25%">' + data.plan[i].EN_USER_NAME + '</td><td style="width:30%">' + data.plan[i].CREATE_TIME.slice(0, 10) + '</td></tr>';
+							}
+							//施肥
+							for(var i = 0, str2 = ""; i < data.fertilizer.length; i++) {
+								for(var j = 0, img_str = ""; j < data.fertilizer[i].IMG_URL.length; j++) {
+									img_str += ',' + data.fertilizer[i].IMG_URL[j].IMG_URL;
+								}
+								img_str = img_str.slice(1);
+								str2 += '<tr value="' + img_str + '"><td style="width:1rem;" align="center">' + (i + 1) + '</td><td>' + data.fertilizer[i].RECORD_NAME + '</td><td style="width:25%">' + data.fertilizer[i].EN_USER_NAME + '</td><td style="width:30%">' + data.fertilizer[i].CREATE_TIME.slice(0, 10) + '</td></tr>';
+							}
+							//施药
+							for(var i = 0, str3 = ""; i < data.spraying.length; i++) {
+								for(var j = 0, img_str = ""; j < data.spraying[i].IMG_URL.length; j++) {
+									img_str += ',' + data.spraying[i].IMG_URL[j].IMG_URL;
+								}
+								img_str = img_str.slice(1);
+								str3 += '<tr value="' + img_str + '"><td style="width:1rem;" align="center">' + (i + 1) + '</td><td>' + data.spraying[i].RECORD_NAME + '</td><td style="width:25%">' + data.spraying[i].EN_USER_NAME + '</td><td style="width:30%">' + data.spraying[i].CREATE_TIME.slice(0, 10) + '</td></tr>';
+							}
+							//其他
+							for(var i = 0, str4 = ""; i < data.other.length; i++) {
+								for(var j = 0, img_str = ""; j < data.other[i].IMG_URL.length; j++) {
+									img_str += ',' + data.other[i].IMG_URL[j].IMG_URL;
+								}
+								img_str = img_str.slice(1);
+								str4 += '<tr value="' + img_str + '"><td style="width:1rem;" align="center">' + (i + 1) + '</td><td>' + data.other[i].RECORD_NAME + '</td><td style="width:25%">' + data.other[i].EN_USER_NAME + '</td><td style="width:30%">' + data.other[i].CREATE_TIME.slice(0, 10) + '</td></tr>';
+							}
+							//检测
+							for(var i = 0, str5 = ""; i < data.checking.length; i++) {
+								for(var j = 0, img_str = ""; j < data.checking[i].IMG_URL.length; j++) {
+									img_str += ',' + data.checking[i].IMG_URL[j].IMG_URL;
+								}
+								img_str = img_str.slice(1);
+								str5 += '<tr value="' + img_str + '"><td style="width:1rem;" align="center">' + (i + 1) + '</td><td>' + data.checking[i].RECORD_NAME + '</td><td style="width:25%">' + data.checking[i].EN_USER_NAME + '</td><td style="width:30%">' + data.checking[i].CREATE_TIME.slice(0, 10) + '</td></tr>';
+							}
+							//采收
+							for(var i = 0, str6 = ""; i < data.recovery.length; i++) {
+								for(var j = 0, img_str = ""; j < data.recovery[i].IMG_URL.length; j++) {
+									img_str += ',' + data.recovery[i].IMG_URL[j].IMG_URL;
+								}
+								img_str = img_str.slice(1);
+								str6 += '<tr value="' + img_str + '"><td style="width:1rem;" align="center">' + (i + 1) + '</td><td>' + data.recovery[i].RECORD_NAME + '</td><td style="width:25%">' + data.recovery[i].EN_USER_NAME + '</td><td style="width:30%">' + data.recovery[i].CREATE_TIME.slice(0, 10) + '</td></tr>';
+							}
+							if(str1 != "") {
+								var str1_1 = '<li>' +
+									'<div><img value="种苗" src="images/flow2.png" alt=""/></div>' +
+									'<table>' +
+									'<thead><tr><th style="width:1rem;"</th><th>名称</th><th style="width:25%;">操作人</th><th>时间</th style="width:30%;"></tr></thead>' +
+									'<tbody>' + str1 + '</tbody>' +
+									'</table>' +
+									'</li>';
+							} else {
+								var str1_1 = "";
+							}
+
+							if(str2 != "") {
+								var str2_1 = '<li>' +
+									'<div><img value="施肥" src="images/flow3.png" alt=""/></div>' +
+									'<table>' +
+									'<thead><tr><th style="width:1rem;"</th><th>名称</th><th style="width:25%;">操作人</th><th>时间</th style="width:30%;"></tr></thead>' +
+									'<tbody>' + str2 + '</tbody>' +
+									'</table>' +
+									'</li>';
+							} else {
+								var str2_1 = "";
+							}
+
+							if(str3 != "") {
+								var str3_1 = '<li>' +
+									'<div><img value="施药" src="images/flow4.png" alt="" /></div>' +
+									'<table>' +
+									'<thead><tr><th style="width:1rem;"</th><th>名称</th><th style="width:25%;">操作人</th><th>时间</th style="width:30%;"></tr></thead>' +
+									'<tbody>' + str3 + '</tbody>' +
+									'</table>' +
+									'</li>';
+							} else {
+								var str3_1 = "";
+							}
+
+							if(str4 != "") {
+								var str4_1 = '<li>' +
+									'<div><img value="其他" src="images/flow5.png" alt="" /></div>' +
+									'<table>' +
+									'<thead><tr><th style="width:1rem;"</th><th>名称</th><th style="width:25%;">操作人</th><th>时间</th style="width:30%;"></tr></thead>' +
+									'<tbody>' + str4 + '</tbody>' +
+									'</table>' +
+									'</li>';
+							} else {
+								var str4_1 = "";
+							}
+
+							if(str5 != "") {
+								var str5_1 = '<li>' +
+									'<div><img value="检测" src="images/flow6.png" alt="" /></div>' +
+									'<table>' +
+									'<thead><tr><th style="width:1rem;"</th><th>名称</th><th style="width:25%;">操作人</th><th>时间</th style="width:30%;"></tr></thead>' +
+									'<tbody>' + str5 + '</tbody>' +
+									'</table>' +
+									'</li>';
+							} else {
+								var str5_1 = "";
+							}
+
+							if(str6 != "") {
+								var str6_1 = '<li>' +
+									'<div><img value="收获/出售" src="images/flow7.png" alt="" /></div>' +
+									'<table>' +
+									'<thead><tr><th style="width:1rem;"</th><th>名称</th><th style="width:25%;">操作人</th><th>时间</th style="width:30%;"></tr></thead>' +
+									'<tbody>' + str6 + '</tbody>' +
+									'</table>' +
+									'</li>';
+							} else {
+								var str6_1 = "";
+							}
+							var str = str1_1 + str2_1 + str3_1 + str4_1 + str5_1 + str6_1;
+							if(str == "") {
+								var tip = '<p style="text-align: center;font-size: 16px;margin: 10px 0;color:#FF9C3C;">' +
+									'您还没有任何生产流程记录信息，<br/>' +
+									'请返回生产流程进行信息录入！' +
+									'</p><div class="submit_btn_box ">' +
+									'<button class="bozhong_submit ">返回</button>' +
+									'</div>';
+								layer.close(loadindex)
+								$("body").append(tip);
+								mui("body").on("tap", ".bozhong_submit", function() {
+									mui.back();
+								})
+							} else {
+								layer.close(loadindex)
+								$(".review_list").html(str);
+								$("#form_info").show();
+								var local_email = localStorage.getItem('$email');
+								if(local_email) {
+									$("input[name='TO_EMAIL']").val(local_email)
+								}
+							}
+						})
+					},
+					error: function(xhr, type, errorThrown, selfs) {
+						layer.close(loadindex)
+						if(type == "timeout") {
+							alert("请求超时");
+						} else if(type == "abort") {
+							alert("请检查您的网络");
+						} else if(type == "error") {
+							alert("服务端错误");
+						}
+					}
+				});
+			});
+		</script>
+
+	</body>
+
+</html>

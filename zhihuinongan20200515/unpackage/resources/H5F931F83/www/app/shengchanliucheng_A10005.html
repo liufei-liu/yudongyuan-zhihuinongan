@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1">
+		<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="format-detection" content="email=no">
+		<meta http-equiv="Expires" content="0">
+		<meta http-equiv="Pragma" content="no-cache">
+		<meta http-equiv="Cache-control" content="no-cache">
+		<meta http-equiv="Cache" content="no-cache">
+		<title>生产流程</title>
+		<meta name="keywords" content="">
+		<meta name="Description" content="">
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/public.css">
+		<link rel="stylesheet" href="css/main.css">
+		<script src="js/jquery.js"></script>
+	</head>
+
+	<body>
+		<div class="header_box">
+			<div class="header">
+				<a class="back mui-action-back">
+					<img src="images/back.png" alt="">
+				</a>
+				<h1>生产流程</h1>
+				<a class="home ">
+					<img src="images/home.png" alt="" />
+				</a>
+			</div>
+		</div>
+		<ul class="type_item">
+			<li>
+				<a href="zhuisuxiangqing_A10005.html" data-spec="true">
+					<b class="flow_1"><i></i></b>
+					<span>操作记录</span>
+				</a>
+			</li>
+			<li>
+				<a href="A10005_yuanliao.html" data-spec="true">
+					<b class="A10005_flow_2"><i></i></b>
+					<span>原料</span>
+				</a>
+			</li>
+			<li>
+				<a href="A10005_fuliao.html" data-spec="true">
+					<b class="A10005_flow_3"><i></i></b>
+					<span>辅料</span>
+				</a>
+			</li>
+			<li>
+				<a href="A10005_jiagong.html" data-spec="true">
+					<b class="A10005_flow_4"><i></i></b>
+					<span>加工</span>
+				</a>
+			</li>
+			<li>
+				<a href="A10005_qita.html" data-spec="true">
+					<b class="A10005_flow_5"><i></i></b>
+					<span>其他</span>
+				</a>
+			</li>
+			<li>
+				<a href="A10005_jiance.html" data-spec="true">
+					<b class="A10005_flow_6"><i></i></b>
+					<span>检测</span>
+				</a>
+			</li>
+			<li>
+				<a href="jianyanchouyang.html" data-spec="true">
+					<b class="flow_8"><i></i></b>
+					<span>检验抽样</span>
+				</a>
+			</li>
+			<li>
+				<a href="A10005_xiaoshou.html" data-spec="true">
+					<b class="A10005_flow_7"><i></i></b>
+					<span>销售</span>
+				</a>
+			</li>
+		</ul>
+		<script src="../js/mui.min.js"></script>
+		<script src="js/init.js"></script>
+		<script src="js/public.js"></script>
+		<script>
+			mui.plusReady(function() {
+				var _self = plus.webview.currentWebview();
+				var REGISTRATION_ID = _self.REGISTRATION_ID;
+				var PRO_BATCH_NAME = _self.PRO_BATCH_NAME;
+				var PRO_CATALOG_ID = _self.PRO_CATALOG_ID;
+				
+				var PRO_CAT1_ID = _self.PRO_CAT1_ID;
+				
+				mui('body').on('tap', '.type_item a', function() {
+					if(unsafe_tap2()) return; // 调用代码
+					var id = this.getAttribute("data-wid");
+						if(!id) {
+							id = this.getAttribute('href');
+						}
+						var old_id=plus.webview.getWebviewById(id);
+						if(old_id){
+							old_id.close("none",0);
+						}
+						var href = this.getAttribute('href');
+						var webview_style = {
+							popGesture: "hide "
+						}
+						var extras = {"REGISTRATION_ID":REGISTRATION_ID,"PRO_BATCH_NAME":PRO_BATCH_NAME,"PRO_CATALOG_ID":PRO_CATALOG_ID,"PRO_CAT1_ID":PRO_CAT1_ID};
+						var webview = plus.webview.create(this.href, id, webview_style, extras);
+						webview.addEventListener("titleUpdate", function() {
+							setTimeout(function() {
+								webview.show('pop-in', 300);
+							}, 100);
+						});
+						
+				})
+			});
+		</script>
+	</body>
+
+</html>

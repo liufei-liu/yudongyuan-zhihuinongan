@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1">
+		<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="format-detection" content="email=no">
+		<meta http-equiv="Expires" content="0">
+		<meta http-equiv="Pragma" content="no-cache">
+		<meta http-equiv="Cache-control" content="no-cache">
+		<meta http-equiv="Cache" content="no-cache">
+		<title>标签打印管理</title>
+		<meta name="keywords" content="">
+		<meta name="Description" content="">
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/public.css">
+		<link rel="stylesheet" href="css/main.css">
+		<script src="js/jquery.js"></script>
+		<style>
+			#RECORD_YEAR{
+				position: absolute;
+				left: 0.2rem;top: 0;
+				display: none;
+				width: 1.44rem;
+			}
+			#RECORD_YEAR_recording{
+				position: absolute;
+				left: 0.2rem;top: 0;
+				display: none;
+				width: 1.44rem;
+			}
+			.search_box{
+				padding-left: 1.8rem;
+				float: left;
+			}
+			.tip {
+				text-align: left;
+				font-size: 16px;
+				margin: 0;
+				color: #FF9C3C;
+				padding: 0.2rem;
+			}
+			
+			.record_list_ewm {}
+			
+			.record_list_ewm>li>a>div {
+				padding-left: 0;
+				overflow: hidden;
+				height: 1.72rem;
+			}
+			
+			.record_list_ewm>li>a>div>p {
+				float: left;
+			}
+			
+			.record_list_ewm>li>a>div>p:first-child {
+				width: 100%;
+			}
+		</style>
+		<style>
+			html,
+			body {
+				background-color: #efeff4;
+			}
+			
+			.mui-bar~.mui-content .mui-fullscreen {
+				top: 44px;
+				height: auto;
+			}
+			
+			.mui-pull-top-tips {
+				position: absolute;
+				top: -20px;
+				left: 50%;
+				margin-left: -25px;
+				width: 40px;
+				height: 40px;
+				border-radius: 100%;
+				z-index: 1;
+			}
+			
+			.mui-bar~.mui-pull-top-tips {
+				top: 24px;
+			}
+			
+			.mui-pull-top-wrapper {
+				width: 42px;
+				height: 42px;
+				display: block;
+				text-align: center;
+				background-color: #efeff4;
+				border: 1px solid #ddd;
+				border-radius: 25px;
+				background-clip: padding-box;
+				box-shadow: 0 4px 10px #bbb;
+				overflow: hidden;
+			}
+			
+			.mui-pull-top-tips.mui-transitioning {
+				-webkit-transition-duration: 200ms;
+				transition-duration: 200ms;
+			}
+			
+			.mui-pull-top-tips .mui-pull-loading {
+				/*-webkit-backface-visibility: hidden;
+				-webkit-transition-duration: 400ms;
+				transition-duration: 400ms;*/
+				margin: 0;
+			}
+			
+			.mui-pull-top-wrapper .mui-icon,
+			.mui-pull-top-wrapper .mui-spinner {
+				margin-top: 7px;
+			}
+			
+			.mui-pull-top-wrapper .mui-icon.mui-reverse {
+				/*-webkit-transform: rotate(180deg) translateZ(0);*/
+			}
+			
+			.mui-pull-bottom-tips {
+				text-align: center;
+				background-color: #efeff4;
+				font-size: 15px;
+				line-height: 40px;
+				color: #777;
+			}
+			
+			.mui-pull-top-canvas {
+				overflow: hidden;
+				background-color: #fafafa;
+				border-radius: 40px;
+				box-shadow: 0 4px 10px #bbb;
+				width: 40px;
+				height: 40px;
+				margin: 0 auto;
+			}
+			
+			.mui-pull-top-canvas canvas {
+				width: 40px;
+			}
+			
+			.mui-slider-indicator.mui-segmented-control {
+				background-color: #efeff4;
+			}
+		</style>
+	</head>
+
+	<body>
+		
+		<div class="mui-content">
+			<form action="" id="form_recording" method="post">
+				<div class="label_search_box_box"">
+			
+					<div class="search_box" >
+						<button type="button" id="RECORD_YEAR_recording" class="mui-btn mui-btn-outlined">2018</button>
+						<div class="mui-input-row mui-search">
+							<input type="search" name="PRO_BATCH_NAME_recording" class="mui-input-clear" placeholder="请输入要查找的批次名称">
+						</div>
+						<input type="submit" value="搜索" style="position: absolute;right:0.2rem;top:0;background-color: #63DC63;border:1px solid #63DC63;" />
+					</div>
+				</div>
+			</form>
+			
+			
+			<div id="pullrefresh_recording" style="position: fixed;bottom: 0;width: 100%;left: 0;top: 1.3rem;overflow:auto">
+				<ul class="record_list record_list_ewm" value="REGISTRATION_ID" id="record_list">
+			
+			
+			
+				</ul>
+		</div>
+
+		<script src="../js/mui.min.js"></script>
+		<!--<script src="../js/mui.pullToRefresh.js"></script>
+		<script src="../js/mui.pullToRefresh.material.js"></script>-->
+		<script src="lib/layer/layer.js"></script>
+		<script src="js/jquery.form.min.js"></script>
+		<script src="js/init.js"></script>
+		<script src="js/public.js"></script>
+		<script>
+			
+			//记录
+			var can_post_recording = true;
+			var next_recording = 0;
+			var PRO_BATCH_NAME_recording = "";
+			var STATE_recording = JSON.parse(JSON.stringify(getState()));
+			if (STATE_recording.jilushengchanYear == undefined) {
+				STATE_recording.jilushengchanYear = 0
+				setState(STATE_recording)
+			}
+			var RECORD_YEAR_recording = STATE_recording.jilushengchanYear;
+			if (RECORD_YEAR_recording == 0) {
+				$("#RECORD_YEAR_recording").html('全部').show();
+			} else {
+				$("#RECORD_YEAR_recording").html(RECORD_YEAR_recording + '年').show();
+			}
+			var RECORD_YEAR_ARR_recording = [{
+				title: '全部',
+				name: 0
+			}];
+			for (var i = new Date().getFullYear(); i >= 2018; i--) {
+				RECORD_YEAR_ARR_recording.push({
+					title: i + '年',
+					name: i
+				})
+			}
+
+
+			
+
+			//记录
+			var creatLi_recording = function(ishtml, callback) {
+				mui.plusReady(function() {
+					if (can_post_recording) {
+						can_post_recording = false;
+						console.info(PRO_BATCH_NAME_recording);
+						console.info(RECORD_YEAR_recording);
+						console.info(next_recording);
+						console.info(PRO_BATCH_NAME_recording);
+						$.ajax(www_v + "/label_manage/printlistlabel", {
+							data: {
+								"token": getToken(),
+								"PAGE_NUM": next_recording++,
+								"EN_USER_ID": getState().en_user_id,
+								"ENTERPRISE_ID": getState().enterprise_id,
+								"PRO_BATCH_NAME": PRO_BATCH_NAME_recording,
+								"RECORD_YEAR": RECORD_YEAR_recording,
+							},
+							type: 'post',
+							timeout: 50000,
+							success: function(data) {
+								//console.info(data)
+								check_ajax(data, function(data) {
+									
+									console.log(JSON.stringify(data[0]))
+									var ul = mui('.record_list');
+									if (data == "") {
+
+										can_post_recording = false;
+										mui('#pullrefresh_recording').pullRefresh().endPullupToRefresh(true);
+										if (ishtml) {
+											$(ul).html('');
+										}
+									} else {
+										for (var i = 0, str = ""; i < data.length; i++) {
+											//console.log(12)
+											str += ' <li>' +
+												'<a data-spec="true">' +
+												'<div class="dayin_box">' +
+												'<p style="width:60%">批次名称：<span>' + data[i].pro_batch_name + '</span></p>' +
+												'<p style="width:40%">标签类型：<span>' + data[i].print_type + '</span></p>' +
+												
+												'<p style="width:60%">单个重量：<span>' + (data[i].weight || 0) + (data[i].unit || '千克') + '</span></p>' +
+												'<p style="width:40%">打印数量：<span>' + data[i].apply_num + '张</span></p>' +
+												'<p style="width:80%">打印时间：' + data[i].create_time + '</span></p>' +
+												
+												'</div>' +
+												'</a>' +
+												'</li>';
+										}
+										if (ishtml) {
+											$(ul).html(str);
+										} else {
+											$(ul).append(str);
+										}
+										mui('#pullrefresh_recording').pullRefresh().endPullupToRefresh(false);
+										mui('#pullrefresh_recording').pullRefresh().enablePullupToRefresh();
+										can_post_recording = true;
+									}
+									if (callback) {
+										callback()
+									}
+								})
+							},
+							error: function(xhr, type, errorThrown) {
+								setTimeout(function() {
+									mui("#pullrefresh_recording").pullToRefresh().endPullUpToRefresh(false);
+								}, 500)
+								ajaxerr(arguments)
+							}
+						});
+					} else {
+						mui('#pullrefresh_recording').pullRefresh().endPullupToRefresh(true);
+					}
+				})
+
+			}
+
+			
+			var upAjax2 = function() {
+				
+				creatLi_recording();
+			}
+			mui.init({
+				gestureConfig: {
+					longtap: true, //默认为false
+					release: true
+				},
+				pullRefresh:				
+				 {
+					container: "#pullrefresh_recording",
+					//下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等
+					up: {
+						contentrefresh: '正在加载...',
+						contentnomore: '没有更多数据了',
+						callback: upAjax2,
+						auto: true,
+						height: 50
+					}
+				}
+
+
+			});
+			
+			// mui("#pullrefresh").pullRefresh({			    
+			//     up: {
+			//     	contentrefresh: '正在加载...',
+			//     	contentnomore: '没有更多数据了',
+			//     	callback: upAjax2,
+			//     	auto: true,
+			//     	height: 50
+			//     }
+			// });
+			
+			
+			
+
+			var options_recording = {
+				beforeSubmit: function() {
+					if (wainshow() == false) {
+						return false;
+					}
+					var search = $("input[name='PRO_BATCH_NAME_recording']").val();
+					can_post_recording = true;
+					next_recording = 0;
+					PRO_BATCH_NAME_recording = search;
+					$("#record_list").hide()
+					var loadindex = layer.load(1);
+					creatLi_recording(true, function() {
+						layer.close(loadindex);
+						$("#record_list").show()
+					});
+					$("input[name='PRO_BATCH_NAME_recording']").blur();
+					return false;
+				}
+			};
+			$("#form_recording").ajaxForm(options_recording);
+			document.getElementById("RECORD_YEAR_recording").addEventListener('tap', function() {
+				var self = this;
+				plus.nativeUI.actionSheet({
+					cancel: "取消",
+					buttons: RECORD_YEAR_ARR_recording
+				}, function(e) {
+					next_recording=0;
+
+					var i = e.index;
+
+					if (i > 0) {
+						var title = RECORD_YEAR_ARR_recording[i - 1].title;
+
+						$(self).html(title)
+
+						RECORD_YEAR_recording = RECORD_YEAR_ARR_recording[i - 1].name;
+						next = 0;
+						can_post_recording = true;
+						var state = getState()
+						state.jilushengchanYear = RECORD_YEAR_recording
+						setState(state)
+						var loadindex = layer.load(1);
+						creatLi_recording(true, function() {
+							layer.close(loadindex);
+							$("#record_list").show()
+						});
+					}
+				});
+			});
+		</script>
+
+	</body>
+
+</html>

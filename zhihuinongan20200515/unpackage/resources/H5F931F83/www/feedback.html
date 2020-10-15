@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+		<meta charset="utf-8">
+		<title>意见反馈</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="css/mui.min.css">
+		<link rel="stylesheet" href="app/css/style.css">
+		<link rel="stylesheet" href="app/css/public.css">
+		<link rel="stylesheet" href="app/css/main.css">
+		<link rel="stylesheet" href="app/css/content.css">
+		<script src="app/js/jquery.js"></script>
+</head>
+<body>
+<!--头部-->
+		<div class="header_box">
+			<div class="header">
+				<a class="back mui-action-back">
+					<img src="app/images/back.png" alt="">
+				</a>
+				<h1>意见反馈</h1>
+				<a class="home ">
+					<img src="app/images/home.png" alt="" />
+				</a>
+			</div>
+		</div>
+<div class="leave_word_box">
+    <p></p>
+    <textarea placeholder="您可以写下对智慧农安APP的改善意见，我们会积极听取！" maxlength="400"></textarea>
+    <span class="leave_word_error"></span>
+    <button class="go_leave_word">提交</button>
+</div>
+<script src="js/mui.min.js"></script>
+<script src="app/js/jquery.form.min.js"></script>
+<script src="app/js/init.js"></script>
+<script src="app/js/public.js"></script>
+<script>
+	mui.init();
+	mui.plusReady(function() {	
+		/*提交表单的返回*/
+				var can_back=true;
+				$("body").on("keyup",function(){
+					can_back=false;
+				})
+			 	var old_back=mui.back;
+				mui.back=function(){
+					if(can_back){
+						old_back();
+					}else{
+						var btnArray = ['否', '是'];
+		                mui.confirm('确认要返回么，确认？', TITLE, btnArray, function(e) {
+		                    if (e.index == 1) {
+		                        old_back();
+		                    }
+		                })
+					}	
+				}
+		var _self = plus.webview.currentWebview();
+	    function leaveword(){
+	    	if(unsafe_tap2()) return; // 调用代码
+	        var CONTENT=$("textarea").val();
+	        CONTENT=CONTENT.replace(/(^\s*)|(\s*$)/g, "");
+	        if(CONTENT!=""){
+	        	if(wainshow()==false){return false;};
+	            $.ajax(www_v+"/system/feedback", {
+					data: {"EN_USER_ID":getState().en_user_id,"CONTENT":CONTENT,"token":getToken(),"APP_VERSION":plus.runtime.version},
+					type: 'post', //HTTP请求类型
+					timeout: 50000, //超时时间设置为10秒；
+					success: function(data) {
+						check_ajax(data,function(data){
+					               	//console.log(JSON.stringify(data));
+					               	 plus.nativeUI.toast("发表意见成功");
+					    				old_back();
+					               })  
+					},
+					error: function(xhr, type, errorThrown, selfs) {
+						if(type == "timeout") {
+							alert("请求超时");
+						} else if(type == "abort") {
+							alert("请检查您的网络");
+						} else if(type == "error") {
+							alert("服务端错误");
+						}
+					}
+				});
+
+	        }else{
+	            plus.nativeUI.toast("发表意见失败");
+	        }
+	
+	    }
+	    $(".go_leave_word").on("tap",function(){
+	        leaveword();
+	    })
+	});
+</script>
+</body>
+</html> 

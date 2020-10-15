@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1">
+		<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="format-detection" content="email=no">
+		<meta http-equiv="Expires" content="0">
+		<meta http-equiv="Pragma" content="no-cache">
+		<meta http-equiv="Cache-control" content="no-cache">
+		<meta http-equiv="Cache" content="no-cache">
+		<title>添加农资</title>
+		<meta name="keywords" content="">
+		<meta name="Description" content="">
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" href="../app/css/style.css">
+		<link rel="stylesheet" href="../app/css/public.css">
+		<link rel="stylesheet" href="../app/css/reset.css">
+		<link rel="stylesheet" href="../app/css/city.css">
+		<link rel="stylesheet" href="../app/css/main.css">
+		<script src="../app/js/jquery.js"></script>
+
+	</head>
+
+	<body>
+		<div class="header_box">
+			<div class="header">
+				<a class="back mui-action-back">
+					<img src="../app/images/back.png" alt="">
+				</a>
+				<h1></h1>
+				<a class="home ">
+					<img src="../app/images/home.png" alt="" />
+				</a>
+			</div>
+		</div>
+		<div class="city">
+			<div class="city-wrapper city-wrapper-hook" style="padding-bottom:1rem;">
+				<div class="scroller-hook">
+					<div class="cities cities-hook"></div>
+				</div>
+				<div class="shortcut shortcut-hook"></div>
+				
+			</div>
+		</div>
+		<script src="../app/js/bscroll.min.js"></script>
+		<script src="../js/mui.min.js"></script>
+		<script src="../app/js/init.js"></script>
+		<script src="../app/js/public.js"></script>
+		<script>
+			mui.plusReady(function() {	
+				
+				window.addEventListener('refresh', function(e) {
+					location.reload();
+					
+				})
+					var self = plus.webview.currentWebview();
+					var OPTION_TYPE=self.OPTION_TYPE;
+					switch(OPTION_TYPE){
+						case "4":
+						$(".header h1").html("选择种子");
+						var _title="种子";
+						break;
+						case "1":
+						$(".header h1").html("选择肥料");
+						var _title="肥料";
+						break;
+						case "2":
+						$(".header h1").html("选择农药");
+							var _title="农药";
+						break;
+					}
+				if(wainshow()==false){return false;}; 	
+				$.ajax(www_v+"/option/optionlist/", {
+					data: {"ENTERPRISE_ID":getState().enterprise_id,'token': getToken(),'OPTION_TYPE': OPTION_TYPE,'EN_USER_ID':getState().en_user_id},
+					type: 'post', //HTTP请求类型
+					timeout: 50000, //超时时间设置为10秒；
+					success: function(data) {
+						check_ajax(data, function(data) {
+										//console.log(JSON.stringify(data));
+										var cityWrapper = document.querySelector('.city-wrapper-hook');
+										var cityScroller = document.querySelector('.scroller-hook');
+										var cities = document.querySelector('.cities-hook');
+										var shortcut = document.querySelector('.shortcut-hook');
+				
+										var scroll;
+				
+										var shortcutList = [];
+										var anchorMap = {};
+				
+										function initCities() {
+											var y = 0;
+											var titleHeight = 28;
+											var itemHeight = 44;
+				
+											var lists = '';
+											var en = '<ul>';
+											data.forEach(function(group) {
+												var word = group.WORD;
+												lists += '<div class="title">' + word + '</div>';
+												lists += '<ul>';
+												group.OPTION.forEach(function(g) {
+													lists += '<li class="item" value="'+g.OPTION_ID+'"><a href="jinhuodengji_add_'+OPTION_TYPE+'.html" data-extras=\'{"OPTION_ID":"'+g.OPTION_ID+'","OPTION_NAME":"'+g.OPTION_NAME+'"}\'><span class="border-1px name">' + g.OPTION_NAME + '</span></a></li>';
+												});
+												lists += '</ul>';
+				
+												var name = group.WORD.substr(0, 1);
+												en += '<li data-anchor="' + name + '" class="item">' + name + '</li>';
+												var len = group.OPTION.length;
+												anchorMap[name] = y;
+												y -= titleHeight + len * itemHeight;
+				
+											});
+											en += '</ul>';
+											lists+='<div class="submit_btn_box">'+
+												'<a href="jinhuodengji_add_name.html" data-spec="ture" data-wid="jinhuodengji_add_name.html" class="bozhong_submit" id="go_add">添加'+_title+'名称</a>'+ 
+											'</div>';
+											cities.innerHTML = lists;
+											shortcut.innerHTML = en;
+											shortcut.style.top = (cityWrapper.clientHeight - shortcut.clientHeight) / 2 + 'px';
+											scroll = new window.BScroll(cityWrapper, {
+												probeType: 3,
+												click: true
+											});
+											mui('body').on('tap', '#go_add', function() {
+												if(unsafe_tap2()) return; // 调用代码
+												var extras = this.getAttribute("data-extras");
+												var webview_style = {
+													popGesture: "hide"
+												}
+												var extras = {"_id":OPTION_TYPE,"_title":_title};
+												var href="jinhuodengji_add_name.html";
+												var id="jinhuodengji_add_name.html";
+												var old_id=plus.webview.getWebviewById(id);
+												if(old_id){
+													old_id.close("none",0);
+												}
+												var webview = plus.webview.create(href, id, webview_style, extras);
+												webview.addEventListener("titleUpdate", function() {
+													setTimeout(function() {
+														webview.show('pop-in', 300);
+													}, 100);
+												});
+											})
+											//go_add
+											
+										}
+				
+										//bind Event
+										function bindEvent() {
+											var touch = {};
+											var firstTouch;
+				
+											shortcut.addEventListener('touchstart', function(e) {
+												e.preventDefault();
+												e.stopPropagation();
+												var anchor = e.target.getAttribute('data-anchor');
+				
+												firstTouch = e.touches[0];
+												touch.y1 = firstTouch.pageY;
+												touch.anchor = anchor;
+				
+												scrollTo(anchor);
+				
+											});
+				
+											shortcut.addEventListener('touchmove', function(e) {
+				
+												firstTouch = e.touches[0];
+												touch.y2 = firstTouch.pageY;
+				
+												var anchorHeight = 16;
+				
+												var delta = (touch.y2 - touch.y1) / anchorHeight | 0;
+				
+												var anchor = shortcutList[shortcutList.indexOf(touch.anchor) + delta];
+				
+												scrollTo(anchor);
+				
+												e.preventDefault();
+												e.stopPropagation();
+				
+											});
+				
+											function scrollTo(anchor) {
+												var maxScrollY = cityWrapper.clientHeight - cityScroller.clientHeight;
+				
+												var y = Math.min(0, Math.max(maxScrollY, anchorMap[anchor]));
+				
+												if(typeof y !== 'undefined') {
+													scroll.scrollTo(0, y);
+												}
+											}
+										}
+				
+										initCities();
+				
+										bindEvent();
+									})
+					},
+					error: function(xhr, type, errorThrown, selfs) {
+						if(type == "timeout") {
+							alert("请求超时");
+						} else if(type == "abort") {
+							alert("请检查您的网络");
+						} else if(type == "error") {
+							alert("服务端错误");
+						}
+					}
+				});	
+					
+					
+
+		
+			});
+		</script>
+	</body>
+
+</html>

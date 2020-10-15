@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>更多</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="css/mui.min.css">
+		<link rel="stylesheet" href="app/css/style.css">
+		<link rel="stylesheet" href="app/css/public.css">
+		<link rel="stylesheet" href="app/css/main.css">
+		<script src="app/js/jquery.js"></script>
+	</head>
+ 
+	<body style="background-color:#fff">
+		<div class="header_box">
+			<div class="header">
+				<a class="back mui-action-back">
+					<img src="app/images/newImgs/newback.png" alt="">
+				</a>
+				<h1>更多</h1>
+				<a class="home">
+					<img src="app/images/newImgs/home.png" alt="" />
+				</a>
+			</div>
+		</div>
+	
+		<div id="form_info"  class="register_list register_list_long" style="border-top:10px solid #F7F7F7;">
+			<ul>
+				<li>
+					<span>版本信息：</span>
+					<a id="check_version" data-spec="ture" href="update.html" data-wid="update.html">
+						<span style="display:none;background: #FF3F3E;border-radius: 0.5rem;padding: 0px 15px;color: #fff;height: 0.5rem;line-height: 0.5rem;margin-top: 0.25rem;">New</span>
+						<div>
+							<span class="input_tip_more"></span>
+							<b></b>
+						</div>
+					</a>
+				</li>
+				<li>
+					<span>意见反馈：</span>
+					<a href="feedback.html" data-wid="feedback.html">
+						<div>
+							<span class="input_tip_more"></span>
+						</div>
+					</a>
+				</li>
+			</ul>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="app/js/init.js"></script>
+		<script src="app/js/public.js"></script>
+			<script src="js/update.js"></script>
+		<script>
+			mui.init();
+			mui.plusReady(function() {
+				if(wainshow()==false){return false;}; 
+				$(".input_tip_more").next().html(plus.runtime.version);
+				$.ajax(server, {
+					data: {},
+					type: 'post', //HTTP请求类型
+					timeout: 50000, //超时时间设置为10秒；
+					success: function(data) {
+						//console.log(server);
+						//console.log(JSON.stringify(data.Android)); 
+						var TITLE=data.Android.title;
+						var NOTE=data.Android.note;
+						var VERSION=data.Android.version;
+						var URL=data.Android.url;
+								mui('body').on('tap', '#check_version', function() {
+									if(unsafe_tap2()) return; // 调用代码
+										var id = this.getAttribute("data-wid");
+										if(!id) {
+											id = this.getAttribute('href');
+										}
+										var old_id=plus.webview.getWebviewById(id);
+										if(old_id){
+											old_id.close("none",0);
+										}
+										var href = this.getAttribute('href');
+										var webview_style = {
+											popGesture: "hide "
+										}
+										var extras = {"TITLE":TITLE,"NOTE":NOTE,"VERSION":VERSION,"URL":URL};
+										var webview = plus.webview.create(this.href, id, webview_style, extras);
+										webview.addEventListener("titleUpdate", function() {
+											setTimeout(function() {
+												webview.show('pop-in', 300);
+											}, 100);
+										});
+								})
+						var curVer=plus.runtime.version,
+						inf = data[plus.os.name]; 
+						if ( inf ){
+							var srvVer = inf.version;
+							// 判断是否存在忽略版本号
+							var vabort = plus.storage.getItem( keyAbort );
+							if ( vabort && srvVer==vabort ) {
+								// 忽略此版本
+								return;
+							}
+							// 判断是否需要升级
+							if(compareVersion(curVer,srvVer)){
+								// 提示用户是否升级  
+								$("#check_version>span").css('display','inline-block');
+							}
+						}
+					},
+					error: function(xhr, type, errorThrown, selfs) {
+					}
+				});
+			});
+		</script>
+	</body>
+
+</html>

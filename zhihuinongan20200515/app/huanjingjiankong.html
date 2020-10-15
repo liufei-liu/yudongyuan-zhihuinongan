@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1">
+		<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="format-detection" content="email=no">
+		<meta http-equiv="Expires" content="0">
+		<meta http-equiv="Pragma" content="no-cache">
+		<meta http-equiv="Cache-control" content="no-cache">
+		<meta http-equiv="Cache" content="no-cache">
+		<title>环境监控</title>
+		<meta name="keywords" content="">
+		<meta name="Description" content="">
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/public.css">
+		<link rel="stylesheet" href="css/main.css">
+		<script src="js/jquery.js"></script>
+	</head>
+
+	<body style="background-color:#fff">
+		<div class="header_box">
+			<div class="header">
+				<a class="back mui-action-back">
+					<img src="images/newImgs/newback.png" alt="">
+				</a>
+				<h1>环境监控</h1>
+				<a class="home ">
+					<img src="images/newImgs/home.png" alt="" />
+				</a>
+			</div>
+		</div>
+		<!--时间-->
+		<!--<div class="monitor time_monitor">
+			<p>时间：<i>2018-09-09</i><b>14：00</b></p>
+			<ul>
+				<li><span>实况气温：</span><b>36℃</b><i></i></li>
+				<li class="w50 monitor_up"><span>最高气度：</span><b>36℃</b><i></i></li>
+				<li class="w50"><span>最低气度：</span><b>36℃</b><i></i></li>
+				<li class="w50 monitor_down"><span>相对湿度：</span><b>35℃</b><i></i></li>
+				<li class="w50"><span>风速：</span><b>2.3m/s</b><i></i></li>
+			</ul>
+		</div>-->
+		<!--水温监测-->
+		<!--<div class="monitor water_monitor">
+			<p>水温检测</p>
+			<ul>
+				<li><span>水质融氧：</span><b>1  mg/L</b><i></i></li>
+				<li><span>水质电导率：</span><b>5  us/cm</b><i></i></li>
+				<li><span>水质盐度：</span><b>0.5   mg/L</b><i></i></li>
+				<li class="monitor_up"><span>水温：</span><b>36℃</b><i></i></li>
+				<li><span>水位：</span><b>1.5  m</b><i></i></li>
+			</ul>
+		</div>-->
+		<!--大棚环境-->
+		<!--<div class="monitor environment_monitor">
+			<p>大棚环境监测</p>
+			<ul>
+				<li class="w50"><span>空气温度：</span><b>30 ℃</b><i></i></li>
+				<li class="w50 monitor_down"><span>空气湿度：</span><b>50%</b><i></i></li>
+				<li class="w50"><span>土壤温度：</span><b>20 ℃</b><i></i></li>
+				<li class="w50"><span>土壤湿度：</span><b>75%</b><i></i></li>
+				<li class="w50"><span>二氧化碳：</span><b>8ppm</b><i></i></li>
+				<li class="w50"><span>光照：</span><b>500lx</b><i></i></li>
+			</ul>
+		</div>-->
+		
+		<p style="text-align: center;font-size: 16px;margin: 40px 0;color:#FF9C3C;">您所在区域暂无物联网监控设备接入<br />
+			请在下方申请接入物联网监控环境监控设备
+		</p>
+		<form id="form_info" action="" method="post" class="register_list">
+			<input type="hidden" name="token" value=""/>
+			<input type="hidden" name="TYPE" value="1"/>
+			<input type="hidden" name="ENTERPRISE_ID" value=""/>
+			<input type="hidden" name="EN_USER_ID" value=""/>
+			<ul>
+				<li>
+					<span>&nbsp;申&nbsp;请&nbsp;人&nbsp;：</span>
+					<div>
+						<input type="text" name="WAIT_PERSON"  value="" placeholder="请输入申请人姓名"/>
+						<div>
+							<span></span>
+						</div>
+					</div>
+				</li>
+				<li>
+					<span>联系电话：</span>
+					<div>
+						<input type="tel" maxlength="11"  name="WAIT_MOBILE"  value="" placeholder="请输入联系电话" min="0.0" step="0.01"/>
+						<div>
+							<span></span>
+						</div>
+					</div>
+				</li>
+				<li>
+					<span>接入地址：</span>
+					<div>
+						<input type="text" name="WAIT_ADDR"  value="" placeholder="请输入接入地址"/>
+						<div>
+							<span></span>
+						</div>
+					</div>
+				</li>
+			</ul>
+			<div class="submit_btn_box">
+				<button class="bozhong_submit">提交申请</button>
+			</div>
+		</form>
+		<script src="../js/mui.min.js"></script>
+		<script src="js/jquery.form.min.js"></script>
+		<script src="js/init.js"></script>
+		<script src="js/public.js"></script>
+		<script>
+			mui.init();
+			mui.plusReady(function() {
+				/*提交表单的返回*/
+				var can_back=true;
+				$("body").on("keyup",function(){
+					can_back=false;
+				})
+			 	var old_back=mui.back;
+				mui.back=function(){
+					if(can_back){
+						old_back();
+					}else{
+						var btnArray = ['否', '是'];
+		                mui.confirm('确认要返回么，确认？', TITLE, btnArray, function(e) {
+		                    if (e.index == 1) {
+		                        old_back();
+		                    }
+		                })
+					}	
+				}
+				$("input[type='token']").val(getToken());
+				$("input[type='ENTERPRISE_ID']").val(getState().enterprise_id);
+				$("input[type='EN_USER_ID']").val(getState().en_user_id);
+				var options={
+					url:www_v+"/system/add_waitmessage/",
+					beforeSubmit:function(){
+						if(wainshow()==false){return false;};
+						if(unsafe_tap2()) return false; // 调用代码
+						if($("input[name='WAIT_PERSON']").val().trim()==""){
+							plus.nativeUI.toast("请输入申请人姓名");
+							return false;
+						}else if($("input[name='WAIT_MOBILE']").val().trim()==""){
+							plus.nativeUI.toast("请输入联系电话");
+							return false;
+						}else if (!/^1[3|4|5|7|8][0-9]{9}$/.test($("input[name='WAIT_MOBILE']").val())) {
+							plus.nativeUI.toast("请输入正确的联系电话");
+							return false;
+						}else if($("input[name='WAIT_ADDR']").val().trim()==""){
+							plus.nativeUI.toast("请输入接入地址");
+							return false;
+						}
+					},
+					success:function(data){
+						//console.log(data);
+						check_ajax(data,function(data){
+							//console.log(JSON.stringify(data));
+								plus.nativeUI.toast("提交成功");
+								old_back();
+						})
+						
+					},error:function(e){
+						alert("服务端错误");
+					}
+				};
+				$("#form_info").ajaxForm(options);
+			})
+		</script>
+	</body>
+
+</html>

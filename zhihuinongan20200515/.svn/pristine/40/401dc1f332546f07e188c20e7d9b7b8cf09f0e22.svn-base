@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1">
+		<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="format-detection" content="email=no">
+		<meta http-equiv="Expires" content="0">
+		<meta http-equiv="Pragma" content="no-cache">
+		<meta http-equiv="Cache-control" content="no-cache">
+		<meta http-equiv="Cache" content="no-cache">
+		<title>单位档案</title>
+		<meta name="keywords" content="">
+		<meta name="Description" content="">
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/public.css">
+		<link rel="stylesheet" href="css/main.css">
+		<script src="js/jquery.js"></script>
+				<style type="text/css">
+			.mui-preview-image.mui-fullscreen {
+				position: fixed;
+				z-index: 9999999;
+				background-color: #000;
+			}
+			.mui-preview-header,
+			.mui-preview-footer {
+				position: absolute;
+				width: 100%;
+				left: 0;
+				z-index: 10;
+			}
+			.mui-preview-header {
+				height: 44px;
+				top: 0;
+			}
+			.mui-preview-footer {
+				height: 50px;
+				bottom: 0px;
+			}
+			.mui-preview-header .mui-preview-indicator {
+				display: block;
+				line-height: 25px;
+				color: #fff;
+				text-align: center;
+				margin: 15px auto 4;
+				width: 70px;
+				background-color: rgba(0, 0, 0, 0.4);
+				border-radius: 12px;
+				font-size: 16px;
+			}
+			.mui-preview-image {
+				display: none;
+				-webkit-animation-duration: 0.5s;
+				animation-duration: 0.5s;
+				-webkit-animation-fill-mode: both;
+				animation-fill-mode: both;
+			}
+			.mui-preview-image.mui-preview-in {
+				-webkit-animation-name: fadeIn;
+				animation-name: fadeIn;
+			}
+			.mui-preview-image.mui-preview-out {
+				background: none;
+				-webkit-animation-name: fadeOut;
+				animation-name: fadeOut;
+			}
+			.mui-preview-image.mui-preview-out .mui-preview-header,
+			.mui-preview-image.mui-preview-out .mui-preview-footer {
+				display: none;
+			}
+			.mui-zoom-scroller {
+				position: absolute;
+				display: -webkit-box;
+				display: -webkit-flex;
+				display: flex;
+				-webkit-box-align: center;
+				-webkit-align-items: center;
+				align-items: center;
+				-webkit-box-pack: center;
+				-webkit-justify-content: center;
+				justify-content: center;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				margin: 0;
+				-webkit-backface-visibility: hidden;
+			}
+			.mui-zoom {
+				-webkit-transform-style: preserve-3d;
+				transform-style: preserve-3d;
+			}
+			.mui-slider .mui-slider-group .mui-slider-item img {
+				width: auto;
+				height: auto;
+				max-width: 100%;
+				max-height: 100%;
+			}
+			.mui-android-4-1 .mui-slider .mui-slider-group .mui-slider-item img {
+				width: 100%;
+			}
+			.mui-android-4-1 .mui-slider.mui-preview-image .mui-slider-group .mui-slider-item {
+				display: inline-table;
+			}
+			.mui-android-4-1 .mui-slider.mui-preview-image .mui-zoom-scroller img {
+				display: table-cell;
+				vertical-align: middle;
+			}
+			.mui-preview-loading {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				top: 0;
+				left: 0;
+				display: none;
+			}
+			.mui-preview-loading.mui-active {
+				display: block;
+			}
+			.mui-preview-loading .mui-spinner-white {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				margin-left: -25px;
+				margin-top: -25px;
+				height: 50px;
+				width: 50px;
+			}
+			.mui-preview-image img.mui-transitioning {
+				-webkit-transition: -webkit-transform 0.5s ease, opacity 0.5s ease;
+				transition: transform 0.5s ease, opacity 0.5s ease;
+			}
+			@-webkit-keyframes fadeIn {
+				0% {
+					opacity: 0;
+				}
+				100% {
+					opacity: 1;
+				}
+			}
+			@keyframes fadeIn {
+				0% {
+					opacity: 0;
+				}
+				100% {
+					opacity: 1;
+				}
+			}
+			@-webkit-keyframes fadeOut {
+				0% {
+					opacity: 1;
+				}
+				100% {
+					opacity: 0;
+				}
+			}
+			@keyframes fadeOut {
+				0% {
+					opacity: 1;
+				}
+				100% {
+					opacity: 0;
+				}
+			}
+			p img {
+				max-width: 100%;
+				height: auto;
+			}
+		</style>
+	</head>
+
+	<body style="background-color:#fff;">
+		<div class="header_box">
+			<div class="header">
+				<a class="back mui-action-back">
+					<img src="images/back.png" alt="">
+				</a>
+				<h1>单位档案</h1>
+				<a class="home ">
+					<img src="images/home.png" alt="" />
+				</a>
+			</div>
+		</div>		
+		<form id="form_info" action="" method="post" class="register_list register_list_long">
+			<input type="hidden" name="DIPLOMA_IMG_ID"/>
+			<input type="hidden" name="DIPLOMA_IMG_ID2"/>
+			<input type="hidden" name="token"/>
+			<input type="hidden" name="ENTERPRISE_ID"/>
+			<input type="hidden" name="EN_USER_ID"/>
+			
+			<ul>
+				<li>
+					<span>单&nbsp;位&nbsp;名&nbsp;称&nbsp;：</span>
+					<div>
+						<input type="text" name="ENTERPRISE_NAME"  value="" placeholder="请输入单位名称"/>
+						<div>
+							<span class=""></span>
+						</div>
+					</div>
+				</li>
+				<li>
+					<span>信&nbsp;用&nbsp;代&nbsp;码&nbsp;：</span>
+					<div>
+						<input type="text" name="ENTERPRISE_CODE"  value="" placeholder="请输入统一社会信用代码"/>
+						<div>
+							<span class=""></span>
+						</div>
+					</div>
+				</li>
+				<li>
+					<span>类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;型：</span>
+					<div>
+						<input type="text" name="ENTERPRISE_TYPE" value="" placeholder="请输入单位类型" />
+						<div>
+							<span></span>
+						</div>
+					</div>
+				</li>
+				<li>
+					<span>法定代表人：</span>
+					<div>
+						<input type="text" name="ENTERPRISE_CORPORATION" placeholder="请输入法定代表人" />
+						<div>
+							<span></span>
+						</div>
+					</div>
+				</li>
+				<li>
+					<span>营&nbsp;业&nbsp;期&nbsp;限&nbsp;：</span>
+					<div>
+						<input type="date" name="BUSINESS_ADTE" placeholder="请输入营业期限" />
+						<div>
+							<span></span>
+						</div>
+					</div>
+				</li>
+			</ul>
+			<div id="img_box">
+				<p>上传图片（营业执照图片）：</p>
+				<ul>
+					<li id="add_img">
+						<img src="images/add.png" alt=""/>
+					</li>
+				</ul>
+				<p class="img_tip">注：长按图片可以进行删除</p>
+			</div>
+			<div id="img_box2">
+				<p>上传图片（企业Logo）：</p>
+				<ul>
+					<li id="add_img2">
+						<img src="images/add.png" alt=""/>
+					</li>
+				</ul>
+				<p class="img_tip">注：长按图片可以进行删除</p>
+			</div>
+			<div class="submit_btn_box">
+				<button class="bozhong_submit">保存</button>
+			</div>
+		</form>
+		
+		<script src="../js/mui.min.js"></script>
+		<script src="js/jquery.form.min.js"></script>
+		<script src="../js/mui.zoom.js"></script>
+		<script src="../js/mui.previewimage.js"></script>
+		<script src="js/init.js"></script>
+		<script src="js/public.js"></script>
+		<script>
+			mui.init({
+			  gestureConfig:{
+			    longtap: true, //默认为false
+			    release:true
+			  }
+			});
+			mui.plusReady(function() {
+				/*提交表单的返回*/
+				var can_back=true;
+				$("body").on("keyup",function(){
+					can_back=false;
+				})
+			 	var old_back=mui.back;
+				mui.back=function(){
+					if(can_back){
+						old_back();
+					}else{
+						var btnArray = ['否', '是'];
+		                mui.confirm('确认要返回么，确认？', TITLE, btnArray, function(e) {
+		                    if (e.index == 1) {
+		                        old_back();
+		                    }
+		                })
+					}	
+				}
+				mui.previewImage();
+				var _self = plus.webview.currentWebview();
+				var ENTERPRISE_NAME = _self.ENTERPRISE_NAME;
+				//$("input[name='ENTERPRISE_NAME']").val(ENTERPRISE_NAME);
+				$("input[name='token']").val(getToken());
+				$("input[name='EN_USER_ID']").val(getState().en_user_id);
+				$("input[name='ENTERPRISE_ID']").val(getState().enterprise_id);
+				
+				mui("#img_box").on('longtap','ul li',function(){
+					var _this=this;
+					if(_this.id!="add_img"){
+					 	var btnArray = ['否', '是'];
+		                mui.confirm('确认要删除该图片么，确认？', TITLE, btnArray, function(e) {
+		                    if (e.index == 1) {
+							 	if(wainshow()==false){return false;};
+								$.ajax(www_v+"/img/diploma_img_delete/", {
+									data: {"token":getToken(),"IMG_ID":$(_this).attr("value")},
+									type: 'post', //HTTP请求类型
+									timeout: 10000, //超时时间设置为10秒；
+									success: function(data) {
+										check_ajax(data,function(data){
+											var d_val=$(_this).attr("value");
+										 	var old_val=$("input[name='DIPLOMA_IMG_ID']").val();
+										 	var new_val=old_val.replace(d_val,'');
+										 	new_val=new_val.replace(',,',',');
+										 	if(new_val.slice(0,1)==","){
+										 		new_val=new_val.slice(1);
+										 	}
+										 	if(new_val.slice(-1)==","){
+										 		new_val=new_val.slice(0,-1);
+										 	}
+										 	$("input[name='DIPLOMA_IMG_ID']").val(new_val);
+										 	$(_this).remove();
+											plus.nativeUI.toast('删除成功');
+										})
+									},
+									error: function(xhr, type, errorThrown, selfs) {
+										if(type == "timeout") {
+											alert("请求超时");
+										} else if(type == "abort") {
+											alert("请检查您的网络");
+										} else if(type == "error") {
+											alert("服务端错误");
+										}
+									}
+								});
+							 	
+		                    }
+		                })
+		            }
+				})
+				document.getElementById("add_img").addEventListener('tap', function() {
+						var self=this;
+						var caremaorimg = [{
+							title: "拍照",
+							name:"p"
+						}, {
+							title: "相册",
+							name:"x"
+						}];
+						plus.nativeUI.actionSheet({
+							cancel: "取消",
+							buttons: caremaorimg
+						}, function(e) {
+							var i = e.index;
+							var _callback=function(data){
+										check_ajax(data,function(data){
+									 	var val=$("input[name='DIPLOMA_IMG_ID']").val();
+									 	if(val==""||val==undefined){
+									 		$("input[name='DIPLOMA_IMG_ID']").val(data.DIPLOMA_IMG_ID);	
+									 	}else{
+									 		$("input[name='DIPLOMA_IMG_ID']").val(val+","+data.DIPLOMA_IMG_ID);	
+									 	}
+									 	//console.log($("input[name='DIPLOMA_IMG_ID']").val());
+									 	//console.log(data.DIPLOMA_IMG_URL);
+									 	var imgs=data.DIPLOMA_IMG_URL.split(",");
+									 	var ids=data.DIPLOMA_IMG_ID.split(",");
+									 	for(var i=0,str="";i<imgs.length;i++){
+									 		str+='<li value="'+ids[i]+'"><img src="'+www+imgs[i]+'" alt="" data-preview-src="" data-preview-group="1"/></li>'
+									 	}
+									 	$("#img_box>ul").append(str);
+									 	})
+							}
+							if(i > 0) {
+								switch(i){
+									 case 1:p(www_v+"/img/prodiploma_img",_callback);
+									 break;
+									 case 2:x(www_v+"/img/prodiploma_img",_callback);
+									 break;
+								}
+							}
+						});
+					});
+					
+										
+				mui("#img_box2").on('longtap','ul li',function(){
+					var _this=this;
+					if(_this.id!="add_img2"){
+					 	var btnArray = ['否', '是'];
+		                mui.confirm('确认要删除该图片么，确认？', TITLE, btnArray, function(e) {
+		                    if (e.index == 1) {
+							 	if(wainshow()==false){return false;};
+								$.ajax(www_v+"/img/diploma_logo_delete/", {
+									data: {"token":getToken(),"IMG_ID":$(_this).attr("value"),"ENTERPRISE_ID":getState().enterprise_id},
+									type: 'post', //HTTP请求类型
+									timeout: 10000, //超时时间设置为10秒；
+									success: function(data) {
+										//console.log(data);
+										check_ajax(data,function(data){
+											var d_val=$(_this).attr("value");
+										 	var old_val=$("input[name='DIPLOMA_IMG_ID2']").val();
+										 	var new_val=old_val.replace(d_val,'');
+										 	new_val=new_val.replace(',,',',');
+										 	if(new_val.slice(0,1)==","){
+										 		new_val=new_val.slice(1);
+										 	}
+										 	if(new_val.slice(-1)==","){
+										 		new_val=new_val.slice(0,-1);
+										 	}
+										 	$("input[name='DIPLOMA_IMG_ID2']").val(new_val);
+										 	$(_this).remove();
+										 	$("#add_img2").show();
+											plus.nativeUI.toast('删除成功');
+										})
+									},
+									error: function(xhr, type, errorThrown, selfs) {
+										if(type == "timeout") {
+											alert("请求超时");
+										} else if(type == "abort") {
+											alert("请检查您的网络");
+										} else if(type == "error") {
+											alert("服务端错误");
+										}
+									}
+								});
+							 	
+		                    }
+		              })
+		            }
+				})	 
+				document.getElementById("add_img2").addEventListener('tap', function() {
+//						if($("#img_box2 ul>li").length-1>=1){
+//								plus.nativeUI.alert('最多只能选择1张图片')
+//								return false;
+//							}
+						var self=this;
+						var caremaorimg = [{
+							title: "拍照",
+							name:"p"
+						}, {
+							title: "相册",
+							name:"x"
+						}];
+						plus.nativeUI.actionSheet({
+							cancel: "取消",
+							buttons: caremaorimg
+						}, function(e) {
+							var i = e.index;
+							var _callback=function(data){
+										check_ajax(data,function(data){
+									 	var val=$("input[name='DIPLOMA_IMG_ID2']").val();
+									 	if(val==""||val==undefined){
+									 		$("input[name='DIPLOMA_IMG_ID2']").val(data.DIPLOMA_IMG_ID);	
+									 	}else{
+									 		$("input[name='DIPLOMA_IMG_ID2']").val(val+","+data.DIPLOMA_IMG_ID);	
+									 	}
+									 	//console.log($("input[name='DIPLOMA_IMG_ID2']").val());
+									 	//console.log(data.DIPLOMA_IMG_URL);
+									 	var imgs=data.DIPLOMA_IMG_URL.split(",");
+									 	var ids=data.DIPLOMA_IMG_ID.split(",");
+									 	for(var i=0,str="";i<imgs.length;i++){
+									 		str+='<li value="'+ids[i]+'"><img src="'+www+imgs[i]+'" alt="" data-preview-src="" data-preview-group="2"/></li>'
+									 	}
+									 	$("#img_box2>ul>li:gt(0)").remove();
+									 	$("#img_box2>ul").append(str);
+//									 	$("#add_img2").hide();
+										})
+							}
+							if(i > 0) {
+								switch(i){
+									 case 1:p(www_v+"/img/prodiploma_img",_callback,getState().enterprise_id,"1");
+									 break;
+									 case 2:x(www_v+"/img/prodiploma_img",_callback,getState().enterprise_id,"1");
+									 break;
+								}
+							}
+						});
+					});	
+ 
+				var options={
+					url:www_v+"/user/enterprise_document",
+					beforeSubmit:function(){
+						if(wainshow()==false){return false;};
+						if(unsafe_tap2()) return false; // 调用代码
+						if($("input[name='DIPLOMA_IMG_ID']").val().trim()==""){
+							plus.nativeUI.toast("请上传图片");
+							return false;
+						}
+					},
+					success:function(data){
+						//console.log(data);
+						check_ajax(data,function(data){
+							//console.log(JSON.stringify(data));
+								plus.nativeUI.toast("修改成功");
+								old_back();
+						})
+					},error:function(e){
+						alert("服务端错误");
+					}
+				};
+				$("#form_info").ajaxForm(options);
+				if(wainshow()==false){return false;};
+				$.ajax(www_v+"/user/check_entrprise_document", {
+					data: {"token":getToken(),"EN_USER_ID":getState().en_user_id,"ENTERPRISE_ID":getState().enterprise_id},
+					type: 'post', //HTTP请求类型
+					timeout: 50000, //超时时间设置为10秒；
+					success: function(data) {
+						//console.log(data);
+						check_ajax(data,function(data){
+							//console.log(JSON.stringify(data));
+							if(data==""){return}; 
+							$("input[name='ENTERPRISE_NAME']").val(data[0].ENTERPRISE_NAME);
+							$("input[name='ENTERPRISE_CODE']").val(data[0].ENTERPRISE_CODE);
+							$("input[name='ENTERPRISE_TYPE']").val(data[0].ENTERPRISE_TYPE);
+							$("input[name='ENTERPRISE_CORPORATION']").val(data[0].ENTERPRISE_CORPORATION);
+							$("input[name='BUSINESS_ADTE']").val(data[0].BUSINESS_ADTE.slice(0,10));
+							for(var i=0,str="",str2="";i<data.length;i++){
+								if(data[i].DIPLOMA_IMG_URL){
+									str+='<li value="'+data[i].DIPLOMA_IMG_ID+'"><img src="'+www+data[i].DIPLOMA_IMG_URL+'" alt="" data-preview-src="" data-preview-group="1"/></li>';
+									str2+=","+data[i].DIPLOMA_IMG_ID;
+								}
+							}
+							if(str2){
+								str2=str2.slice(1);
+							}
+							$("input[name='DIPLOMA_IMG_ID']").val(str2);
+							$("#img_box>ul").append(str);
+							var str_logo='<li value="'+data[0].ENTERPRISE_ID+'"><img src="'+www+data[0].LOGO+'" alt="" data-preview-src="" data-preview-group="2"/></li>';
+							$("input[name='DIPLOMA_IMG_ID2']").val(data.ENTERPRISE_ID); 
+							$("#img_box2>ul").append(str_logo);
+//							$("#add_img2").hide(); 
+						})
+					},error: function(xhr, type, errorThrown, selfs) {
+						if(type == "timeout") {
+							alert("请求超时");
+						} else if(type == "abort") {
+							alert("请检查您的网络");
+						} else if(type == "error") {
+							alert("服务端错误");
+						}
+					}
+				});
+			})
+		</script>
+	</body>
+</html>

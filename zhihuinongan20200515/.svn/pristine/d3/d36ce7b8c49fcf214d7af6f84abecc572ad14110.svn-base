@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1">
+		<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="format-detection" content="email=no">
+		<meta http-equiv="Expires" content="0">
+		<meta http-equiv="Pragma" content="no-cache">
+		<meta http-equiv="Cache-control" content="no-cache">
+		<meta http-equiv="Cache" content="no-cache">
+		<title>认证证书</title>
+		<meta name="keywords" content="">
+		<meta name="Description" content="">
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/public.css">
+		<link rel="stylesheet" href="css/main.css">
+		<script src="js/jquery.js"></script>
+	</head>
+
+	<body style="background-color:#fff;">
+		<div class="header_box">
+			<div class="header">
+				<a class="back mui-action-back">
+					<img src="images/back.png" alt="">
+				</a>
+				<h1>认证证书</h1>
+				<a class="home">
+					<img src="images/home.png" alt="" />
+				</a>
+			</div>
+		</div>
+		<ul class="certificate_list">
+			
+		</ul>
+		<div class="submit_btn_box ">
+				<a href="renzhengzhengshu.html" data-extras="" data-wid="renzhengzhengshu.html" class="bozhong_submit ">添加证书</a>
+			</div>
+		<script src="../js/mui.min.js "></script>
+		<script src="js/jquery.form.min.js "></script>
+		<script src="js/init.js "></script>
+		<script src="js/public.js "></script>
+		<script>
+			mui.init({
+			  
+			});
+			mui.plusReady(function() {
+				window.addEventListener('refresh', function(e) {
+					mui.back();
+				})
+				window.addEventListener('refresh_refresh', function(e) {
+					location.reload();
+				})
+				var self = plus.webview.currentWebview();
+				var PRO_GRADE_ID=self.PRO_GRADE_ID;
+				$(".bozhong_submit").attr("data-extras",'{"PRO_GRADE_ID":"'+PRO_GRADE_ID+'"}');//如果是无害化
+				var ENTERPRISE_ID=getState().enterprise_id;
+				var EN_USER_ID=getState().en_user_id;
+				
+				$("body").on('tap','.certificate_list>li',function(){
+					if(unsafe_tap2()) return; // 调用代码
+					var _id=$(this).attr("value");
+					var _html=$(this).children('.certificate_middle').children('span').children('b').html();
+					var list = plus.webview.getWebviewById('dengjixinxi.html');
+						mui.fire(list, 'refresh_diploma',{"_id":_id,"_html":_html});
+						mui.back();
+				})
+				$("body").on('tap','.certificate_show',function(){
+					var id = $(".bozhong_submit").attr("data-wid");
+					var old_id=plus.webview.getWebviewById(id);
+					if(old_id){
+						old_id.close("none",0);
+					}
+					var href = $(".bozhong_submit").attr("href");
+					var webview_style = {
+						popGesture: "hide"
+					}
+					var extras ={"PRO_GRADE_ID":PRO_GRADE_ID,"DIPLOMA_ID":$(this).parent().attr("value")};
+					var webview = plus.webview.create(href, id, webview_style, extras);
+					webview.addEventListener("titleUpdate", function() {
+						setTimeout(function() {
+							webview.show('pop-in', 300);
+						}, 100);
+					});
+					return false;
+				})
+				if(wainshow()==false){return false;};
+				$.ajax(www_v+"/pro_registration/listdiploma/", {
+					data: {"DIPLOMA_KIND_ID":"1","PRO_GRADE_ID":PRO_GRADE_ID,"ENTERPRISE_ID":ENTERPRISE_ID,"EN_USER_ID":EN_USER_ID,'token':getToken()},
+					type: 'post', //HTTP请求类型
+					timeout: 50000, //超时时间设置为10秒；
+					success: function(data) {
+						check_ajax(data,function(data){
+
+										//console.log(JSON.stringify(data));
+										for(var i=0,str='';i<data.length;i++){
+											str+='<li value="'+data[i].DIPLOMA_ID+'">'+
+								'<div class="certificate_check">'+
+									'<img src="images/certificate_check.png" alt="" />'+
+								'</div>'+
+								'<div class="certificate_middle">'+
+									'<span><i>证书名称：</i><b>'+data[i].DIPLOMA_NAME+'</b></span>'+
+								'</div>'+
+								'<div class="certificate_show"><img src="images/certificate_edit.png" alt="" /></div>'+
+								'</li>';
+										}
+										$(".certificate_list").append(str);
+									})
+					},
+					error: function(xhr, type, errorThrown, selfs) {
+						if(type == "timeout") {
+							alert("请求超时");
+						} else if(type == "abort") {
+							alert("请检查您的网络");
+						} else if(type == "error") {
+							alert("服务端错误");
+						}
+					}
+				});
+
+			})
+		</script>
+	</body>
+
+</html>

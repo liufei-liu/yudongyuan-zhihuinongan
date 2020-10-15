@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>标签管理</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/public.css">
+		<link rel="stylesheet" href="css/main.css">
+		<script src="js/jquery.js"></script>
+		<style>
+			html,
+			body {
+				background-color: #efeff4;
+			}
+			
+			.mui-bar~.mui-content .mui-fullscreen {
+				top: 44px;
+				height: auto;
+			}
+			
+			.mui-pull-top-tips {
+				position: absolute;
+				top: -20px;
+				left: 50%;
+				margin-left: -25px;
+				width: 40px;
+				height: 40px;
+				border-radius: 100%;
+				z-index: 1;
+			}
+			
+			.mui-bar~.mui-pull-top-tips {
+				top: 24px;
+			}
+			
+			.mui-pull-top-wrapper {
+				width: 42px;
+				height: 42px;
+				display: block;
+				text-align: center;
+				background-color: #efeff4;
+				border: 1px solid #ddd;
+				border-radius: 25px;
+				background-clip: padding-box;
+				box-shadow: 0 4px 10px #bbb;
+				overflow: hidden;
+			}
+			
+			.mui-pull-top-tips.mui-transitioning {
+				-webkit-transition-duration: 200ms;
+				transition-duration: 200ms;
+			}
+			
+			.mui-pull-top-tips .mui-pull-loading {
+				/*-webkit-backface-visibility: hidden;
+				-webkit-transition-duration: 400ms;
+				transition-duration: 400ms;*/
+				margin: 0;
+			}
+			
+			.mui-pull-top-wrapper .mui-icon,
+			.mui-pull-top-wrapper .mui-spinner {
+				margin-top: 7px;
+			}
+			
+			.mui-pull-top-wrapper .mui-icon.mui-reverse {
+				/*-webkit-transform: rotate(180deg) translateZ(0);*/
+			}
+			
+			.mui-pull-bottom-tips {
+				text-align: center;
+				background-color: #efeff4;
+				font-size: 15px;
+				line-height: 40px;
+				color: #777;
+			}
+			
+			.mui-pull-top-canvas {
+				overflow: hidden;
+				background-color: #fafafa;
+				border-radius: 40px;
+				box-shadow: 0 4px 10px #bbb;
+				width: 40px;
+				height: 40px;
+				margin: 0 auto;
+			}
+			
+			.mui-pull-top-canvas canvas {
+				width: 40px;
+			}
+			
+			.mui-slider-indicator.mui-segmented-control {
+				background-color: #efeff4;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="header_box">
+			<div class="header">
+				<a class="back mui-action-back">
+					<img src="images/back.png" alt="">
+				</a>
+				<h1>标签管理</h1>
+				<a class="home ">
+					<img src="images/home.png" alt="" />
+				</a>
+			</div>
+		</div>
+		<div class="mui-content">
+			<div style="top:0.88rem" id="slider" class="mui-slider mui-fullscreen">
+				<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+					<div class="mui-scroll" style="width: 100%;padding: 0 0.2rem;">
+						<a class="mui-control-item mui-active" href="#item1mobile" style="width:50%;padding:0;">
+							普通批次
+						</a>
+						<a class="mui-control-item" href="#item2mobile" style="width:50%;padding:0;">
+							优品批次
+						</a>
+					</div>
+				</div>
+				<div class="mui-slider-group">
+					<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+						<div id="scroll1" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul class="mui-table-view record_list">
+									<!--<li class="_apply" value="'+data[i].REGISTRATION_ID+'">
+										<a href="javascript:;">
+										<img style="height:1.32rem" src="images/ceshi/1.jpg" alt=""/>
+										<div>
+										<p>批次名称：<span class="PRO_BATCH_NAME">批次名称</span></p>
+										<p>申请次数：<span>申请次数</span></p>
+										<p>标签数量：<span>标签数量个</span></p>
+										<b>20170101</b>
+										</div>
+										</a>
+										<div value="">
+										<a href="javascript:;" data-spec="ture" value="">标题</a>
+										</div>
+									</li>-->
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div id="item2mobile" class="mui-slider-item mui-control-content">
+						<div class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul class="mui-table-view record_list">
+
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/mui.pullToRefresh.js"></script>
+		<script src="../js/mui.pullToRefresh.material.js"></script>
+		<script src="js/init.js"></script>
+		<script src="js/public.js"></script>
+		<script>
+			mui.init();
+			mui.plusReady(function(){
+			if(wainshow()==false){return false;};
+			(function($$) {
+				//阻尼系数
+				var deceleration = mui.os.ios ? 0.003 : 0.0009;
+				$$('.mui-scroll-wrapper').scroll({
+					bounce: false,
+					indicators: true, //是否显示滚动条
+					deceleration: deceleration
+				});
+				$$.ready(function() { //定义参数
+					window.addEventListener('tagnum', function(e) {
+						var vals=e.detail;
+						var el=$('li[value="'+vals.REGISTRATION_ID+'"]');
+						var shenqing_num=el.find('.shenqing_num');
+						var biaoqian_num=el.find('.biaoqian_num');
+						var biaoqian_num_html=biaoqian_num.html().slice(0,-1)-0+(vals.APPLY_NUM-0);
+						shenqing_num.html(shenqing_num.html()-0+1);
+						biaoqian_num.html(biaoqian_num_html+'个');
+					})
+					var slideItemInit = [true, true]; //切换时候自动加载数据
+					var can_post = [true, true]; //是否可以发送数据
+					var next = [0, 0];
+					
+					//加载数据方法
+					var creatLi = function(url, index, self, reverse) {
+							if(can_post[index]) {
+								can_post[index] = false;
+								switch(index){
+									case 0:
+										var type_num="1,3,4";
+										break;
+									case 1:
+										var type_num="2";
+										break;
+								}
+								$$.ajax(url, {
+									data: {
+										"PAGE_NUM": next[index]++,
+										"IF_P":type_num,
+										"EN_USER_ID":getState().en_user_id,
+										"token":getToken()
+									},
+									type: 'post', //HTTP请求类型
+									timeout: 50000, //超时时间设置为10秒；
+									success: function(data) {
+										 
+										check_ajax(data,function(data){
+											//console.log(JSON.stringify(data));
+										if(data == "") {
+											can_post[index] = false;
+//											if(reverse) {
+//												self.endPullDownToRefresh(true);
+//												self.endPullUpToRefresh(true);
+//												$$.toast('没有更多数据了', {
+//													duration: '100',
+//													type: 'div'
+//												})
+//											} else {
+												self.endPullUpToRefresh(true);
+//											}
+										} else {
+											for(var i = 0, str = ""; i <data.length; i++) {	
+														var _class="_apply";
+														var _title="申请";
+												str += '<li class="'+_class+'" value="'+data[i].REGISTRATION_ID+'">' +
+																'<a href="javascript:;">' +
+																'<img style="height:1.32rem" src="'+www+data[i].img_url+'" alt=""/>' +
+																'<div>' +
+																'<p>批次名称：<span class="PRO_BATCH_NAME">'+data[i].PRO_BATCH_NAME+'</span></p>' +
+																'<p>申请次数：<span class="shenqing_num">'+data[i].apply_times+'</span></p>' +
+																'<p>标签数量：<span class="biaoqian_num">'+data[i].all_label+'个</span></p>' +
+																'<b>'+data[i].CREATE_TIME.slice(0,10)+'</b>' +
+																'</div>' +
+																'</a>' +
+																'<div value="'+type_num+'">' +
+																'<a href="javascript:;" data-spec="ture" value="'+data[i].ENTERPRISE_ID+'">'+_title+'</a>' +
+																'</div>' +
+																'</li>';
+																
+											}
+											var ul = self.element.querySelector('.mui-table-view');
+//											if(reverse) {
+//												$(ul).prepend(str);
+//											} else {
+												$(ul).append(str);
+//											}
+//											if(reverse) {
+//												self.endPullDownToRefresh();
+//												$$.toast('刷新成功', {
+//													duration: '100',
+//													type: 'div'
+//												})
+//											} else {
+												self.endPullUpToRefresh(); //参数为true代表没有更多数据了。
+												$$.toast('刷新成功', {
+													duration: '100',
+													type: 'div'
+												})
+//											}
+											if(reverse) {
+												data.reverse();
+											}
+											can_post[index] = true;
+										}
+										})
+										
+									},
+									error: function(xhr, type, errorThrown, selfs) {
+										setTimeout(function() {
+//											if(reverse) {
+//												self.endPullDownToRefresh(false);
+//												self.endPullUpToRefresh(false);
+//											} else {
+												self.endPullUpToRefresh(false);
+//											}
+										}, 500)
+										if(type == "timeout") {
+											alert("请求超时");
+										} else if(type == "abort") {
+											alert("请检查您的网络");
+										} else if(type == "error") {
+											alert("服务端错误");
+										}
+									}
+								});
+							} else {
+//								if(reverse) {
+//									self.endPullDownToRefresh(true);
+//									self.endPullUpToRefresh(true);
+//									$$.toast('没有更多数据了', {
+//										duration: '100',
+//										type: 'div'
+//									})
+//								} else {
+									self.endPullUpToRefresh(true);
+//								}
+							}
+						}
+					//循环初始化所有下拉刷新，上拉加载。
+					$$.each(document.querySelectorAll('.mui-slider-group .mui-scroll'), function(index, pullRefreshEl) {
+						//上拉加载
+						var upAjax = function() {
+							var self = this;
+							creatLi(www_v+"/apply_label/label_list", index, self);
+						}
+						//下拉加载
+						var downAjax = function() {
+							var self = this;
+							//creatLi(www_v+"/apply_label/label_list", index, self, true);
+							location.reload();
+						}
+						$$(pullRefreshEl).pullToRefresh({
+							down: {
+								callback: downAjax
+							},
+							up: {
+								callback: upAjax
+							}
+						});
+					});
+					mui(".mui-slider-group .mui-scroll").pullToRefresh()[0].pullUpLoading();
+					slideItemInit[0] = false;
+					//第一次切换加载数据
+					document.getElementById('slider').addEventListener('slide', function(e) {
+						if(e.detail.slideNumber === 1) {
+							if(slideItemInit[1]) {
+								slideItemInit[1] = false;
+								mui(".mui-slider-group .mui-scroll").pullToRefresh()[1].pullUpLoading();
+							}
+						}
+					});
+				$$("body").on('tap','._apply>div>a',function(){
+					if(unsafe_tap2()) return; // 调用代码
+						var REGISTRATION_ID=$(this).parent().parent().attr("value");
+						var ENTERPRISE_ID=$(this).attr("value");
+						var PRO_BATCH_NAME=$(this).parent().parent().find(".PRO_BATCH_NAME").html();
+						var IF_P=$(this).parent().attr("value");
+						var webview_style = {
+							popGesture: "hide "
+						}
+						var id = "biaoqianshenqing.html";
+						var href = "biaoqianshenqing.html";
+						var old_id=plus.webview.getWebviewById(id);
+						if(old_id){
+							old_id.close("none",0);
+						}
+						var extras = {"REGISTRATION_ID":REGISTRATION_ID,"ENTERPRISE_ID":ENTERPRISE_ID,"PRO_BATCH_NAME":PRO_BATCH_NAME,"IF_P":IF_P};
+						var webview = plus.webview.create(href, id, webview_style, extras);
+						webview.addEventListener("titleUpdate", function() {
+							setTimeout(function() {
+								webview.show('pop-in', 300);
+							}, 100);
+						});
+					})
+				});
+			})(mui);
+	})
+		</script>
+
+	</body>
+
+</html>

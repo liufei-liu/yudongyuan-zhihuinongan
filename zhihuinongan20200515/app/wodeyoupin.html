@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1">
+		<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="format-detection" content="email=no">
+		<meta http-equiv="Expires" content="0">
+		<meta http-equiv="Pragma" content="no-cache">
+		<meta http-equiv="Cache-control" content="no-cache">
+		<meta http-equiv="Cache" content="no-cache">
+		<title>优品管理</title>
+		<meta name="keywords" content="">
+		<meta name="Description" content="">
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/public.css">
+		<link rel="stylesheet" href="css/main.css">
+		<script src="js/jquery.js"></script>
+		<style>
+			#RECORD_YEAR{
+				position: absolute;
+				left: 0.2rem;top: 0;
+				width: 1.44rem;
+				display: none;
+			}
+			#IF_P{
+				position: absolute;
+				left: 1.64rem;top: 0;
+				display: none; 
+				width: 1.64rem;
+			}
+			.search_box{
+				padding-left: 2rem;
+			}
+		</style>
+		<style>
+			html,
+			body {
+				background-color: #efeff4;
+			}
+			
+			.mui-bar~.mui-content .mui-fullscreen {
+				top: 44px;
+				height: auto;
+			}
+			
+			.mui-pull-top-tips {
+				position: absolute;
+				top: -20px;
+				left: 50%;
+				margin-left: -25px;
+				width: 40px;
+				height: 40px;
+				border-radius: 100%;
+				z-index: 1;
+			}
+			
+			.mui-bar~.mui-pull-top-tips {
+				top: 24px;
+			}
+			
+			.mui-pull-top-wrapper {
+				width: 42px;
+				height: 42px;
+				display: block;
+				text-align: center;
+				background-color: #efeff4;
+				border: 1px solid #ddd;
+				border-radius: 25px;
+				background-clip: padding-box;
+				box-shadow: 0 4px 10px #bbb;
+				overflow: hidden;
+			}
+			
+			.mui-pull-top-tips.mui-transitioning {
+				-webkit-transition-duration: 200ms;
+				transition-duration: 200ms;
+			}
+			
+			.mui-pull-top-tips .mui-pull-loading {
+				margin: 0;
+			}
+			
+			.mui-pull-top-wrapper .mui-icon,
+			.mui-pull-top-wrapper .mui-spinner {
+				margin-top: 7px;
+			}
+			
+			.mui-pull-bottom-tips {
+				text-align: center;
+				background-color: #efeff4;
+				font-size: 15px;
+				line-height: 40px;
+				color: #777;
+			}
+			
+			.mui-pull-top-canvas {
+				overflow: hidden;
+				background-color: #fafafa;
+				border-radius: 40px;
+				box-shadow: 0 4px 10px #bbb;
+				width: 40px;
+				height: 40px;
+				margin: 0 auto;
+			}
+			
+			.mui-pull-top-canvas canvas {
+				width: 40px;
+			}
+			
+			.mui-slider-indicator.mui-segmented-control {
+				background-color: #efeff4;
+			}
+		</style>
+	</head>
+
+	<body style="background-color: #F7F7F7;">
+		<div class="header_box">
+			<div class="header">
+				<a class="back mui-action-back">
+					<img src="images/newImgs/newback.png" alt="">
+				</a>
+				<h1>优品管理</h1>
+				<a class="home ">
+					<img src="images/newImgs/home.png" alt="" />
+				</a>
+			</div>
+		</div>
+		<form action="" id="form" method="post">
+			<div class="search_box_box" >
+				<div class="search_box" >
+					<button type="button" id="RECORD_YEAR" class="mui-btn mui-btn-outlined" style="background-color: #63DC63; color: whitesmoke; border:1px solid #63DC63;">全部</button>
+					<!-- <button type="button" id="IF_P" class="mui-btn mui-btn-outlined">全部</button> -->
+					<div class="mui-input-row mui-search" >
+						<input type="search" name="PRO_BATCH_NAME" class="mui-input-clear" placeholder="搜索">
+					</div>
+					<input type="submit" value="搜索" style="position: absolute;right:0.2rem;top:0;background-color: #63DC63;border:1px solid #63DC63;" />
+				</div>
+			</div>
+		</form>
+		<!--记录生产列表-->
+		<div id="pullrefresh" style="position: fixed;bottom: 0;width: 100%;left: 0;top: 2.08rem;overflow:auto">
+			<ul class="record_list" value="REGISTRATION_ID" id="record_list">
+				<!-- <li>
+					<a href="">
+						<img src="'+www+data[i].img_url+'" alt="" />
+						<div>
+							<p>批次名称：<span>批次批次20180101-06</span></p>
+							<p>产品名称：<span>产品名称</span></p>
+							<b>2017-12-12 14:14:14</b>
+						</div>
+					</a>
+				</li> -->
+			</ul>
+		</div>
+
+		<script src="../js/mui.min.js"></script>
+		<!--<script src="../js/mui.pullToRefresh.js"></script>
+		<script src="../js/mui.pullToRefresh.material.js"></script>-->
+		<script src="lib/layer/layer.js"></script>
+		<script src="js/jquery.form.min.js"></script>
+		<script src="js/init.js"></script>
+		<script src="js/public.js"></script>
+		<script>
+			var can_post = true; //是否可以发送数据
+			var next = 0;
+			var PRO_BATCH_NAME = "";
+			var STATE = JSON.parse(JSON.stringify(getState()));
+			//console.log(JSON.stringify(STATE))
+			if (STATE.jilushengchanYear == undefined) {
+				STATE.jilushengchanYear = 0
+				if (STATE.youpin == undefined) {
+					STATE.youpin = 0
+				}
+				setState(STATE)
+			}
+			var RECORD_YEAR = STATE.jilushengchanYear;
+			var IF_P = STATE.youpin;
+
+			if (RECORD_YEAR == 0) {
+				$("#RECORD_YEAR").html('全部').show();
+			} else {
+				$("#RECORD_YEAR").html(RECORD_YEAR + '年').show();
+			}
+			switch (IF_P) {
+				case 0:
+					$("#IF_P").html('全部').show();
+					break;
+				case 1:
+					$("#IF_P").html('未认证').show();
+					break;
+				case 2:
+					$("#IF_P").html('认证成功').show();
+					break;
+				case 3:
+					$("#IF_P").html('审核中').show();
+					break;
+				case 4:
+					$("#IF_P").html('认证失败').show();
+					break;
+
+			}
+
+			var RECORD_YEAR_ARR = [{
+				title: '全部',
+				name: 0
+			}];
+			for (var i = new Date().getFullYear(); i >= 2018; i--) {
+				RECORD_YEAR_ARR.push({
+					title: i + '年',
+					name: i
+				})
+			}
+			var IF_P_ARR = [{
+				title: '全部',
+				name: 0
+			}, {
+				title: '未认证',
+				name: 1
+			}, {
+				title: '认证成功',
+				name: 2
+			}, {
+				title: '审核中',
+				name: 3
+			}, {
+				title: '认证失败',
+				name: 4
+			}];
+			var creatLi = function(ishtml, callback) {
+				// mui.plusReady(function() {
+				if (can_post) {
+					can_post = false;
+					console.info(RECORD_YEAR);
+					$.ajax(www_v + "/quality/index", {
+						data: {
+							"token": getToken(),
+							"PAGE_NUM": next++,
+							"RECORD_YEAR": RECORD_YEAR,
+							"IF_P": IF_P,
+							"EN_USER_ID": getState().en_user_id,
+							"ENTERPRISE_ID": getState().enterprise_id,
+							"PRO_BATCH_NAME": PRO_BATCH_NAME
+						},
+						type: 'post',
+						timeout: 50000,
+						success: function(data) {
+							check_ajax(data, function(data) {
+								var ul = mui('.record_list');
+								if (data == "") {
+									can_post = false;
+									mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+									if (ishtml) {
+										$(ul).html('');
+									}
+								} else {
+									for (var i = 0, str = ""; i < data.length; i++) {
+										str += ' <li>' +
+											'<a href="wodeyoupin_child.html" data-extras=\'{"registration_id":"' + data[i].registration_id +
+											'","if_p":"' + data[i].if_p + '","pro_batch_name":"' + data[i].pro_batch_name + '","pro_catalog_id":"' + data[i].pro_catalog_id +
+											'","pro_cat1_id":"' + data[i].pro_cat1_id + '"}\'>' +
+											'<img src="' + www + data[i].img_url + '" alt=""/>' +
+											'<div>' +
+											'<p>批次名称：<span>' + data[i].pro_batch_name + '</span></p>' +
+											'<p>产品名称：<span>' + data[i].pro_catalog_name + '</span></p>' +
+											'<p>状态：<span style="color:'+data[i].if_p_color+'">' + data[i].if_p_name + '</span></p>' +
+											'<b>'+data[i].create_time+'</b>'
+											'</div>' +
+											'</a>' +
+											'</li>';
+									}
+									if (ishtml) {
+										$(ul).html(str);
+									} else {
+										$(ul).append(str);
+									}
+									mui('#pullrefresh').pullRefresh().endPullupToRefresh(false);
+									mui('#pullrefresh').pullRefresh().enablePullupToRefresh();
+									can_post = true;
+								}
+								if (callback) {
+									callback()
+								}
+							})
+						},
+						error: function(xhr, type, errorThrown) {
+							setTimeout(function() {
+								mui("#pullrefresh").pullToRefresh().endPullUpToRefresh(false);
+							}, 500)
+							ajaxerr(arguments)
+						}
+					});
+				} else {
+					mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+				}
+				// })
+
+			}
+			var upAjax = function() {
+				creatLi()
+			}
+			mui.init({
+				gestureConfig: {
+					longtap: true, //默认为false
+					release: true
+				},
+				pullRefresh: {
+					container: "#pullrefresh", //下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等
+					up: {
+						contentrefresh: '正在加载...',
+						contentnomore: '没有更多数据了',
+						callback: upAjax,
+						auto: true,
+						height: 50
+					}
+				}
+			});
+			var options = {
+				beforeSubmit: function() {
+					if (wainshow() == false) {
+						return false;
+					}
+					var search = $("input[name='PRO_BATCH_NAME']").val();
+					can_post = true;
+					next = 0;
+					PRO_BATCH_NAME = search;
+					$("#record_list").hide()
+					var loadindex = layer.load(1);
+					creatLi(true, function() {
+						layer.close(loadindex);
+						$("#record_list").show()
+					});
+					$("input[name='PRO_BATCH_NAME']").blur();
+					return false;
+				}
+			};
+			$("#form").ajaxForm(options);
+			document.getElementById("RECORD_YEAR").addEventListener('tap', function() {
+				var self = this;
+				plus.nativeUI.actionSheet({
+					cancel: "取消",
+					buttons: RECORD_YEAR_ARR
+				}, function(e) {
+					var i = e.index;
+					if (i > 0) {
+						var title = RECORD_YEAR_ARR[i - 1].title;
+						$(self).html(title)
+						RECORD_YEAR = RECORD_YEAR_ARR[i - 1].name;
+						next = 0;
+						can_post = true;
+						var state = getState()
+						state.jilushengchanYear = RECORD_YEAR
+						setState(state)
+						var loadindex = layer.load(1);
+						creatLi(true, function() {
+							layer.close(loadindex);
+							$("#record_list").show()
+						});
+					}
+				});
+			});
+			document.getElementById("IF_P").addEventListener('tap', function() {
+				var self = this;
+				plus.nativeUI.actionSheet({
+					cancel: "取消",
+					buttons: IF_P_ARR
+				}, function(e) {
+					var i = e.index;
+					if (i > 0) {
+						var title = IF_P_ARR[i - 1].title;
+						$(self).html(title)
+						IF_P = IF_P_ARR[i - 1].name;
+						next = 0;
+						can_post = true;
+						var state = getState()
+						state.youpin = IF_P
+						setState(state)
+						var loadindex = layer.load(1);
+						creatLi(true, function() {
+							layer.close(loadindex);
+							$("#record_list").show()
+						});
+					}
+				});
+			});
+			window.addEventListener('refresh', function(e) {
+				console.log(111111)
+				location.reload();
+			})
+		</script>
+		<style type="text/css">
+			.mui-input-clear{
+				width: 100%;
+			}
+		</style>
+	</body>
+
+</html>

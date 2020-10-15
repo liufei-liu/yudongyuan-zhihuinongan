@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1">
+		<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="format-detection" content="email=no">
+		<meta http-equiv="Expires" content="0">
+		<meta http-equiv="Pragma" content="no-cache">
+		<meta http-equiv="Cache-control" content="no-cache">
+		<meta http-equiv="Cache" content="no-cache">
+		<title>添加农资名称</title>
+		<meta name="keywords" content="">
+		<meta name="Description" content="">
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" href="../app/css/style.css">
+		<link rel="stylesheet" href="../app/css/public.css">
+		<link rel="stylesheet" href="../app/css/main.css">
+		<script src="../app/js/jquery.js"></script>
+	</head>
+
+	<body style="background-color:#fff;">
+		<div class="header_box">
+			<div class="header">
+				<a class="back mui-action-back">
+					<img src="../app/images/back.png" alt="">
+				</a>
+				<h1></h1>
+				<a class="home">
+					<img src="../app/images/home.png" alt="" />
+				</a>
+			</div>
+		</div>
+
+		<form id="form_info" action="" method="post" class="register_list register_list_long">
+			<input type="hidden" name="token" value=""/>
+			<input type="hidden" name="EN_USER_ID" value=""/>
+			<input type="hidden" name="OPTION_TYPE" value=""/>
+			<input type="hidden" name="ENTERPRISE_ID" value=""/>
+			<ul>
+				<li class="config_name">
+					<span></span>
+					<div>
+						<input type="text" name="OPTION_NAME"  value="" placeholder=""/>
+						<div>
+							<span></span>
+						</div>
+					</div>
+				</li>
+				
+			</ul>
+			
+			<div class="submit_btn_box ">
+				<button class="bozhong_submit ">添加</button>
+			</div>
+		</form>
+		<script src="../js/mui.min.js "></script>
+		<script src="../app/js/jquery.form.min.js "></script>
+		<script src="../app/js/init.js "></script>
+		<script src="../app/js/public.js "></script>
+		<script>
+			mui.init();
+			mui.plusReady(function() {
+				/*提交表单的返回*/
+				var can_back=true;
+				$("body").on("keyup",function(){
+					can_back=false;
+				})
+			 	var old_back=mui.back;
+				mui.back=function(){
+					if(can_back){
+						old_back();
+					}else{
+						var btnArray = ['否', '是'];
+		                mui.confirm('确认要返回么，确认？', TITLE, btnArray, function(e) {
+		                    if (e.index == 1) {
+		                        old_back();
+		                    }
+		                })
+					}	
+				}
+				var _self = plus.webview.currentWebview();
+				var _id = _self._id;
+				var _title = _self._title;
+				$("input[name='token']").val(getToken());
+				$("input[name='EN_USER_ID']").val(getState().en_user_id);
+				$("input[name='OPTION_TYPE']").val(_id);
+				$("input[name='ENTERPRISE_ID']").val(getState().enterprise_id);
+				
+				$(".header h1").html("添加"+_title);
+				$(".config_name>span").html(_title+"名称：");
+				$("input[name='OPTION_NAME']").attr("placeholder","请输入"+_title+"名称");
+				var options={
+					url:www_v+"/option/addoption",
+					beforeSubmit:function(){
+						if(wainshow()==false){return false;}; 
+						if(unsafe_tap2()) return false; // 调用代码
+						if($("input[name='OPTION_NAME']").val().trim()==""){
+							plus.nativeUI.toast("请输入"+_title+"名称");
+							return false;
+						}
+					},
+					success:function(data){
+						//console.log(data);
+						check_ajax(data,function(data){
+							//console.log(JSON.stringify(data));
+							plus.nativeUI.toast("添加成功");
+						var list = plus.webview.getWebviewById('jinhuodengji_list.html');
+						mui.fire(list, 'refresh');
+						old_back();
+						})
+						
+					},error:function(e){
+						alert("服务端错误");
+					}
+				};
+				$("#form_info").ajaxForm(options);
+			})
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Hello MUI</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" href="../app/css/style.css">
+		<link rel="stylesheet" href="../app/css/public.css">
+		<link rel="stylesheet" href="../app/css/main.css">
+		<script src="../app/js/jquery.js"></script>
+		<!--App自定义的css-->
+		<!--<link rel="stylesheet" type="text/css" href="../css/app.css" />-->
+		<script>
+			(function(doc, win) {
+				var docEl = doc.documentElement,
+					resizeEvt = 'onorientationchange' in window ? 'onorientationchange' : 'resize',
+					recalc = function() {
+						var clientWidth = docEl.clientWidth;
+						if(!clientWidth) return;
+						if(clientWidth >= 750) {
+							docEl.style.fontSize = '100px';
+						} else {
+							docEl.style.fontSize = 100 * (clientWidth / 750) + 'px';
+						}
+						// docEl.style. visibility="visible";
+					};
+
+				if(!doc.addEventListener) return;
+				win.addEventListener(resizeEvt, recalc, false);
+				doc.addEventListener('DOMContentLoaded', recalc, false);
+			})(document, window);
+		</script>
+		<style>
+			.mui-control-content {
+				background-color: white;
+				/*min-height: 215px;*/
+			}
+			
+			.mui-control-content .mui-loading {
+				/*margin-top: 50px;*/
+			}
+		</style>
+	</head>
+
+	<body id="move-togger">
+		<div class="header">
+			<a class="back mui-action-back">
+				<img src="../app/images/back.png" alt="">
+			</a>
+			<h1>测试</h1>
+			<a class="home ">
+				<img src="../app/images/home.png" alt="" />
+			</a>
+		</div>
+
+		<div style="height:100%" id="slider" class="mui-slider">
+			<div style="position: fixed;top: 0.88rem;z-index: 3;" id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+				<a class="mui-control-item" href="#item1mobile">
+					待办公文
+				</a>
+				<a class="mui-control-item" href="#item2mobile">
+					已办公文
+				</a>
+				<a class="mui-control-item" href="#item3mobile">
+					全部公文
+				</a>
+			</div>
+			<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-4"></div>
+			<div style="padding-top: 1.76rem;height:100%" class="mui-slider-group">
+				<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+					<div id="scroll1" class="mui-scroll-wrapper">
+						<div class="mui-scroll">
+							<ul class="news_list">
+								<li value="59892b6bc28cb">
+									<p>
+										<span style="color:#c3e95c">户外</span>
+										<span style="color:#e7df05">关注</span>
+									</p>
+									<a class="content" href="../app/xiaoxi.html">
+										<div class="_img">
+											<img src="../app/images/ceshi/1.jpg" alt="曾经销量之王的福克斯迅速陨落！质量问题难以自拔">
+											<ul>
+												<li>
+													<p><img class="share" src="../app/images/pinglun.png" alt=""><i>0</i></p>
+												</li>
+												<li>
+													<p><img src="../app/images/zan.png" alt=""><i>1</i></p>
+												</li>
+											</ul>
+										</div>
+										<div class="_title">
+											<p>曾经销量之王的福克斯迅速陨落！质量问题难以自拔</p>
+											<b>2017-08-08</b>
+											<span>曾几何时，福特福克斯一直都是轿车销量榜上面一哥级别的人物，和大众朗逸分庭抗礼很多年的畅销车怎么突然消失了呢？</span>
+										</div>
+									</a>
+								</li>
+								<li value="59892b6bc28cb">
+									<p>
+										<span style="color:#c3e95c">户外</span>
+										<span style="color:#e7df05">关注</span>
+									</p>
+									<a class="content" href="../app/xiaoxi.html">
+										<div class="_img">
+											<img src="../app/images/ceshi/1.jpg" alt="曾经销量之王的福克斯迅速陨落！质量问题难以自拔">
+											<ul>
+												<li>
+													<p><img class="share" src="../app/images/pinglun.png" alt=""><i>0</i></p>
+												</li>
+												<li>
+													<p><img src="../app/images/zan.png" alt=""><i>1</i></p>
+												</li>
+											</ul>
+										</div>
+										<div class="_title">
+											<p>曾经销量之王的福克斯迅速陨落！质量问题难以自拔</p>
+											<b>2017-08-08</b>
+											<span>曾几何时，福特福克斯一直都是轿车销量榜上面一哥级别的人物，和大众朗逸分庭抗礼很多年的畅销车怎么突然消失了呢？</span>
+										</div>
+									</a>
+								</li>
+								<li value="59892b6bc28cb">
+									<p>
+										<span style="color:#c3e95c">户外</span>
+										<span style="color:#e7df05">关注</span>
+									</p>
+									<a class="content" href="../app/xiaoxi.html">
+										<div class="_img">
+											<img src="../app/images/ceshi/1.jpg" alt="曾经销量之王的福克斯迅速陨落！质量问题难以自拔">
+											<ul>
+												<li>
+													<p><img class="share" src="../app/images/pinglun.png" alt=""><i>0</i></p>
+												</li>
+												<li>
+													<p><img src="../app/images/zan.png" alt=""><i>1</i></p>
+												</li>
+											</ul>
+										</div>
+										<div class="_title">
+											<p>曾经销量之王的福克斯迅速陨落！质量问题难以自拔</p>
+											<b>2017-08-08</b>
+											<span>曾几何时，福特福克斯一直都是轿车销量榜上面一哥级别的人物，和大众朗逸分庭抗礼很多年的畅销车怎么突然消失了呢？</span>
+										</div>
+									</a>
+								</li>
+								<li value="59892b6bc28cb">
+									<p>
+										<span style="color:#c3e95c">户外</span>
+										<span style="color:#e7df05">关注</span>
+									</p>
+									<a class="content" href="../app/xiaoxi.html">
+										<div class="_img">
+											<img src="../app/images/ceshi/1.jpg" alt="曾经销量之王的福克斯迅速陨落！质量问题难以自拔">
+											<ul>
+												<li>
+													<p><img class="share" src="../app/images/pinglun.png" alt=""><i>0</i></p>
+												</li>
+												<li>
+													<p><img src="../app/images/zan.png" alt=""><i>1</i></p>
+												</li>
+											</ul>
+										</div>
+										<div class="_title">
+											<p>曾经销量之王的福克斯迅速陨落！质量问题难以自拔</p>
+											<b>2017-08-08</b>
+											<span>曾几何时，福特福克斯一直都是轿车销量榜上面一哥级别的人物，和大众朗逸分庭抗礼很多年的畅销车怎么突然消失了呢？</span>
+										</div>
+									</a>
+								</li>
+								<li value="59892b6bc28cb">
+									<p>
+										<span style="color:#c3e95c">户外</span>
+										<span style="color:#e7df05">关注</span>
+									</p>
+									<a class="content" href="../app/xiaoxi.html">
+										<div class="_img">
+											<img src="../app/images/ceshi/1.jpg" alt="曾经销量之王的福克斯迅速陨落！质量问题难以自拔">
+											<ul>
+												<li>
+													<p><img class="share" src="../app/images/pinglun.png" alt=""><i>0</i></p>
+												</li>
+												<li>
+													<p><img src="../app/images/zan.png" alt=""><i>1</i></p>
+												</li>
+											</ul>
+										</div>
+										<div class="_title">
+											<p>曾经销量之王的福克斯迅速陨落！质量问题难以自拔</p>
+											<b>2017-08-08</b>
+											<span>曾几何时，福特福克斯一直都是轿车销量榜上面一哥级别的人物，和大众朗逸分庭抗礼很多年的畅销车怎么突然消失了呢？</span>
+										</div>
+									</a>
+								</li>
+								<li value="59892b6bc28cb">
+									<p>
+										<span style="color:#c3e95c">户外</span>
+										<span style="color:#e7df05">关注</span>
+									</p>
+									<a class="content" href="../app/xiaoxi.html">
+										<div class="_img">
+											<img src="../app/images/ceshi/1.jpg" alt="曾经销量之王的福克斯迅速陨落！质量问题难以自拔">
+											<ul>
+												<li>
+													<p><img class="share" src="../app/images/pinglun.png" alt=""><i>0</i></p>
+												</li>
+												<li>
+													<p><img src="../app/images/zan.png" alt=""><i>1</i></p>
+												</li>
+											</ul>
+										</div>
+										<div class="_title">
+											<p>曾经销量之王的福克斯迅速陨落！质量问题难以自拔</p>
+											<b>2017-08-08</b>
+											<span>曾几何时，福特福克斯一直都是轿车销量榜上面一哥级别的人物，和大众朗逸分庭抗礼很多年的畅销车怎么突然消失了呢？</span>
+										</div>
+									</a>
+								</li>
+								<li value="59892b6bc28cb">
+									<p>
+										<span style="color:#c3e95c">户外</span>
+										<span style="color:#e7df05">关注</span>
+									</p>
+									<a class="content" href="../app/xiaoxi.html">
+										<div class="_img">
+											<img src="../app/images/ceshi/1.jpg" alt="曾经销量之王的福克斯迅速陨落！质量问题难以自拔">
+											<ul>
+												<li>
+													<p><img class="share" src="../app/images/pinglun.png" alt=""><i>0</i></p>
+												</li>
+												<li>
+													<p><img src="../app/images/zan.png" alt=""><i>1</i></p>
+												</li>
+											</ul>
+										</div>
+										<div class="_title">
+											<p>曾经销量之王的福克斯迅速陨落！质量问题难以自拔</p>
+											<b>2017-08-08</b>
+											<span>曾几何时，福特福克斯一直都是轿车销量榜上面一哥级别的人物，和大众朗逸分庭抗礼很多年的畅销车怎么突然消失了呢？</span>
+										</div>
+									</a>
+								</li>
+								<li value="59892b6bc28cb">
+									<p>
+										<span style="color:#c3e95c">户外</span>
+										<span style="color:#e7df05">关注</span>
+									</p>
+									<a class="content" href="../app/xiaoxi.html">
+										<div class="_img">
+											<img src="../app/images/ceshi/1.jpg" alt="曾经销量之王的福克斯迅速陨落！质量问题难以自拔">
+											<ul>
+												<li>
+													<p><img class="share" src="../app/images/pinglun.png" alt=""><i>0</i></p>
+												</li>
+												<li>
+													<p><img src="../app/images/zan.png" alt=""><i>1</i></p>
+												</li>
+											</ul>
+										</div>
+										<div class="_title">
+											<p>曾经销量之王的福克斯迅速陨落！质量问题难以自拔</p>
+											<b>2017-08-08</b>
+											<span>曾几何时，福特福克斯一直都是轿车销量榜上面一哥级别的人物，和大众朗逸分庭抗礼很多年的畅销车怎么突然消失了呢？</span>
+										</div>
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div id="item2mobile" class="mui-slider-item mui-control-content">
+					<div id="scroll2" class="mui-scroll-wrapper">
+						<div class="mui-scroll">
+							<!--<ul class="news_list">
+								<li>123</li>
+							</ul>-->
+						</div>
+					</div>
+				</div>
+				<div id="item3mobile" class="mui-slider-item mui-control-content">
+					<div id="scroll3" class="mui-scroll-wrapper">
+						<div class="mui-scroll">
+							<!--<ul class="news_list">
+								<li>456</li>
+							</ul>-->
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<!--<div id="slider" class="mui-slider" style="height: 0.88rem;z-index: 3;position: fixed;top: 0.88rem;">
+			<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+				<div class="mui-scroll" style="width:100%;">
+					<a class="mui-control-item" href="#item1mobile">
+						待办公文
+					</a>
+					<a class="mui-control-item" href="#item2mobile">
+						已办公文
+					</a>
+					<a class="mui-control-item" href="#item3mobile">
+						全部公文
+					</a>
+				</div>
+			</div>
+		</div>
+		<div style="height:100%;padding-top:1.76rem">
+			<div id="pullrefresh" class="mui-content mui-scroll-wrapper" style="height: 100%;position: relative;">
+				<div class="mui-scroll mui-slider-group">
+					<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+						<ul class="news_list">
+							<li value="59892b6bc28cb">
+								<p>
+									<span style="color:#c3e95c">户外</span>
+									<span style="color:#e7df05">关注</span>
+								</p>
+								<a class="content" href="../app/xiaoxi.html">
+									<div class="_img">
+										<img src="../app/images/ceshi/1.jpg" alt="曾经销量之王的福克斯迅速陨落！质量问题难以自拔">
+										<ul>
+											<li>
+												<p><img class="share" src="../app/images/pinglun.png" alt=""><i>0</i></p>
+											</li>
+											<li>
+												<p><img src="../app/images/zan.png" alt=""><i>1</i></p>
+											</li>
+										</ul>
+									</div>
+									<div class="_title">
+										<p>曾经销量之王的福克斯迅速陨落！质量问题难以自拔</p>
+										<b>2017-08-08</b>
+										<span>曾几何时，福特福克斯一直都是轿车销量榜上面一哥级别的人物，和大众朗逸分庭抗礼很多年的畅销车怎么突然消失了呢？</span>
+									</div>
+								</a>
+							</li>
+						</ul>
+					</div>
+					<div id="item2mobile" class="mui-slider-item mui-control-content">
+						<ul class="news_list">
+						</ul>
+					</div>
+					<div id="item3mobile" class="mui-slider-item mui-control-content">
+						<ul class="news_list">
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>-->
+		<script src="../js/mui.min.js"></script>
+		<script>
+			(function($) {
+//							//阻尼系数
+				var deceleration = mui.os.ios ? 0.003 : 0.0009;
+				$('.mui-scroll-wrapper').scroll({
+					bounce: false,
+					indicators: true, //是否显示滚动条
+					deceleration: deceleration
+				});
+			})(mui);
+
+									mui.plusReady(function() {
+										mui.init({
+											swipeBack: true,
+											keyEventBind: {
+												//backbutton: false //关闭back按键监听
+											}
+											,
+											pullRefresh: {
+												container: '#item1mobile',
+												up: {
+													contentrefresh: '正在加载...',
+													callback: pullupRefresh
+												}
+											}
+										});
+										/**
+										 * 上拉加载具体业务实现
+										 */
+										/*到底部加载数据*/
+										var next = 0;
+										var can_post = true;
+										var self = plus.webview.currentWebview(); //当前页面
+										var page = self.page; //获得参数
+						
+										function pullupRefresh() {
+											if(can_post) {
+												can_post = false;
+												var datas = {
+													"next": ++next
+												}
+												$.post("http://www.zhizhiboshi.com/contentlist/hotgetxia.html?nextrow=40&firstrow=20&lable=", datas, function(data) {
+													console.log(data);
+													if(data == "") {
+														can_post = false;
+														mui('#item1mobile').pullRefresh().endPullupToRefresh((!can_post));
+													} else { 
+														mui('#item1mobile').pullRefresh().endPullupToRefresh((can_post)); //参数为true代表没有更多数据了。
+														for(var i = 0, str = ""; i < 1; i++) {
+															str += '<li value="59892b6bc28cb">' +
+																'<p>' +
+																'<span style="color:#c3e95c">户外</span>' +
+																'<span style="color:#e7df05">关注</span>' +
+																'</p>' +
+																' <a class="content" href="../xiaoxi.html" >' +
+																'<div class="_img">' +
+																'<img src="../app/images/ceshi/1.jpg" alt="曾经销量之王的福克斯迅速陨落！质量问题难以自拔">' +
+																'<ul>' +
+																'<li><p><img class="share" src="../app/images/pinglun.png" alt=""><i>0</i></p></li>' +
+																'<li><p><img src="../app/images/zan.png" alt=""><i>1</i></p></li>' +
+																'</ul>' +
+																'</div>' +
+																'<div class="_title">' +
+																'<p>曾经销量之王的福克斯迅速陨落！质量问题难以自拔</p>' +
+																'<b>2017-08-08</b>' +
+																'<span>曾几何时，福特福克斯一直都是轿车销量榜上面一哥级别的人物，和大众朗逸分庭抗礼很多年的畅销车怎么突然消失了呢？</span>' +
+																'</div>' +
+																'</a>' +
+																'</li>';
+														}
+														$(".news_list").append(str);
+														can_post = true;
+													}
+												})
+											}
+										}
+										
+						
+									});
+									if(mui.os.plus) {
+											mui.plusReady(function() {
+												setTimeout(function() {
+													mui('#item1mobile').pullRefresh().pullupLoading();
+												}, 1000);
+											});
+										} else { 
+											mui.ready(function() {
+												mui('#item1mobile').pullRefresh().pullupLoading();
+											});
+										}
+		</script>
+		<script src="../app/js/public.js"></script>
+	</body>
+
+</html>

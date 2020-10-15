@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>我的</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/public.css">
+		<link rel="stylesheet" href="css/main.css">
+		<script src="js/jquery.js"></script>
+	</head>
+
+	<body style="background-color:#fff">
+		<div class="header_box">
+			<div class="header">
+				<a class="back mui-action-back">
+					<img src="images/back.png" alt="">
+				</a>
+				<h1>我的</h1>
+				<a class="home ">
+					<img src="images/home.png" alt="" />
+				</a>
+			</div>
+		</div>
+		<div class="my_head">
+			<a href="">
+				<b><img id="EN_USER_PROFILE" src="images/user_profile.jpg" alt="" /></b>
+				<span id="EN_USER_NAME"></span> 
+			</a>
+		</div>
+		<div id="form_info"  class="register_list register_list_long">
+			<ul>
+				<li>
+					<span>单&nbsp;位&nbsp;名&nbsp;称&nbsp;：</span>
+					<div>
+						<input type="text" name="ENTERPRISE_NAME"  value="" readonly/>
+						<div>
+							<span></span>
+						</div>
+					</div>
+				</li>
+				<li class="xiaji" style="display: none;">
+					<span>单&nbsp;位&nbsp;档&nbsp;案&nbsp;：</span>
+					<a id="change_danweidangan" href="danweidangan.html" data-waid="danweidangan.html" data-spec="ture">
+						<input type="text" name=""  value="" readonly/>
+						<div>
+							<span class="input_tip_more"></span>
+						</div>
+					</a>
+				</li>
+				<li>
+					<span>修改手机号：</span>
+					<a id="change_phone" href="xiugaishoujihao.html" data-spec="ture" data-id="xiugaishoujihao.html">
+						<span></span>
+						<div>
+							<span class="input_tip_more"></span>
+						</div>
+					</a>
+				</li>
+				<li>
+					<span>修&nbsp;改&nbsp;密&nbsp;码&nbsp;：</span>
+					<a href="xiugaimima.html" data-id="xiugaimima.html">
+						<span></span>
+						<div>
+							<span class="input_tip_more"></span>
+						</div>
+					</a>
+				</li>
+				<li class="xiaji" style="display: none;">
+					<span>下&nbsp;级&nbsp;用&nbsp;户&nbsp;：</span>
+					<a href="xiajiyonghu.html" data-id="xiajiyonghu.html">
+						<span></span>
+						<div>
+							<span class="input_tip_more"></span>
+						</div>
+					</a>
+				</li>
+			</ul>
+			
+			<div class="submit_btn_box ">
+				<button class="bozhong_submit " id='exit'>退出</button>
+			</div>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="js/init.js"></script>
+		<script src="js/public.js"></script>
+		<script>
+			mui.init();
+			mui.plusReady(function() {
+				if(wainshow()==false){return false;};
+				$.ajax(www_v+"/user/index", {
+					data: {"token":getToken(),"EN_USER_ID":getState().en_user_id},
+					type: 'post', //HTTP请求类型
+					timeout: 50000, //超时时间设置为10秒；
+					success: function(data) {
+						check_ajax(data,function(data){
+										//console.log(JSON.stringify(data)); 
+										$("#EN_USER_PROFILE").attr("src",www+data.EN_USER_PROFILE);//头像
+										$("#EN_USER_NAME").html(data.EN_USER_NAME);//用户名
+										$("input[name='ENTERPRISE_NAME']").val(data.ENTERPRISE_NAME);//单位名称
+										if(data.EN_USER_LEVEL==1){
+											$(".xiaji").css("display","block");
+										}
+										var ENTERPRISE_MOBILE=data.ENTERPRISE_MOBILE;
+										var ENTERPRISE_NAME=data.ENTERPRISE_NAME;
+										var ENTERPRISE_CHARGE=data.ENTERPRISE_CHARGE;
+										mui('body').on('tap', '#change_phone', function() {
+											var webview_style = {
+												popGesture: "hide"
+											}
+											var extras = {"ENTERPRISE_MOBILE":ENTERPRISE_MOBILE,"ENTERPRISE_NAME":ENTERPRISE_NAME,"ENTERPRISE_CHARGE":ENTERPRISE_CHARGE};
+											var id="xiugaishoujihao.html";
+											var href="xiugaishoujihao.html";
+											var old_id=plus.webview.getWebviewById(id);
+												if(old_id){
+													old_id.close("none",0);
+												}
+											var webview = plus.webview.create(href, id, webview_style, extras);
+											webview.addEventListener("titleUpdate", function() {
+												setTimeout(function() {
+													webview.show('pop-in', 300);
+												}, 100);
+											});
+										})
+										mui('body').on('tap', '#change_danweidangan', function() {
+											var webview_style = {
+												popGesture: "hide"
+											}
+											var extras = {"ENTERPRISE_NAME":data.ENTERPRISE_NAME};
+											var id="danweidangan.html";
+											var href="danweidangan.html";
+											var old_id=plus.webview.getWebviewById(id);
+												if(old_id){
+													old_id.close("none",0);
+												}
+											var webview = plus.webview.create(href, id, webview_style, extras);
+											webview.addEventListener("titleUpdate", function() {
+												setTimeout(function() {
+													webview.show('pop-in', 300);
+												}, 100);
+											});
+										})
+									})
+					},
+					error: function(xhr, type, errorThrown, selfs) {
+						if(type == "timeout") {
+							alert("请求超时");
+						} else if(type == "abort") {
+							alert("请检查您的网络");
+						} else if(type == "error") {
+							alert("服务端错误");
+						}
+					}
+				});
+				
+				
+
+				
+				
+				
+				
+				//退出操作******************
+		document.getElementById('exit').addEventListener('tap', function() {
+//			if (mui.os.ios) {
+//				app.setState({});
+//				mui.openWindow({
+//					url: 'login.html',
+//					id: 'login',
+//					show: {
+//						aniShow: 'pop-in'
+//					},
+//					waiting: {
+//						autoShow: false
+//					}
+//				});
+//				return;
+//			}
+			var btnArray = [{
+				title: "注销当前账号"
+			}, {
+				title: "直接关闭应用"
+			}];
+			plus.nativeUI.actionSheet({
+				cancel: "取消",
+				buttons: btnArray
+			}, function(event) {
+				var index = event.index;
+				switch (index) {
+					case 1:
+						//注销账号
+
+						setState();
+						/*
+						 * 注意：
+						 * 1、因本示例应用启动页就是登录页面，因此注册成功后，直接显示登录页即可；
+						 * 2、如果真实案例中，启动页不是登录页，则需修改，使用mui.openWindow打开真实的登录页面
+						 */
+						//plus.webview.getLaunchWebview().show("pop-in");
+						//若启动页不是登录页，则需通过如下方式打开登录页
+						mui.openWindow({
+							url: '/./login.html',
+							id: 'login.html',
+							show: {
+								aniShow: 'pop-in'
+							}
+						});
+						break;
+					case 2:
+						plus.runtime.quit();
+						break;
+				}
+			});
+		}, false);
+			})
+			
+			
+			
+		</script>
+	</body>
+
+</html>

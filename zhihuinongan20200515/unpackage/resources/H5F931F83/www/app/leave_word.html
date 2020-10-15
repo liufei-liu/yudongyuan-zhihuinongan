@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+		<meta charset="utf-8">
+		<title>发表评论</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/public.css">
+		<link rel="stylesheet" href="css/main.css">
+		<link rel="stylesheet" href="css/content.css">
+		<script src="js/jquery.js"></script>
+</head>
+<body>
+<!--头部-->
+		<div class="header_box">
+			<div class="header">
+				<a class="back mui-action-back">
+					<img src="images/back.png" alt="">
+				</a>
+				<h1>发表评论</h1>
+				<a class="home ">
+					<img src="images/home.png" alt="" />
+				</a>
+			</div>
+		</div>
+<div class="leave_word_box">
+    <p></p>
+    <textarea placeholder="请写下你的评论，对所有人可见。" maxlength="400"></textarea>
+    <span class="leave_word_error"></span>
+    <button class="go_leave_word">提交</button>
+</div>
+<script src="../js/mui.min.js"></script>
+<script src="js/jquery.form.min.js"></script>
+<script src="js/init.js"></script>
+<script src="js/public.js"></script>
+<script>
+	mui.init();
+	mui.plusReady(function() {	
+		/*提交表单的返回*/
+				var can_back=true;
+				$("body").on("keyup",function(){
+					can_back=false;
+				})
+			 	var old_back=mui.back;
+				mui.back=function(){
+					if(can_back){
+						old_back();
+					}else{
+						var btnArray = ['否', '是'];
+		                mui.confirm('确认要返回么，确认？', TITLE, btnArray, function(e) {
+		                    if (e.index == 1) {
+		                        old_back();
+		                    }
+		                })
+					}	
+				}
+		var _self = plus.webview.currentWebview();
+		var CONTENT_ID = _self.CONTENT_ID;
+		var ARTICLE_TITLE = _self.TITLE;
+		$(".leave_word_box>p").html(ARTICLE_TITLE);
+	    function leaveword(){
+	    	if(unsafe_tap2()) return; // 调用代码
+	        var COMMENT=$("textarea").val();
+	        COMMENT=COMMENT.replace(/(^\s*)|(\s*$)/g, "");
+	        if(COMMENT!=""){
+	        	if(wainshow()==false){return false;};
+	            $.ajax(www_v+"/content/addcomment", {
+					data: {"CONTENT_ID":CONTENT_ID,"EN_USER_ID":getState().en_user_id,"COMMENT":COMMENT,"token":getToken()},
+					type: 'post', //HTTP请求类型
+					timeout: 50000, //超时时间设置为10秒；
+					success: function(data) {
+						check_ajax(data,function(data){
+					               	//console.log(JSON.stringify(data));
+					               	 plus.nativeUI.toast("发表成功");
+					                var webview_style = {
+										popGesture: "hide "
+									}
+									var extras = {"CONTENT_ID":CONTENT_ID};
+									var id='article.html';
+									var href='article.html';
+									var old_id=plus.webview.getWebviewById(id);
+									if(old_id){
+										old_id.close("none",0);
+									}
+									var webview = plus.webview.create(href, id, webview_style, extras);
+									webview.addEventListener("titleUpdate", function() {
+										setTimeout(function() {
+											webview.show('pop-in', 300);
+										}, 100);
+									}); 
+									setTimeout(function() {
+									 plus.webview.currentWebview().close("none",0);  
+								}, 500);
+					               })  
+					},
+					error: function(xhr, type, errorThrown, selfs) {
+						if(type == "timeout") {
+							alert("请求超时");
+						} else if(type == "abort") {
+							alert("请检查您的网络");
+						} else if(type == "error") {
+							alert("服务端错误");
+						}
+					}
+				});
+
+	        }else{
+	            plus.nativeUI.toast("留言失败");
+	        }
+	
+	    }
+	    $(".go_leave_word").on("tap",function(){
+	        leaveword();
+	    })
+	});
+</script>
+</body>
+</html> 

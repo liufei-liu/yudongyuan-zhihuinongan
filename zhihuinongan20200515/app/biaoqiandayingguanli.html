@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1">
+		<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="format-detection" content="email=no">
+		<meta http-equiv="Expires" content="0">
+		<meta http-equiv="Pragma" content="no-cache">
+		<meta http-equiv="Cache-control" content="no-cache">
+		<meta http-equiv="Cache" content="no-cache">
+		<title>标签打印管理</title>
+		<meta name="keywords" content="">
+		<meta name="Description" content="">
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/public.css">
+		<link rel="stylesheet" href="css/main.css">
+		<script src="js/jquery.js"></script>
+		<style>
+			
+			#RECORD_YEAR{
+				position: absolute;
+				left: 0.2rem;top: 0;
+				display: none;
+				width: 1.44rem;
+			}
+			#RECORD_YEAR_recording{
+				position: absolute;
+				left: 0.2rem;top: 0;
+				display: none;
+				width: 1.44rem;
+				background-color: #009900;
+				
+			}
+			.search_box{
+				padding-left: 1.8rem;
+				float: left;
+				
+			}
+			.tip {
+				text-align: left;
+				font-size: 16px;
+				margin: 0;
+				color: #FF9C3C;
+				padding: 0.2rem;
+			}
+			
+			.record_list_ewm {}
+			
+			.record_list_ewm>li>a>div {
+				padding-left: 0;
+				overflow: hidden;
+				height: 1.72rem;
+			}
+			
+			.record_list_ewm>li>a>div>p {
+				float: left;
+			}
+			
+			.record_list_ewm>li>a>div>p:first-child {
+				width: 100%;
+			}
+		</style>
+		<style>
+			html,
+			body {
+				background-color: #efeff4;
+			}
+			
+			.mui-bar~.mui-content .mui-fullscreen {
+				top: 44px;
+				height: auto;
+			}
+			
+			.mui-pull-top-tips {
+				position: absolute;
+				top: -20px;
+				left: 50%;
+				margin-left: -25px;
+				width: 40px;
+				height: 40px;
+				border-radius: 100%;
+				z-index: 1;
+			}
+			
+			.mui-bar~.mui-pull-top-tips {
+				top: 24px;
+			}
+			
+			.mui-pull-top-wrapper {
+				width: 42px;
+				height: 42px;
+				display: block;
+				text-align: center;
+				background-color: #efeff4;
+				border: 1px solid #ddd;
+				border-radius: 25px;
+				background-clip: padding-box;
+				box-shadow: 0 4px 10px #bbb;
+				overflow: hidden;
+			}
+			
+			.mui-pull-top-tips.mui-transitioning {
+				-webkit-transition-duration: 200ms;
+				transition-duration: 200ms;
+			}
+			
+			.mui-pull-top-tips .mui-pull-loading {
+				/*-webkit-backface-visibility: hidden;
+				-webkit-transition-duration: 400ms;
+				transition-duration: 400ms;*/
+				margin: 0;
+			}
+			
+			.mui-pull-top-wrapper .mui-icon,
+			.mui-pull-top-wrapper .mui-spinner {
+				margin-top: 7px;
+			}
+			
+			.mui-pull-top-wrapper .mui-icon.mui-reverse {
+				/*-webkit-transform: rotate(180deg) translateZ(0);*/
+			}
+			
+			.mui-pull-bottom-tips {
+				text-align: center;
+				background-color: #efeff4;
+				font-size: 15px;
+				line-height: 40px;
+				color: #777;
+			}
+			
+			.mui-pull-top-canvas {
+				overflow: hidden;
+				background-color: #fafafa;
+				border-radius: 40px;
+				box-shadow: 0 4px 10px #bbb;
+				width: 40px;
+				height: 40px;
+				margin: 0 auto;
+			}
+			
+			.mui-pull-top-canvas canvas {
+				width: 40px;
+			}
+			
+			.mui-slider-indicator.mui-segmented-control {
+				background-color: #efeff4;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="header_box">
+			<div class="header">
+				<a class="back mui-action-back">
+					<img src="images/newImgs/newback.png" alt="">
+				</a>
+				<h1>标签打印管理</h1>
+				<a class="home ">
+					<img src="images/newImgs/home.png" alt="" />
+				</a>
+			</div>
+		</div>
+		<div class="mui-content">
+			<div style="top:0.88rem" id="slider" class="mui-slider mui-fullscreen">
+				<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+					<div class="mui-scroll" style="width: 100%;padding: 0 0.2rem;">
+						<a class="mui-control-item mui-active" href="#item1mobile" style="width:50%;padding:0;" id="onepage">
+							标签打印
+						</a>
+						<a class="mui-control-item" href="#item2mobile" style="width:50%;padding:0;" id="towpage">
+							打印记录
+						</a>
+					</div>
+				</div>
+				<div class="mui-slider-group">
+					<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+						<!-- <div id="scroll1"> -->
+
+							<form action="" id="form" method="post">
+								<div class="label_search_box_box">
+									<div class="search_box">
+										<button type="button" id="RECORD_YEAR" class="mui-btn mui-btn-outlined"style="background-color: #63DC63; color: whitesmoke; border:1px solid #63DC63;">2018</button>
+										<div class="mui-input-row mui-search">
+											<input type="search" name="PRO_BATCH_NAME" class="mui-input-clear" placeholder="请输入要查找的批次名称">
+										</div>
+										<input type="submit" value="搜索" style="position: absolute;right:0.2rem;top:0;background-color: #63DC63;border:1px solid #63DC63;" />
+									</div>
+								</div>
+							</form>
+							<div id="pullrefresh" style="position: fixed;bottom: 0;width: 100%;left: 0;top: 1.3rem;overflow:auto">
+								<ul class=" print_list" id="print_list">
+
+
+
+								</ul>
+							</div>
+
+						<!-- </div> -->
+					</div>
+					
+				</div>
+			</div>
+		</div>
+
+		<script src="../js/mui.min.js"></script>
+		<!--<script src="../js/mui.pullToRefresh.js"></script>
+		<script src="../js/mui.pullToRefresh.material.js"></script>-->
+		<script src="lib/layer/layer.js"></script>
+		<script src="js/jquery.form.min.js"></script>
+		<script src="js/init.js"></script>
+		<script src="js/public.js"></script>
+		<script>
+			var _url = "http://m.jnzhna.com/api107";
+			var can_post = true; //是否可以发送数据
+
+			var next = 0;
+
+			var PRO_BATCH_NAME = "";
+			var STATE = JSON.parse(JSON.stringify(getState()));
+			if (STATE.jilushengchanYear == undefined) {
+				STATE.jilushengchanYear = 0
+				setState(STATE)
+			}
+			var RECORD_YEAR = STATE.jilushengchanYear;
+			if (RECORD_YEAR == 0) {
+				$("#RECORD_YEAR").html('全部').show();
+			} else {
+				$("#RECORD_YEAR").html(RECORD_YEAR + '年').show();
+			}
+			var RECORD_YEAR_ARR = [{
+				title: '全部',
+				name: 0
+			}];
+			for (var i = new Date().getFullYear(); i >= 2018; i--) {
+				RECORD_YEAR_ARR.push({
+					title: i + '年',
+					name: i
+				})
+			}
+			//记录
+			var can_post_recording = true;
+			var next_recording = 0;
+			var PRO_BATCH_NAME_recording = "";
+			var STATE_recording = JSON.parse(JSON.stringify(getState()));
+			if (STATE_recording.jilushengchanYear == undefined) {
+				STATE_recording.jilushengchanYear = 0
+				setState(STATE_recording)
+			}
+			var RECORD_YEAR_recording = STATE_recording.jilushengchanYear;
+			if (RECORD_YEAR_recording == 0) {
+				$("#RECORD_YEAR_recording").html('全部').show();
+				$("#RECORD_YEAR_recording").css({"background":"red"});
+			} else {
+				$("#RECORD_YEAR_recording").html(RECORD_YEAR_recording + '年').show();
+			}
+			var RECORD_YEAR_ARR_recording = [{
+				title: '全部',
+				name: 0
+			}];
+			for (var i = new Date().getFullYear(); i >= 2018; i--) {
+				RECORD_YEAR_ARR_recording.push({
+					title: i + '年',
+					name: i
+				})
+			}
+
+
+			var creatLi = function(ishtml, callback) {
+				// mui.plusReady(function() {
+				if (can_post) {
+					console.info(www_v);
+					can_post = false;
+
+					$.ajax(www_v + "/label_manage/printlabel", {
+						data: {
+							"token": getToken(),
+							"PAGE_NUM": next++,
+							"RECORD_YEAR": RECORD_YEAR,
+							"EN_USER_ID": getState().en_user_id,
+							"ENTERPRISE_ID": getState().enterprise_id,
+							"PRO_BATCH_NAME": PRO_BATCH_NAME
+						},
+						type: 'post',
+						timeout: 50000,
+						success: function(data) {
+							check_ajax(data, function(data) {
+								var ul = mui('.print_list');
+
+								if (data == "") {
+									can_post = false;
+									mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+									if (ishtml) {
+										$(ul).html('');
+									}
+								} else {
+									for (var i = 0, str = ""; i < data.length; i++) {
+
+										str += ' <li value="' + data[i].registration_id + '">' +
+											'<a >' +
+											'<img class="print_list_img" style="height: 1.32rem;" src="' + www + data[i].img_url + '" alt=""/>' +
+											'<div>' +
+											'<div class="print_btn">' + "打印" + '</div>' +
+											'<p>批次名称：<span>' + data[i].pro_batch_name + '</span></p>' +
+
+											'<p>产品名称：<span>' + data[i].pro_catalog_name + '</span></p>' +
+											'<b>' + data[i].create_time + '</b>' +
+											'</div>' +
+											'</a>' +
+											'</li>';
+									}
+									if (ishtml) {
+
+										$(ul).html(str);
+									} else {
+
+										$(ul).append(str);
+									}
+
+									mui('#pullrefresh').pullRefresh().endPullupToRefresh(false);
+									mui('#pullrefresh').pullRefresh().enablePullupToRefresh();
+									can_post = true;
+								}
+								if (callback) {
+									callback()
+								}
+							})
+						},
+						error: function(xhr, type, errorThrown) {
+							setTimeout(function() {
+								mui("#pullrefresh").pullToRefresh().endPullUpToRefresh(false);
+							}, 500)
+							
+							ajaxerr(arguments)
+						}
+					});
+				} else {
+					mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+				}
+				
+
+			}
+
+			window.addEventListener('listenerWorkState', function(e) {
+				creatLi();	
+			});
+
+			var upAjax1 = function() {
+				creatLi();				
+			}
+			
+			mui.init({
+				gestureConfig: {
+					longtap: true, //默认为false
+					release: true
+				},
+				pullRefresh:				
+				 {
+					container: "#pullrefresh",
+					//下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等
+					up: {
+						contentrefresh: '正在加载...',
+						contentnomore: '没有更多数据了',
+						callback: upAjax1,
+						auto: true,
+						height: 50
+					}
+				},
+									
+			});
+			
+			
+			mui('body').on('tap', '#towpage', function() {
+				mui.openWindow({
+						url: 'biaoqiandayingguanli_jilu.html',
+						id: 'biaoqiandayingguanli_jilu',
+						styles: {
+								top: '85px', //mui标题栏默认高度为45px；
+								 //默认为0px，可不定义；
+							    bottom:'0px'
+						}
+					});
+				
+			});	
+			mui('body').on('tap', '#onepage', function() {
+					plus.webview.getWebviewById('biaoqiandayingguanli_jilu').close();
+					// mui.back();
+				});	
+			mui('body').on('tap', '.print_btn', function() {
+				var val = $(this).parents("li").attr("value");
+				console.info(val);
+				mui.openWindow({
+						url: 'biaoqiandaying_dayin.html',
+						id: 'biaoqiandaying_dayin',
+						styles: {
+								top: '85px', //mui标题栏默认高度为45px；
+								 //默认为0px，可不定义；
+							    bottom:'0px'
+						},
+						extras: {
+						           REGISTRATION_ID: val
+						        }
+					});
+				
+			});
+			
+			var options = {
+				beforeSubmit: function() {
+					if (wainshow() == false) {
+						return false;
+					}
+					var search = $("input[name='PRO_BATCH_NAME']").val();
+					can_post = true;
+					next = 0;
+					PRO_BATCH_NAME = search;
+					$("#print_list").hide()
+					var loadindex = layer.load(1);
+					creatLi(true, function() {
+						layer.close(loadindex);
+						$("#print_list").show()
+					});
+					$("input[name='PRO_BATCH_NAME']").blur();
+					return false;
+				}
+			};
+			$("#form").ajaxForm(options);
+			document.getElementById("RECORD_YEAR").addEventListener('tap', function() {
+				var self = this;
+				plus.nativeUI.actionSheet({
+					cancel: "取消",
+					buttons: RECORD_YEAR_ARR
+				}, function(e) {
+
+					var i = e.index;
+
+					if (i > 0) {
+						var title = RECORD_YEAR_ARR[i - 1].title;
+
+						$(self).html(title)
+
+						RECORD_YEAR = RECORD_YEAR_ARR[i - 1].name;
+						next = 0;
+						can_post = true;
+						var state = getState()
+						state.jilushengchanYear = RECORD_YEAR
+						setState(state)
+						var loadindex = layer.load(1);
+						creatLi(true, function() {
+							layer.close(loadindex);
+							$("#print_list").show()
+						});
+					}
+				});
+			});
+
+			
+		</script>
+        <style type="text/css">
+        	
+        </style>
+	</body>
+
+</html>

@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1">
+		<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="format-detection" content="email=no">
+		<meta http-equiv="Expires" content="0">
+		<meta http-equiv="Pragma" content="no-cache">
+		<meta http-equiv="Cache-control" content="no-cache">
+		<meta http-equiv="Cache" content="no-cache">
+		<title>收获/出售</title>
+		<meta name="keywords" content="">
+		<meta name="Description" content="">
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/public.css">
+		<link rel="stylesheet" href="css/main.css">
+		<script src="js/jquery.js"></script>
+		<style type="text/css">
+			.tip {
+				text-align: left;
+				font-size: 16px;
+				margin: 0;
+				color: #FF9C3C;
+				padding: 0.2rem;
+			}
+			.btnPace{
+				width: 100%;
+				height: 0.8rem;
+				margin-top: 0.1rem;
+				color: white;
+				font-size: 0.35rem;
+				line-height: 0.8rem;
+				text-align: center;
+				
+			}
+			.printNO{
+				width: 40%;
+				height: 100%;
+				background-color: #6D6D72;
+				float: left;
+				font-weight:bold;
+				margin-left: 5%;
+			}
+			.printYes{
+				width: 40%;
+				height: 100%;
+				background-color: #63DC63;
+				float: right;
+				font-weight:bold;
+				margin-right: 5%;
+			}
+			.searchDevicesbtn,.openBluetooth,.searchDevice{
+				width: 90%;
+				height: 100%;
+				background-color: #63DC63;
+				font-weight:bold;
+				margin: 0px auto;
+			}
+			.mui-preview-image.mui-fullscreen {
+				position: fixed;
+				z-index: 9999999;
+				background-color: #000;
+			}
+
+			.mui-preview-header,
+			.mui-preview-footer {
+				position: absolute;
+				width: 100%;
+				left: 0;
+				z-index: 10;
+			}
+
+			.mui-preview-header {
+				height: 44px;
+				top: 0;
+			}
+
+			.mui-preview-footer {
+				height: 50px;
+				bottom: 0px;
+			}
+
+			.mui-preview-header .mui-preview-indicator {
+				display: block;
+				line-height: 25px;
+				color: #fff;
+				text-align: center;
+				margin: 15px auto 4;
+				width: 70px;
+				background-color: rgba(0, 0, 0, 0.4);
+				border-radius: 12px;
+				font-size: 16px;
+			}
+
+			.mui-preview-image {
+				display: none;
+				-webkit-animation-duration: 0.5s;
+				animation-duration: 0.5s;
+				-webkit-animation-fill-mode: both;
+				animation-fill-mode: both;
+			}
+
+			.mui-preview-image.mui-preview-in {
+				-webkit-animation-name: fadeIn;
+				animation-name: fadeIn;
+			}
+
+			.mui-preview-image.mui-preview-out {
+				background: none;
+				-webkit-animation-name: fadeOut;
+				animation-name: fadeOut;
+			}
+
+			.mui-preview-image.mui-preview-out .mui-preview-header,
+			.mui-preview-image.mui-preview-out .mui-preview-footer {
+				display: none;
+			}
+
+			.mui-zoom-scroller {
+				position: absolute;
+				display: -webkit-box;
+				display: -webkit-flex;
+				display: flex;
+				-webkit-box-align: center;
+				-webkit-align-items: center;
+				align-items: center;
+				-webkit-box-pack: center;
+				-webkit-justify-content: center;
+				justify-content: center;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				margin: 0;
+				-webkit-backface-visibility: hidden;
+			}
+
+			.mui-zoom {
+				-webkit-transform-style: preserve-3d;
+				transform-style: preserve-3d;
+			}
+
+			.mui-slider .mui-slider-group .mui-slider-item img {
+				width: auto;
+				height: auto;
+				max-width: 100%;
+				max-height: 100%;
+			}
+
+			.mui-android-4-1 .mui-slider .mui-slider-group .mui-slider-item img {
+				width: 100%;
+			}
+
+			.mui-android-4-1 .mui-slider.mui-preview-image .mui-slider-group .mui-slider-item {
+				display: inline-table;
+			}
+
+			.mui-android-4-1 .mui-slider.mui-preview-image .mui-zoom-scroller img {
+				display: table-cell;
+				vertical-align: middle;
+			}
+
+			.mui-preview-loading {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				top: 0;
+				left: 0;
+				display: none;
+			}
+
+			.mui-preview-loading.mui-active {
+				display: block;
+			}
+
+			.mui-preview-loading .mui-spinner-white {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				margin-left: -25px;
+				margin-top: -25px;
+				height: 50px;
+				width: 50px;
+			}
+
+			.mui-preview-image img.mui-transitioning {
+				-webkit-transition: -webkit-transform 0.5s ease, opacity 0.5s ease;
+				transition: transform 0.5s ease, opacity 0.5s ease;
+			}
+
+			@-webkit-keyframes fadeIn {
+				0% {
+					opacity: 0;
+				}
+
+				100% {
+					opacity: 1;
+				}
+			}
+
+			@keyframes fadeIn {
+				0% {
+					opacity: 0;
+				}
+
+				100% {
+					opacity: 1;
+				}
+			}
+
+			@-webkit-keyframes fadeOut {
+				0% {
+					opacity: 1;
+				}
+
+				100% {
+					opacity: 0;
+				}
+			}
+
+			@keyframes fadeOut {
+				0% {
+					opacity: 1;
+				}
+
+				100% {
+					opacity: 0;
+				}
+			}
+
+			p img {
+				max-width: 100%;
+				height: auto;
+			}
+		</style>
+	</head>
+
+	<body style="background-color:#fff;">
+		<form id="form_info" action="" method="post" class="register_list" style="overflow:auto">
+			<ul>
+				<li>
+					<span>标签类型：</span>
+					<div id="PRINT_TYPE">
+						<input type="text" name="PRINT_TYPE" readonly placeholder="请选择标签类型" />
+						<div>
+							<span class="input_tip_more"></span>
+						</div>
+					</div>
+				</li>
+				<li>
+					<span>产品名称：</span>
+					<div>
+						<input type="text" name="pro_catalog_name" placeholder="请输入产品信息" />
+						<div>
+							<span></span>
+						</div>
+					</div>
+				</li>
+				<li>
+					<span>开具日期：</span>
+					<div>
+						<input type="date" name="DATE_TIME" placeholder="请输入开具时间" />
+						<div>
+							<span class="input_tip_more"></span>
+						</div>
+					</div>
+				</li>
+				<li>
+					<span>打印数量：</span>
+					<div>
+						<input type="number" name="PRINT_NUM" placeholder="请输入打印数量" />
+						<div>
+							<span></span>
+						</div>
+					</div>
+				</li>
+				<li>
+					<span>单个重量：</span>
+					<div>
+						<input type="number" name="WEIGHT" placeholder="请输入重量" />
+						<div>
+							<span></span>
+						</div>
+					</div>
+				</li>
+				<li class="list_short">
+					<span>重量单位：</span>
+					<div id="weight">
+						<input type="text" name="UNIT" readonly placeholder="请选择重量单位" min="0.0" step="0.01" />
+						<div>
+							<span class="input_tip_more"></span>
+						</div>
+					</div>
+				</li>
+				<li>
+					<span>电话：</span>
+					<div>
+						<input type="text" name="EN_USER_MOBILE" placeholder="请输电话信息" />
+						<div>
+							<span></span>
+						</div>
+					</div>
+				</li>
+				<li>
+					<span>生产者：</span>
+					<div>
+						<input type="text" name="enterprise_name" readonly placeholder="请输入生产者" />
+						<div>
+							<span></span>
+						</div>
+					</div>
+				</li>
+				<li>
+					<span>产地：</span>
+					<div>
+						<input type="text" name="Origin" placeholder="请输入产地" />
+						<div>
+							<span></span>
+						</div>
+					</div>
+				</li>
+			</ul>
+			<div class="btnPace">
+				 <div id="openBluetooth" class="openBluetooth" >
+					 打开蓝牙设备
+				</div> 
+			</div> 
+<!-- 			<div class="btnPace">
+				 <div id="searchDevice" class="searchDevice" >
+					 打开蓝牙设备
+				</div> 
+			</div> -->
+			<div class="btnPace">
+				 <div id="searchDevicesbtn" class="searchDevicesbtn" >
+					 搜索蓝牙打印机
+				</div> 
+			</div>
+			<div class="btnPace" style="display: none;">
+				<div style="color: #000000;">
+				    <div style="width: 45%;float: left; color: #000000; ">未配对设备：</div> 
+					<ul id="list1" "width: 45%;float: left; color: #000000;"> </ul>  
+				</div>
+			</div>
+			<div class="btnPace">	
+			    <div style="width: 45%;float: left; color: #000000;">已配对设备：</div>
+				<ul style="width: 45%;float: left; color: #000000; font-size: 12px;" id="list2"> </ul>  
+			</div>  
+			
+			<div class="btnPace">
+				
+				<div class="printNO">取消</div>
+				<div class="printYes">打印</div>
+				
+			</div>
+		</form>
+		<p class="tip">
+			请使用电脑登录标签打印平台进行打印
+			<br />
+			登录地址：http://ewm.jnzhna.com
+			<br />
+			用户名和密码与智慧农安APP用户名和密码一致
+		</p>
+		<script src="../js/mui.min.js"></script>
+		<script src="js/jquery.form.min.js"></script>
+		<script src="../js/mui.zoom.js"></script>
+		<script src="../js/mui.previewimage.js"></script>
+		<script src="js/init.js"></script>
+		<script src="js/public.js"></script>
+		<script src="js/pr.js"></script>
+		<script>
+			//同步调用原生方法
+			function KejiaNativeSync(ObjString) {
+			        //调用customPlugin插件的testFunctionSync方法，传递了两个参数，分别是James和Tracy
+			        //用result变量接收返回值
+			        var result = plus.bridge.execSync("pluginKeJiaBT", "KeJiaTestFunction", ObjString);
+			        alert(result);
+			        console.log(result);
+					
+					return result;
+			        //alert(JSON.stringify(plus.bridge));
+			}
+				
+			    // //异步调用原生方法
+			    // nativeAsync: function(){
+			    //     var bridge = plus.bridge;
+			    //     var success = function(msg){
+			    //         alert("onSuccess,msg = " + msg);
+			    //     };
+			    //     var failed = function(msg){
+			    //         alert("onFailed,msg = " + msg);
+			    //     }
+			    //     //获取回调的id
+			    //     var callbackId = bridge.callbackId(success, failed);
+			    //     //注意，这里要跟原生开发的人定好回调id在参数列表中的索引位置
+			    //     plus.bridge.exec("customPlugin", "testFunctionAsync", [callbackId, "secondParam"]);
+			    // }
+			
+		</script>
+		
+		<script>
+			mui.init({
+				gestureConfig: {
+					longtap: true, //默认为false
+					release: true
+				}
+			});
+			mui.plusReady(function() {
+						$("input[name='DATE_TIME']").val(format());
+						$("input[name='DATE_TIME']+div>span").on("click", function() {
+							$("input[name='DATE_TIME']").click();
+						})
+
+
+						mui.previewImage();
+						var _self = plus.webview.currentWebview();
+						var REGISTRATION_ID = _self.REGISTRATION_ID;
+						var PRO_CATALOG_NAME;
+						var DATE_TIME;
+						var PRINT_NUM;
+						var WEIGHT;
+						var UNIT;
+						var ENTERPRISE_NAME;
+						var END_ADDR;
+						var EN_USER_MOBILE;
+						var PRINT_TYPE;
+						var BlueToothMAC;
+
+						console.log(REGISTRATION_ID);
+						//console.log(PRO_BATCH_NAME);
+						//console.log(PRO_CATALOG_ID);
+
+
+						document.getElementById("weight").addEventListener('tap', function() {
+								var self=this;
+								var bts = [{
+									title: "千克",
+									name:'Kg'
+								}, {title: "克",
+									name:'g'
+								}];
+									plus.nativeUI.actionSheet({
+										cancel: "取消",
+										buttons: bts
+									}, function(e) {
+										var i = e.index;
+										if (i > 0) {
+											var title = bts[i - 1].title;
+											console.info(title);
+											$("input[name='UNIT']").val(title);
+										}
+									});
+								});
+						document.getElementById("PRINT_TYPE").addEventListener('tap', function() {
+								var self=this;
+								var bts = [{
+									title: "追溯凭证",
+									name:'1'
+								}, {title: "合格证",
+									name:'2'
+								}];
+									plus.nativeUI.actionSheet({
+										cancel: "取消",
+										buttons: bts
+									}, function(e) {
+										var i = e.index;
+										if (i > 0) {
+											var title = bts[i - 1].title;
+											console.info(title);
+											$("input[name='PRINT_TYPE']").val(title);
+										}
+									});
+								});
+
+
+							if (wainshow() == false) {
+								return false;
+							}; 														
+							mui.ajax(www_v + "/label_manage/getprintdata", {
+								data: {
+									
+									
+									"ENTERPRISE_ID": getState().enterprise_id,
+									"REGISTRATION_ID": REGISTRATION_ID,
+									"token": getToken(),
+									
+								},
+								type: 'post', //HTTP请求类型
+								timeout: 10000, //超时时间设置为10秒；
+								success: function(data) {
+									check_ajax(data, function(data) {
+										$("input[name='pro_catalog_name']").val(data.pro_catalog_name);
+										$("input[name='EN_USER_MOBILE']").val(data.en_user_mobile);
+										$("input[name='enterprise_name']").val(data.enterprise_name);
+										$("input[name='Origin']").val(data.end_addr);
+										PRO_CATALOG_NAME=data.pro_batch_name;
+									    END_ADDR=data.end_addr;
+										
+									})
+								},
+								error: function(xhr, type, errorThrown, selfs) {
+									if (type == "timeout") {
+										alert("请求超时");
+									} else if (type == "abort") {
+										alert("请检查您的网络");
+									} else if (type == "error") {
+										alert("服务端错误");
+										console.info(errorThrown)
+									}
+								}
+							});
+							mui('body').on('tap', '.printNO', function() {
+								var btnArray = ['否', '是'];
+								
+								mui.confirm('确认要放弃打印？', TITLE, btnArray, function(e) {
+									plus.webview.getWebviewById('biaoqiandaying_dayin').close();
+								});
+							});
+							mui('body').on('tap', '.printYes', function() {
+								
+								 DATE_TIME=$("input[name='DATE_TIME']").val();
+								 PRINT_NUM=$("input[name='PRINT_NUM']").val();
+								 WEIGHT=$("input[name='WEIGHT']").val();
+								 UNIT=$("input[name='UNIT']").val();
+								 ENTERPRISE_NAME=$("input[name='enterprise_name']").val();
+								 END_ADDR=$("input[name='Origin']").val()
+								 EN_USER_MOBILE=$("input[name='EN_USER_MOBILE']").val();
+								 PRINT_TYPE=$("input[name='PRINT_TYPE']").val();
+								 var Origin=$("input[name='Origin']").val();
+								 BlueToothMAC=$(".BTmac").text();
+								console.info(DATE_TIME);
+								console.info(BlueToothMAC);
+								if(DATE_TIME==""||DATE_TIME==undefined ||
+								 UNIT =="" || ENTERPRISE_NAME == '' || EN_USER_MOBILE ==''|| PRINT_TYPE =='' ||Origin==''){
+									plus.nativeUI.toast("请先将信息填写完整");
+								}
+								else 
+								if(PRINT_NUM < 1 ){
+									plus.nativeUI.toast("打印数量不能少于1张");
+								}
+								else
+								if(WEIGHT <= 0 ){
+									plus.nativeUI.toast("重量不能少于0千克");
+								}
+								else
+								if(BlueToothMAC == null || BlueToothMAC == ''){
+									plus.nativeUI.toast("请先配对蓝牙打印机");
+								}
+								else 
+								{
+									var btnArray = ['否', '是'];						
+									
+									mui.confirm('确认要打印？', TITLE, btnArray, function(e) {
+										if (e.index == 1) {
+											
+											// var jsonString={
+											// 	"REGISTRATION_ID":REGISTRATION_ID,
+											// 	"PRO_CATALOG_NAME":PRO_CATALOG_NAME,
+											// 	"DATE_TIME":DATE_TIME,
+											// 	"WEIGHT":WEIGHT,
+											// 	"EN_USER_MOBILE":EN_USER_MOBILE,
+											// 	"ENTERPRISE_NAME":ENTERPRISE_NAME,
+											// 	"PRINT_NUM":PRINT_NUM,
+											// 	"END_ADDR":END_ADDR,
+											// 	"REDIRECT_URL":"http://m.jnzhna.com/index/redirect/qcode/REGISTRATION_ID/"+REGISTRATION_ID,
+											// 	"BTMAC":BlueToothMAC
+											// }
+											// //KejiaNativeSync();
+											// console.log(jsonString);
+											// console.info(END_ADDR);
+											// console.info(PRO_CATALOG_NAME);
+											
+											// kejiaObjString=JSON.stringify(jsonString);
+											// console.log("kejiaObjString:"+kejiaObjString);
+											
+											// //调用科嘉蓝牙打印插件
+											// var res=KejiaNativeSync(kejiaObjString);
+											
+											
+											
+											mui.ajax( www_v+ "/label_manage/add_printlabel", {
+												data: {
+													"ENTERPRISE_ID": getState().enterprise_id,
+													"REGISTRATION_ID": REGISTRATION_ID,
+													"token": getToken(),
+													"DATE_TIME":DATE_TIME,
+													"PRINT_NUM":PRINT_NUM,
+													"WEIGHT":WEIGHT,
+													"ENTERPRISE_NAME":ENTERPRISE_NAME,
+													"EN_USER_MOBILE":EN_USER_MOBILE,
+													"PRINT_TYPE":PRINT_TYPE,
+													"END_ADDR":END_ADDR,
+													"PRO_CATALOG_NAME":PRO_CATALOG_NAME,
+													"UNIT":UNIT,
+													
+												},
+												type: 'post', //HTTP请求类型
+												timeout: 10000, //超时时间设置为10秒；
+												success: function(data) {
+													//console.log(JSON.stringify(data));
+													check_ajax(data, function(data) {
+														console.log(data)
+														var kejiaObj=data;
+														kejiaObj.BTMAC=BlueToothMAC;
+														console.log(JSON.stringify(data));
+														console.log(kejiaObj);
+														kejiaObjString=JSON.stringify(kejiaObj);
+														console.log("=========" + kejiaObjString);
+														
+														//调用科嘉蓝牙打印插件
+														var res=KejiaNativeSync(kejiaObjString);
+														if (res == "success"){
+															
+															plus.nativeUI.toast("打印成功");
+															plus.webview.getWebviewById('biaoqiandaying_dayin').close();
+															var xunguan=plus.webview.getWebviewById("biaoqiandayingguanli.html");
+															mui.fire(xunguan,'biaoqiandayingguanli'); 
+														}
+														else{
+															alert("蓝牙打印出错,请重试," + res );
+														}
+														
+														// old_back();
+													})
+												},
+												error: function(xhr, type, errorThrown, selfs) {
+													if (type == "timeout") {
+														alert("请求超时");
+													} else if (type == "abort") {
+														alert("请检查您的网络");
+													} else if (type == "error") {
+														alert("服务端错误")
+														console.info(errorThrown);
+													}
+												}
+											});
+											
+												
+										}
+									},);
+								}										
+							});
+							
+				document.getElementById("openBluetooth").addEventListener('click', function() {							   openBluetooth();
+							startDiscovery();
+				});
+				// document.getElementById("searchDevice").addEventListener('click', function() {							   startDiscovery();
+				// });
+				document.getElementById("searchDevicesbtn").addEventListener('click', function() {					
+								// startDiscovery();
+								searchDevices('a');
+				});
+							
+							
+				})
+		</script>
+	</body>
+
+</html>

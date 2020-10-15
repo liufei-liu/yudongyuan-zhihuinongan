@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>下级用户</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/public.css">
+		<link rel="stylesheet" href="css/main.css">
+		<script src="js/jquery.js"></script>
+	</head>
+
+	<body style="background-color:#fff">
+		<div class="header_box">
+			<div class="header">
+				<a class="back mui-action-back">
+					<img src="images/newImgs/newback.png" alt="">
+				</a>
+				<h1>下级用户</h1>
+				<a class="home ">
+					<img src="images/newImgs/home.png" alt="" />
+				</a>
+			</div>
+		</div>
+			<ul class="low_usr">
+				<!--<li>
+					<div class="low_usr_middle">
+						<span><i>用户名：</i><b>斯蒂芬</b></span>
+						<span><i>手机号：</i><b>斯蒂芬</b></span>
+					</div>
+					<div class="low_usr_del"><img src="images/low_user_del.png" alt="" /></div>
+				</li>
+				<li>
+					<div class="low_usr_middle">
+						<span><i>用户名：</i><b>斯蒂芬</b></span>
+						<span><i>手机号：</i><b>斯蒂芬</b></span>
+					</div>
+					<div class="low_usr_del"><img src="images/low_user_del.png" alt="" /></div>
+				</li>-->
+			</ul>
+			<div class="submit_btn_box">
+				<a href="tianjiayonghu.html" data-wid="tianjiayonghu.html" class="bozhong_submit ">添加用户</a>
+			</div>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="js/init.js"></script>
+		<script src="js/public.js"></script>
+		<script>
+			mui.init();
+			mui.plusReady(function() {
+				window.addEventListener('refresh', function(e) {
+					location.reload();
+				})
+				
+				
+				
+
+				//删除下级用户
+				mui('body').on('tap', '.low_usr_del',function(){
+					if(unsafe_tap2()) return; // 调用代码
+					var _this=$(this);
+					var val=$(this).attr("value");
+
+					if(wainshow()==false){return false;};
+					var btnArray = ['否', '是'];
+		                mui.confirm('确认要删除么，确认？', TITLE, btnArray, function(e) {
+		                    if (e.index == 1) {
+		                        $.ajax(www_v+"/user/delete_user", {
+									data: {"THIS_USER_ID":getState().en_user_id,"EN_USER_ID":val},
+									type: 'post', //HTTP请求类型
+									timeout: 50000, //超时时间设置为10秒；
+									success: function(data) {
+										check_ajax(data,function(data){
+															_this.parent().remove();
+															plus.nativeUI.toast('删除成功');
+														})
+									},
+									error: function(xhr, type, errorThrown, selfs) {
+										if(type == "timeout") {
+											alert("请求超时");
+										} else if(type == "abort") {
+											alert("请检查您的网络");
+										} else if(type == "error") {
+											alert("服务端错误");
+										}
+									}
+								});
+		                    }
+		                })
+				})
+				if(wainshow()==false){return false;};
+				$.ajax(www_v+"/user/list_user", {
+					data: {"EN_USER_ID":getState().en_user_id,"token":getToken()},
+					type: 'post', //HTTP请求类型
+					timeout: 50000, //超时时间设置为10秒；
+					success: function(data) {
+						check_ajax(data,function(data){
+										//console.log(JSON.stringify(data));
+										for(var i=0,str="";i<data.length;i++){
+											str+='<li>'+
+												'<div class="low_usr_middle">'+
+													'<span><i>用户名：</i><b>'+data[i].en_user_name+'</b></span>'+
+													'<span><i>手机号：</i><b>'+data[i].en_user_mobile+'</b></span>'+
+												'</div>'+
+												'<div class="low_usr_del"  value="'+data[i].en_user_id+'"><img src="images/low_user_del.png" alt="" /></div>'+
+											'</li>';
+										}
+										$(".low_usr").html(str);
+									})
+					},
+					error: function(xhr, type, errorThrown, selfs) {
+						if(type == "timeout") {
+							alert("请求超时");
+						} else if(type == "abort") {
+							alert("请检查您的网络");
+						} else if(type == "error") {
+							alert("服务端错误");
+						}
+					}
+				});
+			})
+		</script>
+	</body>
+</html>

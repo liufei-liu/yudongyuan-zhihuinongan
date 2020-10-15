@@ -1,0 +1,260 @@
+.content_top>h1{
+    font-size:0.36rem;
+    color: #333;
+    line-height:0.42rem;
+    padding:0 0.2rem;
+    margin-bottom:0.14rem;
+    margin-top:0.45rem;
+}
+.content_top>div{
+    overflow: hidden;
+    padding:0 0.2rem;
+    margin-bottom:0.36rem;
+}
+.content_top>div>b{
+    color: #757575;
+    font-size:0.24rem;
+    float: left;
+    line-height:0.28rem;
+}
+.content_top>div>span{
+    float: right;
+    padding-left:0.37rem;
+    margin-left: 0.4rem;
+    font-size:0.24rem;
+    color: #999;
+    line-height:0.28rem;
+    background: url("../images/pinglun.png") no-repeat left center;
+    -webkit-background-size: auto 0.28rem;
+    background-size: auto 0.28rem;
+}
+.content{
+    padding:0 0.2rem;
+    margin-bottom:0.7rem;
+}
+.content_btns{
+    float: right;
+    margin:0.3rem 0;
+}
+
+.content_btns>li{
+    float: left;
+    font-size:0.24rem;
+    line-height:0.48rem;
+    padding:0 0.2rem 0 0.76rem;
+    background: url("../images/share_big.png") no-repeat 0.2rem center;
+    -webkit-background-size: 0.48rem 0.48rem;
+    background-size: 0.48rem 0.48rem;
+}
+.content_btns>li:first-child{
+    background: url("../images/zan_big.png") no-repeat 0.2rem center;
+    -webkit-background-size: 0.48rem 0.48rem;
+    background-size: 0.48rem 0.48rem;
+}
+.content_btns>li.zan.active{
+    color: #999;
+}
+.pinglun_box{
+    border-top:0.18rem solid #f4f4f4;
+    width:100%;
+    float: left;
+}
+.pinglun_box>p{
+    font-size:0.28rem;
+    color:#7ac44e;
+    padding:0 0.2rem;
+    line-height:0.64rem;
+    border-bottom:1px solid #dbd6d6;
+    position: relative;
+}
+.pinglun_box>p>span{
+    color: #999;
+    font-size:0.24rem;
+    padding-left:0.1rem;
+}
+.pinglun_box>p>a{
+    display: inline-block;
+    height: 0.44rem;
+    line-height: 0.44rem;
+    border: 1px solid #f3f3f3;
+    padding: 0 0.14rem;
+    color: #78be4a;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    z-index: 100;
+    position: absolute;
+    top: 50%;
+    right: 3%;
+    -webkit-transform: translate(0,-50%);
+    transform: translate(0,-50%);
+}
+
+
+/*评论列表*/
+.pinglun_box>ul{
+    padding-bottom: 0.1rem;
+}
+.pinglun_box>ul>li{
+    border-bottom: 1px solid #dbd6d6;
+    padding-bottom:0.3rem;
+}
+.one_pinglun{
+    padding-top: 0.3rem;
+}
+.one_pinglun>img{
+    width: 0.5rem;
+    height:0.5rem;
+    float: left;
+    margin-left: 0.2rem;
+}
+.one_pinglun>div{
+    padding:0 0.2rem 0 0.8rem;
+    font-size: 0.26rem;
+}
+.one_pinglun>div>b{
+    font-size:0.26rem;
+    color: #3387d5;
+    line-height:0.34rem;
+}
+.one_pinglun>div>span{
+    font-size:0.26rem;
+    color: #3387d5;
+    line-height:0.34rem;
+    float: right;
+}
+.one_pinglun>div>span>a{
+    color: #3387d5;
+}
+.one_pinglun>div>i{
+    float:right;
+    width:0.4rem;
+    height:0.34rem;
+    background: url("../images/zan.png") no-repeat center;
+    -webkit-background-size: 0.32rem 0.28rem;
+    background-size: 0.32rem 0.28rem;
+}
+.one_pinglun>i{
+    padding-left:0.8rem;
+    display: block;
+    color: #999;
+    font-size:0.24rem;
+}
+.one_pinglun>p{
+    font-size:0.24rem;
+    color: #333;
+    padding:0 0.2rem 0 0.96rem;
+}
+
+.pinglun_box>a{
+    font-size:0.28rem;
+    color: #7ac44e;
+    line-height:0.48rem;
+    text-align: center;
+    margin-bottom: 0.2rem;
+    display: block;
+}
+.pinglun_box_more{
+    border-top: none;
+}
+
+
+/*留言*/
+.leave_word_box>p {
+    font-size: 0.36rem;
+    color: #333;
+    word-break: break-all;
+    padding: 0.2rem 0.2rem 0.12rem;
+}
+textarea{
+    width: 100%;
+    height: 2.6rem;
+    outline: none;
+    padding: 0.22rem 0.2rem;
+    border: 1px solid #e0e0e0;
+}
+.leave_word_box>button{
+    font-size: 0.36rem;
+    height: 0.9rem;
+    line-height: 0.9rem;
+    display: block;
+    -webkit-border-radius: 0.08rem;
+    border-radius: 0.08rem;;
+    background-color:#78be4a;
+    text-align: center;
+    width:94%;
+    margin:0.4rem 0.2rem 0;
+    color: #fff;
+    padding: 0;
+}
+.leave_word_error{
+    color: #eb1010;
+    display: block;
+    text-align: center;
+}
+
+
+
+/*分享*/
+/*分享提示框*/
+.share_tip{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index:100;
+    display: none;
+}
+.share_tip>i{
+    display: block;
+    width:100%;
+    height:100%;
+    background-color: rgba(0,0,0,0.6);
+    position: absolute;
+    top:0;
+    left:0;
+}
+.share_tip>div{
+    position: absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index:101;
+}
+.share_tip>div>span{
+    margin:1.2rem auto 1rem;
+    display: block;
+    width:5.96rem;
+    height:3.36rem;
+    background:url(../images/share_tip.png) no-repeat center;
+    -webkit-background-size: cover;
+    background-size: cover;
+}
+.share_tip>div>b{
+    width:3.7rem;
+    height:0.82rem;
+    display: block;
+    margin:0 auto;
+    color: #fff;
+    border:0.04rem solid #fff;
+    -webkit-border-radius: 0.2rem;
+    border-radius: 0.2rem;
+    font-size:0.36rem;
+    line-height:0.82rem;
+    text-align: center;
+    box-sizing: content-box;
+}
+.content_top>div>i{
+	font-size: 0.24rem;
+	margin-right: 0.36rem;
+	line-height: 0.28rem;
+	float: left;
+}
+.content_top>div>i>span{
+	font-size: 0.24rem;
+	margin-right: 0.36rem;
+	line-height: 0.28rem;
+	float: left;
+}

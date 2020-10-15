@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+	</head>
+
+	<body>
+		<script src="js/mui.min.js"></script>
+		<script src="app/js/jquery.js"></script>
+		<script src="app/js/init.js"></script>
+		<script src="app/js/public.js"></script>
+		<script>
+			mui.init();
+			mui.plusReady(function() {
+				var settings = getSettings();
+				var state = getState();
+				//console.log(JSON.stringify(settings));
+				//console.log(JSON.stringify(state));
+				if(settings.autoLogin && state.Accesstoken && settings.gestures) {
+					//如果是自动登录  且 有登录信息  且  设置了手势 
+					mui.openWindow({
+						url: 'unlock.html',
+						id: 'unlock.html',
+						show: {
+							aniShow: 'pop-in'
+						},
+						waiting: {
+							autoShow: false
+						}
+					});
+				} else if(settings.autoLogin && state.Accesstoken) {
+					//如果设置了自动登录  且  有登录信息
+					if(getState().en_user_type==1){
+						mui.openWindow({
+							url: 'index.html',
+							id: 'index.html',
+							show: {
+								aniShow: 'pop-in'
+							},
+							waiting: {
+								autoShow: false
+							}
+						});
+					}else{
+						mui.openWindow({
+							url: 'nongzi/index.html',
+							id: 'index2.html',
+							show: {
+								aniShow: 'pop-in'
+							},
+							waiting: {
+								autoShow: false
+							}
+						});
+					}
+				} else {
+					//如果没设置了自动登录
+					mui.openWindow({
+						url: 'login.html',
+						id: 'login.html',
+						show: {
+							aniShow: 'pop-in'
+						},
+						waiting: {
+							autoShow: false
+						}
+					});
+				}
+			});
+		</script>
+	</body>
+
+</html>

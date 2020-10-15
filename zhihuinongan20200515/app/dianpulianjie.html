@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1">
+		<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="format-detection" content="email=no">
+		<meta http-equiv="Expires" content="0">
+		<meta http-equiv="Pragma" content="no-cache">
+		<meta http-equiv="Cache-control" content="no-cache">
+		<meta http-equiv="Cache" content="no-cache">
+		<title>店铺链接</title>
+		<meta name="keywords" content="">
+		<meta name="Description" content="">
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/public.css">
+		<link rel="stylesheet" href="css/main.css">
+		<script src="js/jquery.js"></script>
+						<style type="text/css">
+			.mui-preview-image.mui-fullscreen {
+				position: fixed;
+				z-index: 9999999;
+				background-color: #000;
+			}
+			.mui-preview-header,
+			.mui-preview-footer {
+				position: absolute;
+				width: 100%;
+				left: 0;
+				z-index: 10;
+			}
+			.mui-preview-header {
+				height: 44px;
+				top: 0;
+			}
+			.mui-preview-footer {
+				height: 50px;
+				bottom: 0px;
+			}
+			.mui-preview-header .mui-preview-indicator {
+				display: block;
+				line-height: 25px;
+				color: #fff;
+				text-align: center;
+				margin: 15px auto 4;
+				width: 70px;
+				background-color: rgba(0, 0, 0, 0.4);
+				border-radius: 12px;
+				font-size: 16px;
+			}
+			.mui-preview-image {
+				display: none;
+				-webkit-animation-duration: 0.5s;
+				animation-duration: 0.5s;
+				-webkit-animation-fill-mode: both;
+				animation-fill-mode: both;
+			}
+			.mui-preview-image.mui-preview-in {
+				-webkit-animation-name: fadeIn;
+				animation-name: fadeIn;
+			}
+			.mui-preview-image.mui-preview-out {
+				background: none;
+				-webkit-animation-name: fadeOut;
+				animation-name: fadeOut;
+			}
+			.mui-preview-image.mui-preview-out .mui-preview-header,
+			.mui-preview-image.mui-preview-out .mui-preview-footer {
+				display: none;
+			}
+			.mui-zoom-scroller {
+				position: absolute;
+				display: -webkit-box;
+				display: -webkit-flex;
+				display: flex;
+				-webkit-box-align: center;
+				-webkit-align-items: center;
+				align-items: center;
+				-webkit-box-pack: center;
+				-webkit-justify-content: center;
+				justify-content: center;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				margin: 0;
+				-webkit-backface-visibility: hidden;
+			}
+			.mui-zoom {
+				-webkit-transform-style: preserve-3d;
+				transform-style: preserve-3d;
+			}
+			.mui-slider .mui-slider-group .mui-slider-item img {
+				width: auto;
+				height: auto;
+				max-width: 100%;
+				max-height: 100%;
+			}
+			.mui-android-4-1 .mui-slider .mui-slider-group .mui-slider-item img {
+				width: 100%;
+			}
+			.mui-android-4-1 .mui-slider.mui-preview-image .mui-slider-group .mui-slider-item {
+				display: inline-table;
+			}
+			.mui-android-4-1 .mui-slider.mui-preview-image .mui-zoom-scroller img {
+				display: table-cell;
+				vertical-align: middle;
+			}
+			.mui-preview-loading {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				top: 0;
+				left: 0;
+				display: none;
+			}
+			.mui-preview-loading.mui-active {
+				display: block;
+			}
+			.mui-preview-loading .mui-spinner-white {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				margin-left: -25px;
+				margin-top: -25px;
+				height: 50px;
+				width: 50px;
+			}
+			.mui-preview-image img.mui-transitioning {
+				-webkit-transition: -webkit-transform 0.5s ease, opacity 0.5s ease;
+				transition: transform 0.5s ease, opacity 0.5s ease;
+			}
+			@-webkit-keyframes fadeIn {
+				0% {
+					opacity: 0;
+				}
+				100% {
+					opacity: 1;
+				}
+			}
+			@keyframes fadeIn {
+				0% {
+					opacity: 0;
+				}
+				100% {
+					opacity: 1;
+				}
+			}
+			@-webkit-keyframes fadeOut {
+				0% {
+					opacity: 1;
+				}
+				100% {
+					opacity: 0;
+				}
+			}
+			@keyframes fadeOut {
+				0% {
+					opacity: 1;
+				}
+				100% {
+					opacity: 0;
+				}
+			}
+			p img {
+				max-width: 100%;
+				height: auto;
+			}
+		</style>
+	</head>
+
+	<body style="background-color:#fff;">
+		<div class="header_box">
+			<div class="header">
+				<a class="back mui-action-back">
+					<img src="images/newImgs/newback.png" alt="">
+				</a>
+				<h1>店铺链接</h1>
+				<a class="home ">
+					<img src="images/newImgs/home.png" alt="" />
+				</a>
+			</div>
+		</div>		
+		<form id="form_info" action="" method="post" class="register_list">
+			<input type="hidden" name="token"/>
+			<input type="hidden" name="REGISTRATION_ID"/>
+			<input type="hidden" name="EN_USER_ID"/>
+			<input type="hidden" name="DIPLOMA_IMG_ID2"/>
+			<ul>
+				<li>
+					<span>店铺名称：</span>
+					<div>
+						<input type="text" name="ESHOP_NAME" placeholder="请输入店铺名称"/>
+						<div>
+							<span class=""></span>
+						</div>
+					</div>
+				</li>
+				<li>
+					<span>店铺类型：</span>
+					<div id="size">
+						<input type="text" name="ESHOP_TYPE_ID_SHOW" readonly placeholder="请选择店铺类型"/>
+						<div>
+							<span class="input_tip_more"></span>
+							<input type="hidden" name="ESHOP_TYPE_ID"/>
+						</div>
+					</div>
+				</li>
+				
+				<li class="shangpinlianjie">
+					<span>商品链接：</span>
+					<div>
+						<input type="text" name="GOODS_URL" placeholder="复制商品网站粘贴至此处"/>
+						<div>
+							<span></span>
+						</div>
+					</div>
+				</li>
+				
+			</ul>
+			<div id="img_box2" style="display:none;">
+				<p>上传图片（微信二维码图片）：</p>
+				<ul>
+					<li id="add_img2">
+						<img src="images/add.png" alt="" />
+					</li>
+				</ul>
+				<p class="img_tip">注：长按图片可以进行删除</p>
+			</div>
+			<div class="submit_btn_box">
+				<button class="bozhong_submit">保存</button>
+			</div>
+		</form>
+		<ul class="record_list" style="border-top: 0.15rem solid #efeff4;">
+			<!--<li>
+				<a href="javascript:;">
+				<div style="padding-left:0;padding-right:1.5rem">
+				<p>店铺名称：<span>ppppp</span></p>
+				<p>店铺类型：<span>'pppp</span></p>
+				<p>添加时间：<span>ppppp</span></p>
+				<button class="del">删除</button>
+				</div>
+				</a>
+			</li>-->
+		</ul>
+		<script src="../js/mui.min.js"></script>
+		<script src="js/jquery.form.min.js"></script>
+		<script src="../js/mui.zoom.js"></script>
+		<script src="../js/mui.previewimage.js"></script>
+		<script src="js/init.js"></script>
+		<script src="js/public.js"></script>
+		<script>
+			mui.init({
+			  gestureConfig:{
+			    longtap: true, //默认为false
+			    release:true
+			  }
+			});
+			mui.plusReady(function() {	
+				mui.previewImage();
+				/*提交表单的返回*/
+				var can_back=true;
+				$("body").on("keyup",function(){
+					can_back=false;
+				})
+			 	var old_back=mui.back;
+				mui.back=function(){
+					if(can_back){
+						old_back();
+					}else{
+						var btnArray = ['否', '是'];
+		                mui.confirm('确认要返回么，确认？', TITLE, btnArray, function(e) {
+		                    if (e.index == 1) {
+		                        old_back();
+		                    }
+		                })
+					}	
+				}
+				var _self =  plus.webview.getWebviewById('wodeyoupin_child.html');
+				var REGISTRATION_ID = _self.registration_id;
+				var PRO_BATCH_NAME = _self.pro_batch_name;
+				$("input[name='token']").val(getToken());
+				$("input[name='REGISTRATION_ID']").val(REGISTRATION_ID);
+				$("input[name='EN_USER_ID']").val(getState().en_user_id);
+				
+				
+				document.getElementById("size").addEventListener('tap', function() {
+					var self=this;
+					var bts = [{
+						title: "淘宝",
+						name:'101'
+					}, {title: "京东",
+						name:'102'
+					}, {
+						title: "苏宁",
+						name:'103'
+					},{
+						title: "微信",
+						name:'104'
+					},{
+						title: "其他网店",
+						name:'105'
+					}];
+					plus.nativeUI.actionSheet({
+						cancel: "取消",
+						buttons: bts
+					}, function(e) {
+						var i = e.index;
+						if(i > 0) {
+							var _title=bts[i - 1].title;
+							var _name=bts[i - 1].name;
+							$("input[name='ESHOP_TYPE_ID']").val(_name);
+							$("input[name='ESHOP_TYPE_ID_SHOW']").val(_title);
+							if(_title=='微信'){
+								$("#img_box2").show();
+								$(".shangpinlianjie").hide();
+							}else{
+								$("#img_box2").hide();
+								$(".shangpinlianjie").show();
+							}
+						}
+					});
+				});
+				mui("#img_box2").on('longtap','ul li',function(){
+					var _this=this;
+					if(_this.id!="add_img2"){
+					 	var btnArray = ['否', '是'];
+		                mui.confirm('确认要删除该图片么，确认？', TITLE, btnArray, function(e) {
+		                    if (e.index == 1) {
+							 						if(wainshow()==false){return false;};
+							 							$("input[name='DIPLOMA_IMG_ID2']").val('');
+														$("#img_box2>ul>li:gt(0)").remove();
+		                    }
+		              })
+		            }
+				})	 
+				document.getElementById("add_img2").addEventListener('tap', function() {
+						var self=this;
+						var caremaorimg = [{
+							title: "拍照",
+							name:"p"
+						}, {
+							title: "相册",
+							name:"x"
+						}];
+						plus.nativeUI.actionSheet({
+							cancel: "取消",
+							buttons: caremaorimg
+						}, function(e) {
+							var i = e.index;
+							var _callback=function(data){
+										check_ajax(data,function(data){
+									 	$("input[name='DIPLOMA_IMG_ID2']").val(data);
+									 	str='<li ><img src="'+www+data+'" alt="" data-preview-src="" data-preview-group="2"/></li>'
+									 	$("#img_box2>ul>li:gt(0)").remove();
+									 	$("#img_box2>ul").append(str);
+										})
+							}
+							if(i > 0) {
+								switch(i){
+									 case 1:p(www_v+"/img/wx_img",_callback,undefined,"1");
+									 break;
+									 case 2:x(www_v+"/img/wx_img",_callback,undefined,"1");
+									 break;
+								}
+							}
+						});
+					});	
+				
+				
+				
+				var options={
+					url:www_v+"/superior_products/submit_shop",
+					beforeSubmit:function(){
+						if(wainshow()==false){return false;};
+						if(unsafe_tap2()) return false; // 调用代码
+						if($("input[name='ESHOP_NAME']").val().trim()==""){
+							plus.nativeUI.toast("请填写店铺名称");
+							return false;
+						}else if($("input[name='ESHOP_TYPE_ID']").val().trim()==""){
+							plus.nativeUI.toast("请选择店铺类型");
+							return false;
+						}
+						if($("input[name='ESHOP_TYPE_ID']").val().trim()=='104'){
+							//如果是微信
+							if($("input[name='DIPLOMA_IMG_ID2']").val().trim()==''){
+									plus.nativeUI.toast("请上传微信二维码");
+								return false;
+							}
+							
+						}else{
+							if($("input[name='GOODS_URL']").val().trim()==""){
+								plus.nativeUI.toast("请填写店铺链接");
+								return false;
+							}else if($("input[name='GOODS_URL']").val().slice(0,4)!="http"){
+								plus.nativeUI.toast("店铺链接必须以http开头");
+								return false;
+							}
+						}
+						
+					},
+					success:function(data){
+						//console.log(data);
+						check_ajax(data,function(data){
+							//console.log(JSON.stringify(data));
+								plus.nativeUI.toast("添加成功");
+								old_back();	
+						})
+						
+					},error:function(e){
+						alert("服务端错误");
+					}
+				};
+				$("#form_info").ajaxForm(options);
+				if(wainshow()==false){return false;};
+				$.ajax(www_v+"/superior_products/shop_list", {
+					data: {"REGISTRATION_ID":REGISTRATION_ID,"token":getToken()},
+					type: 'post', //HTTP请求类型
+					timeout: 50000, //超时时间设置为10秒；
+					success: function(data) {
+						check_ajax(data,function(data){
+										//console.log(JSON.stringify(data));
+										for(var i = 0, str = ""; i < data.length; i++) {
+											str += ' <li value="'+data[i].GOODS_URL_ID+'">' +
+												'<a href="javascript:;">' +
+												//'<img src="'+www+data[i].img_url+'" alt=""/>' +
+												'<div style="padding-left:0;padding-right:1.5rem;">' +
+												'<p>店铺名称：<span>'+data[i].ESHOP_NAME+'</span></p>' +
+												'<p>店铺类型：<span>'+data[i].ESHOP_TYPE_NAME+'</span></p>' +
+												'<p>添加时间：<span>'+data[i].CREATE_TIME.slice(0,10)+'</span></p>' +
+												'<button class="del">删除</button>'+
+												'</div>' +
+												'</a>' +
+												'</li>';
+										}
+										$(".record_list").html(str);
+									})
+					},
+					error: function(xhr, type, errorThrown, selfs) {
+						if(type == "timeout") {
+							alert("请求超时");
+						} else if(type == "abort") {
+							alert("请检查您的网络");
+						} else if(type == "error") {
+							alert("服务端错误");
+						}
+					}
+				});
+				mui("body").on("tap",".record_list .del",function(){
+					if(unsafe_tap2()) return; // 调用代码
+					var GOODS_URL_ID=$(this).parents("li").attr("value");
+					var _this=$(this);
+					if(wainshow()==false){return false;};
+					$.ajax(www_v+"/superior_products/delete_shop", {
+						data: {"GOODS_URL_ID":GOODS_URL_ID,"token":getToken(),"EN_USER_ID":getState().en_user_id},
+						type: 'post', //HTTP请求类型
+						timeout: 50000, //超时时间设置为10秒；
+						success: function(data) {
+							check_ajax(data,function(data){
+												//console.log(JSON.stringify(data));
+												_this.parents("li").remove();
+												plus.nativeUI.toast("删除成功");
+												
+											})
+						},
+						error: function(xhr, type, errorThrown, selfs) {
+							if(type == "timeout") {
+								alert("请求超时");
+							} else if(type == "abort") {
+								alert("请检查您的网络");
+							} else if(type == "error") {
+								alert("服务端错误");
+							}
+						}
+					});
+					
+					
+				})
+			})
+		</script>
+	</body>
+
+</html>

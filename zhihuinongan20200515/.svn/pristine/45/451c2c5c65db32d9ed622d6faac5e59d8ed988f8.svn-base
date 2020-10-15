@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link rel="stylesheet" href="css/mui.min.css">
+		<link rel="stylesheet" href="app/css/style.css">
+		<link rel="stylesheet" href="app/css/public.css">
+		<link rel="stylesheet" href="app/css/main.css">
+		<link href="css/style.css" rel="stylesheet" />
+		<script src="app/js/jquery.js"></script>
+		<style>
+			.area {
+				margin: 20px auto 0px auto;
+			}
+			
+			.mui-input-group:first-child {
+				margin-top: 20px;
+			}
+			
+			.mui-input-group label {
+				width: 30%;
+			}
+			
+			.mui-input-row label~input,
+			.mui-input-row label~select,
+			.mui-input-row label~textarea {
+				width: 70%;
+			}
+			
+			.mui-checkbox input[type=checkbox],
+			.mui-radio input[type=radio] {
+				top: 6px;
+			}
+			
+			.mui-content-padded {
+				margin-top: 25px;
+			}
+			
+			.mui-btn {
+				padding: 10px;
+			}
+			input[type=checkbox], .mui-radio input[type=radio]{
+				position: relative;
+				top: 0;
+				left: 0;
+			}
+			#check_phone{
+				position: absolute;
+				right: 3px;
+				height: 32px;
+				line-height: 32px;
+				top: 4px;
+				width: 60px;
+				padding: 0;
+			}
+		</style>
+	</head>
+
+	<body style="background: #fff;">
+		<div class="header_box">
+			<div class="header">
+				<a class="back mui-action-back">
+					<img src="app/images/back.png" alt="">
+				</a>
+				<h1 style="margin: 0.2rem 0;">注册</h1>
+			</div>
+		</div>
+		<div id="form_info" action="" method="post" class="register_list">
+			<ul>
+				<li>
+					<span>单位名称：</span>
+					<div>
+						<input id="ENTERPRISE_NAME" type="text" value="" placeholder="请输入单位名称"/>
+						<div>
+							<span></span>
+						</div>
+					</div>
+				</li>
+				<li>
+					<span>负&nbsp;&nbsp;责&nbsp;&nbsp;人：</span>
+					<div>
+						<input id="ENTERPRISE_CHARGE" type="text"  value="" placeholder="请输入单位负责人"/>
+						<div>
+							<span></span>
+						</div>
+					</div>
+				</li>
+				
+			</ul>
+			<div class="submit_btn_box">
+				<a id='reg' href="reg2.html" data-spec="ture" class="bozhong_submit">下一步</a>
+			</div>
+			
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="app/js/init.js"></script>
+		<script src="app/js/public.js"></script>
+		<script src="js/app.js"></script>
+		<script>
+			mui.init();
+			mui.plusReady(function() {	
+				/*提交表单的返回*/
+				var can_back=true;
+				$("body").on("keyup",function(){
+					can_back=false;
+				})
+			 	var old_back=mui.back;
+				mui.back=function(){
+					if(can_back){
+						old_back();
+					}else{
+						var btnArray = ['否', '是'];
+		                mui.confirm('确认要返回么，确认？', TITLE, btnArray, function(e) {
+		                    if (e.index == 1) {
+		                        old_back();
+		                    }
+		                })
+					}	
+				}
+				mui('body').on('tap', '#reg', function() {
+					if(unsafe_tap2()) return; // 调用代码
+					var ENTERPRISE_NAME=$("#ENTERPRISE_NAME").val();
+					var ENTERPRISE_CHARGE=$("#ENTERPRISE_CHARGE").val();
+					if(!/[\S]+/.test(ENTERPRISE_NAME)) {
+			            plus.nativeUI.toast('单位名称不能为空');
+			            return false;
+			        }
+					if(!/[\S]+/.test(ENTERPRISE_CHARGE)) {
+			            plus.nativeUI.toast('负责人不能为空');
+			             return false;
+			        }
+					if(wainshow()==false){return false;};
+					var extras = {"ENTERPRISE_NAME":ENTERPRISE_NAME,"ENTERPRISE_CHARGE":ENTERPRISE_CHARGE};
+					$.ajax(www_v+"/login/blindenterprise", {
+						data: extras,
+						type: 'post', //HTTP请求类型
+						timeout: 50000, //超时时间设置为10秒；
+						success: function(data) {
+							check_ajax(data,function(data){
+
+								if(data==""){
+									plus.nativeUI.toast('未找到相关单位或负责人');
+								}else{
+									var webview_style = {
+										popGesture: "hide"
+									}
+									var extras = {"ENTERPRISE_NAME":data.ENTERPRISE_NAME,"ENTERPRISE_CHARGE":data.ENTERPRISE_CHARGE};
+									extras.ENTERPRISE_ID=data.ENTERPRISE_ID;
+									var webview = plus.webview.create("reg2.html", "reg2.html", webview_style, extras);
+									webview.addEventListener("titleUpdate", function() {
+										setTimeout(function() {
+											webview.show('pop-in', 300);
+										}, 100);
+									});
+								}
+							})
+						},
+						error: function(xhr, type, errorThrown, selfs) {
+							if(type == "timeout") {
+								alert("请求超时");
+							} else if(type == "abort") {
+								alert("请检查您的网络");
+							} else if(type == "error") {
+								alert("服务端错误");
+							}
+						}
+					});
+				})
+			})
+		</script>
+	</body>
+
+</html>

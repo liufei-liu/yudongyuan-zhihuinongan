@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>修改密码</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/public.css">
+		<link rel="stylesheet" href="css/main.css">
+		<script src="js/jquery.js"></script>
+	</head>
+
+	<body style="background-color:#fff">
+		<div class="header_box">
+			<div class="header">
+				<a class="back mui-action-back">
+					<img src="images/newImgs/newback.png" alt="">
+				</a>
+				<h1>修改密码</h1>
+				<a class="home ">
+					<img src="images/newImgs/home.png" alt="" />
+				</a>
+			</div>
+		</div>
+		<div id="form_info" action="" method="post" class="register_list register_list_long">
+			<ul>
+				<li>
+					<span>&nbsp;新&nbsp;密&nbsp;码&nbsp;：</span>
+					<div>
+						<input type="password" id="PASSWORD" name="PASSWORD"  value="" placeholder="请输入新密码"/>
+						<div>
+							<span></span>
+						</div>
+					</div>
+				</li>
+				<li>
+					<span>确认密码：</span>
+					<div>
+						<input type="password" id="REPASSWORD" name="REPASSWORD"  value="" placeholder="请确认密码"/>
+						<div>
+							<span></span>
+						</div>
+					</div>
+				</li>
+				
+				
+			</ul>
+			
+			<div class="submit_btn_box ">
+				<a href="javascript:;"  data-spec="ture" class="bozhong_submit" id="save">保存</a>
+			</div>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/md5.js"></script>
+		<script src="js/init.js"></script>
+		<script src="js/public.js"></script>
+		<script>
+			mui.init();
+			mui.plusReady(function() {
+				/*提交表单的返回*/
+				var can_back=true;
+				$("body").on("keyup",function(){
+					can_back=false;
+				})
+			 	var old_back=mui.back;
+				mui.back=function(){
+					if(can_back){
+						old_back();
+					}else{
+						var btnArray = ['否', '是'];
+		                mui.confirm('确认要返回么，确认？', TITLE, btnArray, function(e) {
+		                    if (e.index == 1) {
+		                        old_back();
+		                    }
+		                })
+					}	
+				}
+				mui('body').on('tap', '#save',function(){
+					if(unsafe_tap2()) return; // 调用代码
+					//密码
+					var PASSWORD=$("input[name='PASSWORD']").val();
+					var REPASSWORD=$("input[name='REPASSWORD']").val();
+					function a2(){				
+						if(!/[\S]+/.test(PASSWORD)) {
+				            plus.nativeUI.toast('密码不能为空');
+				             return false;
+				        }else if(PASSWORD.length<5){
+				         	plus.nativeUI.toast('密码最短为 5 个字符');
+				        }else{
+				        	return true;
+				        }
+					}
+					//确认密码
+					function a3(){
+											
+						if(PASSWORD!=REPASSWORD) {
+				            plus.nativeUI.toast('密码两次输入不一致');
+				             return false;
+				        }else{
+				        	return true;
+				        }
+					}
+					if(a2()&&a3()){
+						var datas={ 
+									"PASSWORD":hex_md5(PASSWORD),
+									"EN_USER_ID":getState().en_user_id,
+									'token':getToken()
+								};
+						if(wainshow()==false){return false;};		
+						$.ajax(www_v+"/user/uppassword", {
+							data: datas,
+							type: 'post', //HTTP请求类型
+							timeout: 50000, //超时时间设置为10秒；
+							success: function(data) {
+								check_ajax(data,function(data){
+									plus.nativeUI.toast('修改成功');
+									setState();
+									var id ="login.html";
+									var old_id=plus.webview.getWebviewById(id);
+									if(old_id){
+										old_id.close("none",0);
+									}
+//									mui.openWindow({
+//										url: '/./login.html',
+//										id: 'login.html',
+//										show: {
+//											aniShow: 'pop-in'
+//										}
+//									});
+									var href = "../login.html";
+									var webview_style = {
+										popGesture: "show "
+									}
+									var extras = {};
+									var webview = plus.webview.create(href, id, webview_style, extras);
+									webview.addEventListener("titleUpdate", function() {
+										setTimeout(function() {
+											webview.show('pop-in', 300);
+										}, 100);
+									});
+								})
+							},
+							error: function(xhr, type, errorThrown, selfs) {
+								if(type == "timeout") {
+									alert("请求超时");
+								} else if(type == "abort") {
+									alert("请检查您的网络");
+								} else if(type == "error") {
+									alert("服务端错误");
+								}
+							}
+						});			
+
+					}
+				})
+				
+			})
+			
+			
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>添加用户</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" href="../app/css/style.css">
+		<link rel="stylesheet" href="../app/css/public.css">
+		<link rel="stylesheet" href="../app/css/main.css">
+		<script src="../app/js/jquery.js"></script>
+	</head>
+
+	<body style="background-color:#fff">
+		<div class="header_box">
+			<div class="header">
+				<a class="back mui-action-back">
+					<img src="../app/images/back.png" alt="">
+				</a>
+				<h1>添加用户</h1>
+				<a class="home ">
+					<img src="../app/images/home.png" alt="" />
+				</a>
+			</div>
+		</div>
+		<div id="form_info" class="register_list register_list_long">
+			<ul>
+				<li>
+					<span>用户姓名：</span>
+					<div>
+						<input type="text" name="EN_USER_NAME"  value="" placeholder="请输入用户姓名"/>
+						<div>
+							<span></span>
+						</div>
+					</div>
+				</li>
+				<li>
+					<span>&nbsp;手&nbsp;机&nbsp;号&nbsp;：</span>
+					<div>
+						<input type="tel" maxlength="11"  name="EN_USER_MOBILE"  value="" placeholder="请输入手机号" min="0.0" step="0.01"/>
+						<div>
+							<span></span>
+						</div>
+					</div>
+				</li>
+				<li>
+					<span>登录密码：</span>
+					<div>
+						<input type="password" name="EN_USER_PWD" value="" placeholder="请输入密码"/>
+						<div>
+							<span></span>
+						</div>
+					</div>
+				</li>
+				
+			</ul>
+			
+			<div class="submit_btn_box ">
+				<a id='reg' href="javascript:;" data-spec="ture" class="bozhong_submit">提交</a>
+			</div>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/md5.js"></script>
+		<script src="../app/js/init.js"></script>
+		<script src="../app/js/public.js"></script>
+		<script>
+			mui.init();
+			mui.plusReady(function() {
+				/*提交表单的返回*/
+				var can_back=true;
+				$("body").on("keyup",function(){
+					can_back=false;
+				})
+			 	var old_back=mui.back;
+				mui.back=function(){
+					if(can_back){
+						old_back();
+					}else{
+						var btnArray = ['否', '是'];
+		                mui.confirm('确认要返回么，确认？', TITLE, btnArray, function(e) {
+		                    if (e.index == 1) {
+		                        old_back();
+		                    }
+		                })
+					}	
+				}
+				//提交
+				mui('body').on('tap', '#reg', function() {
+						if(unsafe_tap2()) return; // 调用代码
+					//EN_USER_ID;
+					var EN_USER_NAME=$("input[name='EN_USER_NAME']").val();//姓名
+					var EN_USER_MOBILE=$("input[name='EN_USER_MOBILE").val();//手机号
+					var EN_USER_PWD=$("input[name='EN_USER_PWD").val();//密码
+				
+					//手机号
+					function a1(){
+												
+						if(!/[\S]+/.test(EN_USER_MOBILE)) {
+				            plus.nativeUI.toast('手机号不能为空');
+				             return false;
+				        }else{
+				        	return true;
+				        }
+					}
+					//密码
+					function a2(){
+											
+						if(!/[\S]+/.test(EN_USER_PWD)) {
+				            plus.nativeUI.toast('密码不能为空');
+				             return false;
+				        }else if(EN_USER_PWD.length<5){
+				         	plus.nativeUI.toast('密码最短为 5 个字符');
+				        }else{
+				        	return true;
+				        }
+					}
+
+					//验证码
+					function a5(){					
+						if(!/[\S]+/.test(EN_USER_NAME)) {
+				            plus.nativeUI.toast('用户姓名不能为空');
+				             return false;
+				        }else{
+				        	return true;
+				        }
+					}
+					//console.log(a1()&&a2()&&a3()&&a4());
+					if(a5()&&a1()&&a2()){
+						var datas={ "EN_USER_NAME":EN_USER_NAME,
+									"EN_USER_MOBILE":EN_USER_MOBILE,
+									"EN_USER_PWD":hex_md5(EN_USER_PWD),
+									"EN_USER_ID":getState().en_user_id
+								};
+								
+								
+						$.ajax(www_v+"/user/add_user", {
+							data: datas,
+							type: 'post', //HTTP请求类型
+							timeout: 50000, //超时时间设置为10秒；
+							success: function(data) {
+								check_ajax(data,function(data){
+														plus.nativeUI.toast('添加成功');
+														var list = plus.webview.getWebviewById('xiajiyonghu.html');
+														mui.fire(list, 'refresh');
+														old_back();
+													})
+							},
+							error: function(xhr, type, errorThrown, selfs) {
+								if(type == "timeout") {
+									alert("请求超时");
+								} else if(type == "abort") {
+									alert("请检查您的网络");
+								} else if(type == "error") {
+									alert("服务端错误");
+								}
+							}
+						});			
+					}
+
+				})
+			})
+		</script>
+	</body>
+
+</html>

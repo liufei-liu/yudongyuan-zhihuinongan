@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1">
+		<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="format-detection" content="email=no">
+		<meta http-equiv="Expires" content="0">
+		<meta http-equiv="Pragma" content="no-cache">
+		<meta http-equiv="Cache-control" content="no-cache">
+		<meta http-equiv="Cache" content="no-cache">
+		<title>选择产品类型</title>
+		<meta name="keywords" content="">
+		<meta name="Description" content="">
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/public.css">
+		<link rel="stylesheet" href="css/main.css">
+		<script src="js/jquery.js"></script>
+	</head>
+
+	<body>
+		<div class="header_box">
+			<div class="header">
+				<a class="back mui-action-back">
+					<img src="images/newImgs/newback.png" alt="">
+				</a>
+				<h1>选择产品类型</h1>
+				<a class="home ">
+					<img src="images/newImgs/home.png" alt="" />
+				</a>
+			</div>
+		</div>
+		<ul class="type_item">
+			<!--<li>
+				<a href="xuanzechanpin.html">
+					<b class="type_1"><i></i></b>
+					<span>蔬菜产品</span>
+				</a>
+			</li>
+			<li>
+				<a href="xuanzechanpin.html">
+					<b class="type_2"><i></i></b>
+					<span>瓜果产品</span>
+				</a>
+			</li>
+			<li>
+				<a href="xuanzechanpin.html">
+					<b class="type_3"><i></i></b>
+					<span>水产品</span>
+				</a>
+			</li>
+			<li>
+				<a href="xuanzechanpin.html">
+					<b class="type_4"><i></i></b>
+					<span>畜禽产品</span>
+				</a>
+			</li>
+			<li>
+				<a href="xuanzechanpin.html">
+					<b class="type_5"><i></i></b>
+					<span>粮油产品</span>
+				</a>
+			</li>
+			<li>
+				<a href="xuanzechanpin.html">
+					<b class="type_6"><i></i></b>
+					<span>茶叶</span>
+				</a>
+			</li>-->
+		</ul>
+		<script src="../js/mui.min.js"></script>
+		<script src="js/init.js"></script>
+		<script src="js/public.js"></script>
+		<script>
+			mui.plusReady(function() {
+				if(wainshow()==false){return false;};
+				$.ajax(www_v+"/pro_registration/catalog_two/", {
+					data: {'token':getToken()},
+					type: 'post', //HTTP请求类型
+					timeout: 50000, //超时时间设置为10秒；
+					success: function(data) {
+						check_ajax(data,function(data){
+										console.log(JSON.stringify(data)); 
+										for(var i=0,str="";i<data.length;i++){
+											str+='<li >'+
+													'<a  href="xuanzechanpin.html" data-wid="xuanzechanpin.html" data-extras=\'{"pro_cat2_id":"'+data[i].pro_cat2_id+'"}\'>'+
+														'<b style="background:#62DC63; border-radius:50%; " class="type_'+(i+1)+'"><i ></i></b>'+
+														'<span>'+data[i].pro_cat2_name+'</span>'+
+													'</a>'+
+												'</li>';
+										}
+										$(".type_item").html(str); 
+										console.log(data)
+									})
+					},
+					error: function(xhr, type, errorThrown, selfs) {
+						if(type == "timeout") {
+							alert("请求超时");
+						} else if(type == "abort") {
+							alert("请检查您的网络");
+						} else if(type == "error") {
+							alert("服务端错误");
+						}
+					}
+				});
+			});
+		</script>
+		<style type="text/css">
+			
+		</style>
+	</body>
+
+</html>
